@@ -390,7 +390,7 @@ for c in md_rows(RES / "BENCH3.md"):   # cross-check the markdown
 
 # ---- desk metrics -----------------------------------------------------------------------------------------------
 desk_md = {}; knobs_md = {}
-lines = (ROOT / "DESK.md").read_text(encoding="utf-8").splitlines()
+lines = (ROOT / "docs" / "DESK.md").read_text(encoding="utf-8").splitlines()
 hdr = None
 for ln in lines:
     if ln.startswith("| task"): hdr = [x.strip() for x in ln.strip().strip("|").split("|")]; continue
