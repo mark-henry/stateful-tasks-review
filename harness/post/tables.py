@@ -33,6 +33,27 @@ FORMATS = {"published": "", "ours": "ours", "ergonomic": "ergonomic", "execute":
 MODELS = {"qwen9b": "Qwen3.5-9B", "llama70b": "Llama-3.3-70B", "ds": "DeepSeek-V4-Flash", "dspro": "DeepSeek-V4-Pro"}
 MODEL_ORDER = ["qwen9b", "llama70b", "ds"]
 CLEAN_FOUR = {"random_lookup_table", "nested_arithmetic", "s5_composition", "cellular_automaton"}
+# bibliography: the paper whose trace format each task implements (verified against arXiv / Crossref titles)
+SOURCE_URLS = {
+    "addition": "https://arxiv.org/abs/2112.00114", "synthetic_program_trace": "https://arxiv.org/abs/2112.00114",
+    "blocksworld": "https://arxiv.org/abs/2405.04776",
+    "boolean_expressions": "https://arxiv.org/abs/2210.09261", "cup_shuffling": "https://arxiv.org/abs/2210.09261",
+    "dyck": "https://arxiv.org/abs/2210.09261", "nested_arithmetic": "https://arxiv.org/abs/2210.09261",
+    "cellular_automaton": "https://doi.org/10.1007/11786986_13",
+    "cruxeval": "https://arxiv.org/abs/2401.03065",
+    "entity_tracking_boxes": "https://arxiv.org/abs/2305.02363",
+    "hanoi": "https://arxiv.org/abs/2506.06941",
+    "multiplication": "https://arxiv.org/abs/2305.18654",
+    "random_lookup_table": "https://arxiv.org/abs/2311.12997",
+    "s5_composition": "https://arxiv.org/abs/2210.10749",
+    "threesum": "https://arxiv.org/abs/2404.15758",
+    "turing_machine": "https://arxiv.org/abs/2504.20771",
+}
+
+
+def source_link(slug, text):
+    url = SOURCE_URLS.get(slug)
+    return f'<a href="{url}">{html.escape(text)}</a>' if url else html.escape(text)
 
 
 def read(name):
@@ -365,12 +386,12 @@ def t_tasks():
     rows = []
     for t in sorted(TASKS, key=lambda t: t["slug"]):
         knob = re.split(r"\s*\(", t["depth_knob"])[0]
-        rows.append([tname(t["slug"], t["display_name"]), t["source_short"], t["harness_depth"],
+        rows.append([tname(t["slug"], t["display_name"]), source_link(t["slug"], t["source_short"]), t["harness_depth"],
                      t["state_description"], knob, t["answer_space"], FORMATS.get(t["surviving_format"], t["surviving_format"]) or "published"])
     return table(
         "The sixteen tasks.",
-        "Source is the paper whose trace format was implemented; SOURCING.md in each task directory records the "
-        "exact commit or figure. A step is one unit of depth in the harness. Format is the one the results "
+        "Source is the paper whose trace format was implemented, linked; SOURCING.md in each task directory records "
+        "the exact commit or figure. A step is one unit of depth in the harness. Format is the one the results "
         "tables use for that task.",
         ["task", "source", "one step is", "state carried", "depth knob", "answer space", "format"], rows)
 

@@ -141,3 +141,9 @@ you can recreate from the recorded commits.
 - `docs/IMPL.md`: implementation status at the start of batch 1, with each task's deviations from its source.
 
 `DESK.md` at the top level is a symlink to `docs/DESK.md`, kept because `harness/tidy.py` reads it from there.
+
+## License
+
+MIT (see `LICENSE`). Files under `tasks/*/vendor/` are copied from the upstream repositories named in each
+task's `SOURCING.md` and keep their own licenses (MIT or Apache-2.0, shipped alongside). The two noun lists
+under `tasks/entity_tracking_boxes/vendor/` come from a repository that carries no license.
