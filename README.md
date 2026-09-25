@@ -1,6 +1,6 @@
 # stateful-tasks
 
-Code and results for [POST TITLE](POST_URL), a comparative review of chain-of-thought tasks from the
+Code and results for [A buyer's guide to stateful chain-of-thought tasks](https://mark-henry.me/posts/2026/stateful-tasks/), a comparative review of chain-of-thought tasks from the
 literature, asking which ones force a language model to carry load-bearing state in its CoT tokens. The review
 reimplemented 16 published tasks (addition, Dyck completion, S5 composition, Towers of Hanoi, program traces,
 and others) behind one common interface. Each gold trace uses the source's published format. The tasks were

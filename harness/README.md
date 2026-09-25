@@ -63,8 +63,15 @@ those dirs). goldko, continue and mistake need only the task code.
 
 ## Rerunning the review
 
-The log dirs under `results/logs/` are not in the repository (about 300 MB of Inspect `.eval` files). Every
-table in `results/` was built from them. The commands below write to the same dirs the published run used;
+The log dirs under `results/logs/` are not in the repository; they ship as a release asset (359 Inspect `.eval`
+files, about 300 MB). Every table in `results/` was built from them. To get them:
+
+    cd harness/results
+    curl -L -o logs.tar.gz https://github.com/mark-henry/stateful-tasks-review/releases/download/v1.0/stateful-tasks-logs-v1.0.tar.gz
+    tar xzf logs.tar.gz && rm logs.tar.gz      # creates results/logs/
+
+After that `uv run inspect view --log-dir results/logs/batch1` browses every sample, and `tidy.py`,
+`density.py`, `collect2.py` and `collect3.py` run from the logs. The commands below write to the same dirs the published run used;
 the header of each log confirms its flags. `--max-connections` and the `caffeinate` wrapper used on the
 original runs are left out.
 
