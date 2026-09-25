@@ -1,0 +1,86 @@
+{
+ "blocksworld": {
+  "model": "qwen9b",
+  "depth": 2,
+  "acc_cot": 0.92,
+  "acc_nocot": 0.64,
+  "gap": 0.28
+ },
+ "boolean_expressions": {
+  "model": "qwen9b",
+  "depth": 12,
+  "acc_cot": 0.7,
+  "acc_nocot": 0.34,
+  "gap": 0.36
+ },
+ "cruxeval": {
+  "model": "qwen9b",
+  "depth": 6,
+  "acc_cot": 0.86,
+  "acc_nocot": 0.44,
+  "gap": 0.42
+ },
+ "cup_shuffling": {
+  "model": "qwen9b",
+  "depth": 12,
+  "acc_cot": 0.98,
+  "acc_nocot": 0.22,
+  "gap": 0.76
+ },
+ "dyck": {
+  "model": "qwen9b",
+  "depth": 8,
+  "acc_cot": 0.88,
+  "acc_nocot": 0.2,
+  "gap": 0.68
+ },
+ "entity_tracking_boxes": {
+  "model": "qwen9b",
+  "depth": 8,
+  "acc_cot": 0.82,
+  "acc_nocot": 0.4,
+  "gap": 0.42
+ },
+ "nested_arithmetic": {
+  "model": "qwen9b",
+  "depth": 7,
+  "acc_cot": 0.96,
+  "acc_nocot": 0.0,
+  "gap": 0.96
+ },
+ "synthetic_program_trace": {
+  "model": "qwen9b",
+  "depth": 32,
+  "acc_cot": 0.94,
+  "acc_nocot": 0.08,
+  "gap": 0.86
+ },
+ "turing_machine": {
+  "model": "qwen9b",
+  "depth": 2,
+  "acc_cot": 0.9,
+  "acc_nocot": 0.04,
+  "gap": 0.86
+ },
+ "addition": {
+  "model": "ds",
+  "depth": 2,
+  "acc_cot": 1.0,
+  "acc_nocot": 0.08,
+  "gap": 0.92
+ },
+ "random_lookup_table": {
+  "model": "ds",
+  "depth": 24,
+  "acc_cot": 1.0,
+  "acc_nocot": 0.14,
+  "gap": 0.86
+ },
+ "s5_composition": {
+  "model": "ds",
+  "depth": 16,
+  "acc_cot": 0.88,
+  "acc_nocot": 0.0,
+  "gap": 0.88
+ }
+}

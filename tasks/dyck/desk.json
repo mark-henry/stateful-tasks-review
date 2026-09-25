@@ -1,0 +1,54 @@
+{
+  "slug": "dyck",
+  "primary_source": {
+    "paper": "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.09261",
+    "repo": "https://github.com/suzgunmirac/BIG-Bench-Hard (commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d)"
+  },
+  "trace_available": true,
+  "trace_source": "vendor/BIG-Bench-Hard/cot-prompts/dyck_languages.txt (commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d), first full few-shot exemplar, saved verbatim to published_trace.txt",
+  "format_description": "Each step is 'N: <symbol> ; stack: <space-separated current stack contents>', one line per input symbol (e.g. '2: { ; stack: [ {'), preceded by '0: empty stack' and closed by a summary sentence naming the final stack and the derived closing-bracket sequence.",
+  "steps_in_trace": 3,
+  "tokens_per_step": {
+    "gemma2": 38.0,
+    "llama3": 35.33,
+    "qwen2": 35.0
+  },
+  "tokens_total": {
+    "gemma2": 114,
+    "llama3": 106,
+    "qwen2": 105
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 2.0,
+  "state_bounded": false,
+  "state_atomic_tokens": true,
+  "theory_class": "unclear",
+  "theory_citation": "Yao, Peng, Papadimitriou, Narasimhan, 'Self-Attention Networks Can Process Bounded Hierarchical Languages,' ACL 2021, arXiv:2105.11115: self-attention networks (bounded-depth, no CoT) can provably process Dyck-(k,m) for bounded stack depth m, but general unbounded-depth Dyck-k completion requires unbounded memory (a stack), so it does not sit in a single fixed circuit-complexity class the way navigate (TC0) or boolean_expressions (NC1) do here -- 'unclear' is used rather than guessing a specific completeness class, since this sourcing pass did not find a citation establishing NC1-completeness (or otherwise) for the general completion task.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "prefix length, k (number of bracket types), max stack depth",
+    "granularity": "integer for all three; canonical BBH prefixes run roughly 3-20 symbols with k up to 4 types ((), [], {}, <>); the vendored princeton-nlp/dyck-transformer generator (SOURCING.md candidate 3) exposes k and max_stack_depth directly as constructor arguments",
+    "tokens_flat_across_knob": false
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "medium",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Suzgun et al. 2022 (arXiv:2210.09261), BIG-Bench-Hard",
+      "metric": "3-shot CoT vs answer-only (no-CoT) accuracy on the canonical fixed dyck_languages example set; computed directly from vendored code-davinci-002 eval_metrics.jsonl (not transcribed from the paper's typeset table)",
+      "models": "code-davinci-002 (Codex)",
+      "values": "no-CoT (direct) 46.8% -> CoT 56.8%"
+    }
+  ],
+  "notes": "tokens_per_step / tokens_total measured with real tokenizers loaded via huggingface_hub + tokenizers on published_trace.txt's CoT completion (the 'A: ...' portion only, 3 numbered symbol-processing steps -- the '0: empty stack' line is the initial state, not counted as a step): gemma2 tokenizer.json from unsloth/gemma-2-2b (ungated mirror of google/gemma-2-2b, 401 gated), llama3 tokenizer.json from NousResearch/Meta-Llama-3-8B (ungated mirror of meta-llama/Meta-Llama-3-8B, also 401 gated), qwen2 tokenizer.json from Qwen/Qwen2-7B directly (ungated). state_bits=2.0 is the MARGINAL per-push-step information (log2(k) for k=4 canonical bracket types: (), [], {}, <>), not the total accumulated stack information, which grows with current stack depth and is unbounded in principle -- hence state_bounded=false, the key structural contrast with navigate/boolean_expressions in this batch (their per-step state is a fixed-arity tuple/bit; dyck's stack-contents field genuinely lengthens as depth grows). state_atomic_tokens=true was verified empirically: single bracket characters ('[', ']', '{', '}', '(', ')') and their space-prefixed forms each encode as exactly one token across all three tokenizers. tokens_flat_across_knob=false (not null) because this one IS directly observable from the trace's own structure without needing to generate new instances: each stack-listing field textually lengthens by one atomic bracket token per unit of stack depth, so a step's line length is a function of current depth, unlike navigate/boolean_expressions where this required deferred cross-depth measurement. dyck_languages is one of the hardest BBH tasks for CoT (Codex only reaches 56.8%, a 10-point CoT gain, versus navigate's 96.4%), consistent with unbounded-depth Dyck completion being structurally harder than a prefix-sum or a bounded-depth boolean reduction. Did not find exact InstructGPT/PaLM per-task numbers or the human-rater baseline for this task in this pass (would require full PDF table extraction of Suzgun et al. Table 3; not attempted since the vendored eval_metrics.jsonl already gives an exact, reproducible Codex number) -- flagged as an honest gap, not fabricated."
+}

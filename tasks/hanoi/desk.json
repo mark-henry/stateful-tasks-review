@@ -1,0 +1,58 @@
+{
+  "slug": "hanoi",
+  "primary_source": {
+    "paper": "The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2506.06941",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": "tasks/hanoi/published_trace.txt, extracted from arXiv:2506.06941 Appendix Tower-of-Hanoi system prompt (verified via WebFetch of arxiv.org/html/2506.06941), cross-checked against vendor/illusion_of_thinking/run_hanoi_experiment.py (commit fc1bc18128b914b54579397c36bb88cf281ef404) SYSTEM_PROMPT constant, which reproduces the same appendix text verbatim. The paper prints no actual model-generated CoT/response trace, only this one worked N=3 example embedded in its own prompt.",
+  "format_description": "A step is one [disk_id, from_peg, to_peg] integer triple (0-indexed pegs, disks numbered 1=smallest..n=largest) inside a single flat Python-list literal `moves = [[...], [...], ...]`; the format carries no explicit per-step peg-state annotation, only the ordered move sequence itself.",
+  "steps_in_trace": 7,
+  "tokens_per_step": {"gemma2": 9.2857, "llama3": 9.2857, "qwen2": 9.2857},
+  "tokens_total": {"gemma2": 65, "llama3": 65, "qwen2": 65},
+  "step_delimitable": true,
+  "state_at_fixed_position": false,
+  "state_bits": 4.7549,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Per-step legality check and peg update (top-disk comparison, push/pop) is a constant-depth, bounded-fan-in boolean computation (TC0); generating the full optimal n-disk solution is O(2^n) output length via the standard recursive algorithm. See Hinz, A.M., Klavzar, S., Milutinovic, U., Petr, C. (2013), 'The Tower of Hanoi -- Myths and Maths', Springer, for the closed-form recursive/iterative solution and complexity treatment.",
+  "local_redundancy": "high",
+  "prompt_recomputable": false,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "disks (N)",
+    "granularity": "integer, paper tested a range up to N=12 (N>12 excluded for context-length reasons per Appendix A.1)",
+    "tokens_flat_across_knob": true
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "high",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Shojaee et al. 2025, arXiv:2506.06941 (Apple)",
+      "metric": "Accuracy vs. number of disks (N) on Tower of Hanoi, planning formulation (model must produce the full move list from scratch)",
+      "models": "Claude 3.7 Sonnet (thinking and non-thinking), DeepSeek-R1, o3-mini; QwQ-32B-class models per secondary/summary sources, not independently confirmed against paper text",
+      "values": "Text (Appendix A.1, per WebFetch of arxiv.org/html/2506.06941) states 'reasoning models begin to collapse at N=7 and 8, corresponding to ~100-200 moves'; the paper excluded N>12 from Hanoi trials due to context-length limits. Exact per-N accuracy percentages for each named model are given only as figures; not extracted here since WebFetch tooling cannot read figure pixel values. Secondary/summary sources (blog posts, not the paper text) describe collapse to near-0% accuracy for all tested frontier models by N=7-8 disks."
+    },
+    {
+      "paper": "Shojaee et al. 2025, arXiv:2506.06941 (Apple)",
+      "metric": "Reasoning-token usage vs. N across three described complexity regimes",
+      "models": "same reasoning models as above",
+      "values": "Text describes three regimes: (1) low N -- non-thinking models match or beat thinking models more token-efficiently; (2) medium N -- thinking models' long-CoT advantage manifests and the performance gap between paired models widens; (3) high N -- both model types collapse to zero accuracy, with thinking models delaying but not avoiding the same collapse. Near collapse, models 'counterintuitively begin to reduce their reasoning effort despite increasing problem complexity' while 'operating well below their generation length limits'. Exact token-count-per-N curves are given only as figures, not extracted numerically here."
+    },
+    {
+      "paper": "Comment on The Illusion of Thinking, arXiv:2506.09250 ('The Illusion of the Illusion of Thinking')",
+      "metric": "Critique of the accuracy-collapse finding as partly an evaluation-harness artifact",
+      "models": "same frontier reasoning models, re-scored under adjusted harness assumptions",
+      "values": "Qualitative rebuttal arguing some reported 'failures' are output-length/token-budget truncation or overly strict exact-match scoring of the required `moves = [[...]]` format rather than genuine reasoning collapse; no new accuracy numbers extracted here, flagged as relevant to how strict check() tolerance should be if this task is later used to support 'reasoning collapse' claims."
+    }
+  ],
+  "notes": "AMENDMENT 2 pass: metrics describe the task AS PUBLISHED (Apple's own planning-formulation prompt, where the model must produce the entire move list itself; no per-step state is ever printed in the published format), not the tracking reformulation from the earlier phase. Tokenizer counts are real (not hand-estimated): tokenizer.json pulled via huggingface_hub.hf_hub_download for Qwen/Qwen2-7B (ungated), and for the two gated models used ungated re-upload mirrors per instruction -- unsloth/gemma-2-2b (gemma2) and NousResearch/Meta-Llama-3-8B (llama3), both stated to be tokenizer-identical re-uploads, not retrained. All three fetches succeeded (no HF token needed). Tokenized the worked N=3 example trace ('moves = [[1, 0, 2], [2, 0, 1], [1, 2, 1], [3, 0, 2], [1, 1, 0], [2, 1, 2], [1, 0, 2]]') with tokenizers==0.21.1, Tokenizer.encode(text, add_special_tokens=False) so BOS/EOS tokens (which gemma2/llama3 add by default and Qwen2 does not) don't distort the per-tokenizer comparison; all three tokenizers happen to segment this exact string identically (65 tokens / 7 steps = 9.2857 tokens/step) -- a coincidence of this short numeric/bracket-heavy string, not a general claim that these tokenizers agree elsewhere. state_atomic_tokens is null because the published format never emits a state string at all (only move triples), so 'does one state symbol tokenize atomically' has no referent in this format -- state must be reconstructed by simulating the moves, it is not present in the trace text, hence also state_at_fixed_position=false. state_bits (4.7549 = 3*log2(3)) is computed for the N=3 example specifically (log2 of the 3^N full peg-assignment space); it scales as N*log2(3) for general N, a fact noted here since the schema wants a single float tied to the trace at hand. state_bounded=true because for a fixed N the state descriptor size doesn't grow with additional moves/depth (only with N, which is the knob, not the depth axis). prompt_recomputable=false because in this planning formulation the moves are exactly what the prompt withholds -- nothing about move k is visible in the prompt beyond the initial/goal peg configuration and disk count, unlike a tracking formulation where the operator would be given. local_redundancy=high despite prompt_recomputable=false: the *sequence* of optimal moves follows a well-known simple iterative rule (the smallest disk cycles pegs every other move; the only other legal move at each step is forced), so each next move is cheaply re-derivable from the previous move plus parity/disk-count, without needing to recompute the full recursive solution from scratch. tokens_flat_across_knob=true for tokens-PER-STEP (each [disk_id, from_peg, to_peg] triple stays ~9-10 tokens as N grows, since from_peg/to_peg are always single digits 0-2 and disk_id only grows past one digit for N>=10); total trace tokens are NOT flat across N (they grow with the 2^N-1 move count), which is exactly the point of the paper's context-length argument for capping at N<=12. format_natural=false: while models trained on code will readily emit move lists, the specific 0-indexed-peg, flat-list-of-triples convention is imposed by the prompt, not something to expect a model to reproduce identically unprompted. See tasks/hanoi/SOURCING.md (phase 1) for the vendoring/candidate survey this trace and citation build on. NOTE (batch 2, 2026-09-18): these metrics describe the PUBLISHED planning formulation; task.py's default is now the execution/state-tracking formulation (start configuration + a given list of legal moves -> resulting configuration), for which no published trace exists -- see README.md 'Format decision'; the published formulation remains available as generate(..., formulation=\"plan\")."
+}

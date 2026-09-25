@@ -1,0 +1,96 @@
+SOURCE: Song, Yue, Zhang, "Thinking Isn't an Illusion: Overcoming the Limitations of Reasoning
+Models via Tool Augmentations", arXiv:2507.17699 (2025). Official code repo
+https://github.com/magiclinux/thinking_is_not_an_illusion, commit 1075515f839f21d67543d5193a8c95a2bc2b0564
+(vendored at vendor/thinking_is_not_an_illusion/), notebook
+Scratchpad/DeepSeek/R1/DeepSeekR1_Scratchpad_Checker_Jumping.ipynb, ALL saved cell outputs in order.
+Not from the Apple paper (arXiv:2506.06941) itself: that paper's only two qualitative model-output
+examples in its "Qualitative Examples of Thoughts in LRMs" appendix are Tower of Hanoi and River
+Crossing (see published_trace_river_crossing.txt) — no Checker Jumping trace exists there. This is
+the follow-up paper's own logged DeepSeek-R1 API output under its "Scratchpad" tool-augmentation
+strategy, using the ORIGINAL Apple task description and move format verbatim (system/user prompt
+text quoted matches arXiv:2506.06941 App. A.2.2 word for word), for N=3 (board length 7).
+Format: each round the model returns a JSON object {"moves": [...], "scratchpad": "state = [...]",
+"finished": ...}; the harness then prints "Scratchpad: state = [...]" to confirm what it fed back
+as prev_scratchpad on the next call. State is given once per ROUND (a batch of 1-7 moves), not once
+per individual move — the notebook's harness, not the model, decides how many moves per round.
+Round 5 shows the model discarding an (apparently corrupted/inconsistent) fed-back scratchpad state
+and re-deriving the full 15-move solution from the ORIGINAL initial board instead — the final
+output is then rejected by the repo's own validator (see the last line below): a genuine
+published failure case, left in verbatim rather than cleaned up.
+==============================================================================
+
+--- round 1: model API response (cell 0) ---
+{
+  "moves": "[[ 'R', 2, 3], [ 'B', 4, 2], [ 'R', 3, 4], [ 'B', 5, 3], [ 'R', 4, 5], [ 'B', 6, 4], [ 'R', 5, 6]]",
+  "scratchpad": "state = ['R', 'R', 'B', 'B', 'B', '_', 'R']",
+  "finished": "False"
+}
+
+[round 1 confirmed board printed by notebook]
+Scratchpad: state = ['R', 'R', 'B', '_', 'R', 'B', 'B']
+
+--- round 2: model API response (cell 2) ---
+{
+  "moves": "[[ 'R', 1, 3 ], [ 'B', 2, 1 ], [ 'R', 0, 2 ], [ 'B', 1, 0 ]]",
+  "scratchpad": "state = ['B','_','R','R','R','B','B']",
+  "finished": "False"
+}
+
+[round 2 confirmed board printed by notebook]
+Scratchpad: state = ['B','_','R','R','R','B','B']
+
+--- round 3: model API response (cell 4) ---
+{
+  "moves": "[[ 'B', 4, 3 ], [ 'R', 2, 4 ], [ 'B', 3, 2 ], [ 'B', 5, 3 ]]",
+  "scratchpad": "state = ['R','R','B','B','_','B','B']",
+  "finished": "False"
+}
+
+[round 3 confirmed board printed by notebook]
+Scratchpad: state = ['R','R','B','B','_','B','B']
+
+--- round 4: model API response (cell 6) ---
+Based on the previous scratchpad state provided: `['R','R','B','B','_','B','B']` (positions: 0:R, 1:R, 2:B, 3:B, 4:_, 5:B, 6:B), the only possible move is for the blue checker at position 5 to slide left (forward for blue) to the empty space at position 4. This results in the new state: `['R','R','B','B','B','_','B']`.
+
+The move is: `[ 'B' , 5 , 4 ]`.
+
+Since the goal state `['B','B','B','_','R','R','R']` has not been reached and there are more moves needed (though from this new state, further moves are limited), the task is not finished. The scratchpad is updated to the new state for the next round.
+
+**Output:**
+{
+  "moves": "[[ 'B' , 5 , 4 ]]",
+  "scratchpad": "state = ['R','R','B','B','B','_','B']",
+  "finished": "False"
+}
+
+[round 4 confirmed board printed by notebook]
+Scratchpad: state = ['R','R','B','B','B','_','B']
+
+--- round 5: model API response (cell 8) ---
+{
+  "moves": "[[ 'B', 6, 5 ]]",
+  "scratchpad": "state = ['R','R','B','B','B','B','_']",
+  "finished": "False"
+}
+
+[round 5 confirmed board printed by notebook]
+Scratchpad: state = ['R','R','B','B','B','B','_']
+
+--- round 6: model API response (cell 10) ---
+Based on the task description and the provided puzzle with 7 positions (3 red checkers on the left, 3 blue checkers on the right, and one empty space in between), the initial board state is ['R', 'R', 'R', '_', 'B', 'B', 'B'], and the goal state is ['B', 'B', 'B', '_', 'R', 'R', 'R']. The minimum sequence of moves to achieve this swap consists of 15 moves. 
+
+The "prev_scratchpad" state provided in the input appears to be inconsistent with the puzzle setup (as it shows only 2 reds and 4 blues), but since the scratchpad use count is 5 (max allowed), no further scratchpad writes are possible. Therefore, the full solution from the correct initial state to the goal state is provided below, ignoring the inconsistent scratchpad state.
+
+The move sequence is as follows:
+
+{
+  "moves": "[[ 'B', 4, 3], [ 'R', 2, 4], [ 'B', 3, 2], [ 'B', 5, 3], [ 'R', 4, 5], [ 'B', 6, 4], [ 'R', 5, 6], [ 'B', 2, 3], [ 'R', 1, 3], [ 'B', 3, 1], [ 'R', 3, 5], [ 'B', 1, 3], [ 'R', 0, 2], [ 'B', 3, 4], [ 'R', 2, 3]]",
+  "scratchpad": "",
+  "finished": "True"
+} 
+
+This sequence ensures the board reaches the goal state ['B', 'B', 'B', '_', 'R', 'R', 'R'] in 15 moves, adhering to the rules (sliding or jumping forward only, over opposite colors for jumps). Each move is given as [checker_color, position_from, position_to] with 0-indexed positions.
+
+[validator output, not a model response — the repo's own CheckerJumpingSolver check on the round-6
+final answer above, printed by cell 11]
+Result: False - Step 3: Destination 3 is not empty

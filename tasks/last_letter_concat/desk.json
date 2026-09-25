@@ -1,0 +1,42 @@
+{
+  "slug": "last_letter_concat",
+  "primary_source": {
+    "paper": "Wei et al. 2022, \"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\"",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2201.11903",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": "tasks/last_letter_concat/published_trace.txt -- Wei et al. 2022 Fig. 3 / Appendix G 4-shot CoT prompt for Last Letter Concatenation (the 'Elon Musk' exemplar), corroborated verbatim via third-party reproductions (HKUNLP/HumanPrompt, bboylyg/BackdoorLLM; see file header).",
+  "format_description": "One sentence per word giving that word's last letter in quotes ('The last letter of \"Elon\" is \"n\".'), followed by a single closing sentence that concatenates all the extracted letters and states the final answer -- the running concatenated string is NOT shown incrementally after each word, only assembled once at the end.",
+  "steps_in_trace": 2,
+  "tokens_per_step": {"gemma2": 18.0, "llama3": 19.0, "qwen2": 18.5},
+  "tokens_total": {"gemma2": 36, "llama3": 38, "qwen2": 37},
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 4.7,
+  "state_bounded": false,
+  "state_atomic_tokens": true,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "No transformer-construction paper specific to this exact concatenation task was found. By analogy to Chiang & Cholak 2022's constant-depth PARITY construction (ACL 2022, arXiv:2202.12172): each step's operation (index a fixed word, read off its last character) is a constant-depth, bounded-fan-in lookup, so the per-step computation is TC0-simple; what grows with depth is only the PRINTED OUTPUT length, not the circuit depth needed per step -- this is the deliberately-chosen 'growing lexical state' contrast case in this task suite, versus parity_coinflip and web_of_lies where the tracked state stays a fixed 1 bit regardless of depth.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {"name": "depth (number of words)", "granularity": "1", "tokens_flat_across_knob": true},
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "high",
+  "paraphrasable": true,
+  "format_natural": true,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Wei et al. 2022 (arXiv:2201.11903)",
+      "metric": "PaLM 540B accuracy, standard vs chain-of-thought prompting, Last Letter Concatenation",
+      "models": "PaLM 540B",
+      "values": "standard prompting 7.6%; CoT prompting 99.4% (extracted via ar5iv HTML render of the arXiv source's text, not the original PDF/figure directly -- flagged for a spot check, though this specific contrast -- single digits without CoT vs near-ceiling with CoT -- matches the paper's own qualitative description of this task as one of its clearest 'CoT unlocks an otherwise-unsolved symbolic task' results)"
+    }
+  ],
+  "notes": "Unlike the other two tasks in this suite, answer_space is null/unbounded (grows with depth: 26^depth possible strings) rather than a small fixed set, so there is no meaningful guessing floor -- baseline accuracy without reasoning should approach 0% as depth grows, consistent with the 7.6% standard-prompting number above (already near floor at depth 2). state_bits (4.7 = log2(26)) is the marginal per-step information (which letter), not the size of the accumulated answer, which is the actual thing that grows with depth and is why state_bounded is false -- this is the intended contrast case against parity_coinflip/web_of_lies's fixed 1-bit state. state_atomic_tokens is true for the letter itself (a single quoted character tokenizes as one token across all three tokenizers checked, e.g. gemma2/llama3/qwen2 all split '\"n\"' as [quote][n][quote] with 'n' itself a single atomic token) though the surrounding quote marks add two extra non-informative tokens per step. tokens_flat_across_knob is a reasoned true (the per-word sentence template is structurally uniform) rather than measured across depths, since the only located exemplars (this 4-shot prompt's four Q/A pairs) are all depth=2; flag this if precision matters later. contamination_risk raised to 'high' (vs the phase-1 pass's 'medium') because this specific 'Elon Musk / Larry Page / Sergey Brin / Bill Gates' quadruple is one of the single most-quoted CoT exemplars in the entire literature -- almost certainly memorized verbatim by frontier models; freshly generated instances with different names would carry substantially lower risk. Vendored (phase-1 pass, reference only): Kojima et al. 2022 official Zero-Shot-CoT repo (fixed 500-example last_letters.json + shared generator script, no LICENSE file found in the repo) and atfortes/DataGenLM (MIT, cleaner reimplementation; uclaml/Rephrase-and-Respond carries a byte-identical copy, not separately vendored). Neither reproduces the per-word scratchpad format seen in the actual published trace -- both only store a final question/answer pair with no intermediate reasoning -- so a generator matching the PUBLISHED CoT format still has no existing source and must be written from scratch if/when task.py is built (still not written, per the phase-1 and phase-2 amendments). Tokenizers used: unsloth/gemma-2-2b (mirror; gated google/gemma-2-2b was inaccessible without an HF token here), NousResearch/Meta-Llama-3-8B (mirror; gated meta-llama/Meta-Llama-3-8B likewise inaccessible), Qwen/Qwen2-7B (ungated, fetched directly). All token counts are real tokenizer.json encodes of the published_trace.txt CoT text (everything after 'A:'), not hand estimates."
+}

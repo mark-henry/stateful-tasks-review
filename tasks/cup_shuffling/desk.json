@@ -1,0 +1,48 @@
+{
+  "slug": "cup_shuffling",
+  "primary_source": {
+    "paper": "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.09261",
+    "repo": "https://github.com/suzgunmirac/BIG-Bench-Hard"
+  },
+  "trace_available": true,
+  "trace_source": "vendor/bbh/cot-prompts/tracking_shuffled_objects_three_objects.txt, first of three 3-shot CoT exemplars, commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d; verbatim copy in published_trace.txt",
+  "format_description": "Each step is a parenthesized index '(k)' followed by either 'At the start:' or 'X and Y swap/switch Z:' and then a comma-separated 'Name: object' clause for every person in the scenario, ending after the last step with a plain-English answer sentence and 'So the answer is (X).'",
+  "steps_in_trace": 4,
+  "tokens_per_step": {"gemma2": 58.25, "llama3": 55.25, "qwen2": 55.25},
+  "tokens_total": {"gemma2": 233, "llama3": 221, "qwen2": 221},
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 2.585,
+  "state_bounded": true,
+  "state_atomic_tokens": true,
+  "theory_class": "NC1-hard",
+  "theory_citation": "Barrington 1989, 'Bounded-width polynomial-size branching programs recognize exactly those languages in NC1' establishes that the word problem over S_5 (composing permutations/transpositions) is NC1-complete; tracking pairwise swaps in this task is exactly composition of transpositions in S_n, so the task family is NC1-hard as n grows (each fixed-n BBH instance, n in {3,5,7}, is trivially solvable by direct simulation, but the family's hardness class is set by n->infinity).",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 3,
+  "error_diagnostic": true,
+  "knob": {"name": "n (number of people/objects)", "granularity": "1, fixed to {3,5,7} in the published BBH subtasks", "tokens_flat_across_knob": false},
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "high",
+  "paraphrasable": true,
+  "format_natural": true,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Suzgun et al. 2022 (arXiv:2210.09261), Table 3, row 'Tracking Shuffled Objects (avg)'",
+      "metric": "few-shot accuracy (%), answer-only (AO) vs chain-of-thought (CoT) prompting, averaged over the three BBH subtasks n=3,5,7",
+      "models": "random baseline; Srivastava et al. 2022 prior SOTA; human-rater avg/max; InstructGPT text-davinci-002; Codex code-davinci-002; PaLM 540B",
+      "values": "random 22.5; prior SOTA 24.1; human-rater avg 64.7, max 100; InstructGPT AO 25.1 -> CoT 61.1; Codex AO 24.1 -> CoT 84.5; PaLM-540B AO 19.6 -> CoT 52.9"
+    },
+    {
+      "paper": "Suzgun et al. 2022 (same), Section 4.3 / Figure 5",
+      "metric": "qualitative CoT-scaling curve across InstructGPT model sizes: answer-only prompting is flat/near-random at every scale, CoT prompting is also near-random at small scale but jumps to well-above-random at the largest scale (an 'emergent' task per Wei et al. 2022a)",
+      "models": "InstructGPT text-ada-001, text-babbage-001, text-curie-001, text-davinci-001, text-davinci-002",
+      "values": "no exact numbers tabulated (read off Figure 5); AO stays near the ~22-25% random baseline across all five scales, CoT stays near baseline through text-davinci-001 then rises sharply to ~60% at text-davinci-002"
+    }
+  ],
+  "notes": "state_bits (2.585) is log2(3!) for the n=3 subtask that the vendored published_trace.txt exemplar uses; the n=5 and n=7 BBH subtasks have log2(5!)=6.907 and log2(7!)=12.30 bits respectively, since the tracked state is a full permutation of n objects among n people. state_bounded=true because within any fixed-n subtask the permutation-group size does not grow with additional swaps (more depth only cycles through the same finite S_n), even though tokens/step is flat across depth. answer_space=3 reflects the n=3 subtask specifically (published_trace.txt); the family answer_space is {3,5,7} depending on which BBH subtask. This is S_n composition: each swap is a transposition applied to the running permutation, which is exactly the algebraic structure Barrington used to show NC1-completeness of the S_5 word problem -- the empirical signature (flat no-CoT scaling, emergent CoT scaling per Suzgun Fig. 5) is consistent with that theoretical hardness even though BBH itself never exceeds n=7. Contamination risk is HIGH: this exact fixed dataset (canary-tagged since Oct 2022) is mirrored in multiple HF datasets (lukaemon/bbh, maveriq/bigbenchhard) and lm-evaluation-harness, and has almost certainly leaked into pretraining corpora; a fresh from-scratch generator (not yet written; SOURCING.md phase) is required for actual eval instances, this desk.json describes the published implementation only, per AMENDMENT 2."
+}

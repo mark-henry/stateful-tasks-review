@@ -1,0 +1,68 @@
+SOURCE: Nye, Andreassen, Gur-Ari, Michalewski, Austin, Bieber, Dohan, Lewkowycz, Bosma, Luan, Sutton, Odena (2021),
+"Show Your Work: Scratchpads for Intermediate Computation with Language Models", arXiv:2112.00114v1,
+Appendix C, "Example few-shot prompt for synthetic Python experiments" (page 13-14). Transcribed verbatim from
+the PDF at https://arxiv.org/pdf/2112.00114 (16-page version; the figure/appendix text is embedded as a
+raster image in the PDF, not machine-selectable text, so this was transcribed by rendering pages 13-14 at
+400 DPI and reading the text directly off the page). This is the FIRST of several few-shot examples given in
+Appendix C; it is reproduced in full, from "Consider the following Python function:" through "[DONE]".
+Quote marks in the source PDF render as typographic quotes (" ") due to a LaTeX listings/font substitution;
+normalized here to straight double quotes (") for legibility, no other characters changed.
+
+This example is chosen over the same paper's Figure 1 "remove_Occ" scratchpad example (a string-manipulation
+function) because it is the closer match to the synthetic_program_trace task family: a small integer-variable
+program with straight-line assignment/arithmetic (+=, *=) and ONE bounded while-loop, traced line-by-line with
+full local-variable state after each executed line -- structurally identical to what this task's own generator
+is meant to produce, per SOURCING.md and Bieber et al. 2020 (the synthetic-program corpus Nye et al. themselves
+modified for this appendix, per their Section 5.1: "We use a dataset of synthetic Python programs modified from
+Bieber et al. (2020). These programs include small integers (0, 1, and 2), simple while loops, and if
+statements."). Also note: Table 2 (Section 5.1, "Synthetic tracing and execution results") reports quantitative
+accuracy numbers for scratchpad vs. direct-prediction on exactly this synthetic-program family (see desk.json
+published_data).
+
+=== Prompt ===
+
+Consider the following Python function:
+
+def f(v0):
+  v0 += 0
+  v4 = 2
+  while v4 > 0:
+    v4 -= 1
+    v0 *= 2
+  return v0
+
+output = f(6)
+
+What is the execution trace?
+
+=== Model/gold trace (verbatim, including the paper's own [BEGIN]/[DONE] delimiters) ===
+
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(6)
+state: {"v0": 6}
+line:   v0 += 0
+state: {"v0": 6}
+line:   v4 = 2
+state: {"v0": 6, "v4": 2}
+line:   while v4 > 0:
+state: {"v0": 6, "v4": 2}
+line:     v4 -= 1
+state: {"v0": 6, "v4": 1}
+line:     v0 *= 2
+state: {"v0": 12, "v4": 1}
+line:   while v4 > 0:
+state: {"v0": 12, "v4": 1}
+line:     v4 -= 1
+state: {"v0": 12, "v4": 0}
+line:     v0 *= 2
+state: {"v0": 24, "v4": 0}
+line:   while v4 > 0:
+state: {"v0": 24, "v4": 0}
+line:   return v0
+state: {"f": "<callable_object f>", "output": 24}
+
+[DONE]

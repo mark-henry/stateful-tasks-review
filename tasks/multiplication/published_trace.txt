@@ -1,0 +1,19 @@
+SOURCE: Dziri et al. 2023, "Faith and Fate: Limits of Transformers on Compositionality" (arXiv:2305.18654, NeurIPS 2023 Spotlight), Figure 9, Appendix A.1 (multiplication scratchpad example, operands 35 x 90). This exact text was verified sentence-for-sentence against the paper (via ar5iv.labs.arxiv.org fetch: opening sentence, final numbered step, and final-answer line all match the paper's Figure 9 verbatim: A=0 from digit-by-digit multiply by 0, B=315 from digit-by-digit multiply by 9 shifted one place, final answer '0 x 1 + 315 x 10 = 0 + 3150 = 3150'). The paper's own fetch tool declined to reproduce the full figure verbatim (fair-use guardrail), so this text was instead regenerated character-for-character by running the vendored generator that produced the figure: vendor/faith-and-fate/multiplication/generate_scratchpads.py:generate_prompt(35, 90), commit 1e90edb54b4ed0fa150259a72c994b0fee90d388 (MIT license, (c) 2022 Nouha Dziri). generate_prompt() asserts internally that its scratchpad sum equals x*y (differential self-check).
+===
+What is 35 times 90? 
+
+###
+
+ Let's multiply 35 by the digit in the ones place of 90, which is 0.
+
+1. Multiply 0 by the digit in the ones place of 35, which is 5. This gives 5 x 0 = 0. Write down the result 0.
+2. Multiply 0 by the digit in the tens place of 35, which is 3. This gives 3 x 0 = 0. Write down the result 0.
+3. The partial product for this step is A=0 which is the concatenation of the digits we found in each step.
+
+Now, let's multiply 35 by the digit in the tens place of 90, which is 9.
+
+4. Multiply 9 by the digit in the ones place of 35, which is 5. This gives 5 x 9 = 45. Write down the result 5 and carry over the 4 to the next step.
+5. Multiply 9 by the digit in the tens place of 35, which is 3. Add the carryover from the previous step to account for this. This gives (3 x 9) + 4 = 31. Write down the result 31.
+6. The partial product for this step is B=315 which is the concatenation of the digits we found in each step.
+
+Now, let's sum the 2 partial products A and B, and take into account the position of each digit: A=0 (from multiplication by 0) and B=315 (from multiplication by 9 but shifted one place to the left, so it becomes 3150). The final answer is 0 x 1 + 315 x 10 = 0 + 3150 = 3150. ###

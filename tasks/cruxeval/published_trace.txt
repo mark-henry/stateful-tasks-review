@@ -1,0 +1,20 @@
+SOURCE: vendor/cruxeval_repo/prompts.py, function make_cot_output_prompt() (facebookresearch/cruxeval, commit 190faf16d175b5847b0af05d937872b1fb395942, MIT license). This is the single hardcoded few-shot worked example embedded in the paper's own CoT prompt-construction function for CRUXEval-O (output prediction). Byte-for-byte identical copy also present in vendor/lm_eval_harness_cruxeval/cruxeval_output_cot.yaml. The paper (arXiv:2401.03065) states the full CoT prompt text is given in Appendix D.3, which was not retrievable through available web tools in this pass (HTML render truncates before Appendix D.3, and no PDF fetch tool succeeded); the repo's embedded copy is used per task instructions as the acceptable substitute when the paper's own rendering of the appendix could not be directly retrieved.
+
+[PYTHON]
+def f(s):
+    s = s + s
+    return "b" + s + "a"
+assert f("hi") == ??
+[/PYTHON]
+[THOUGHT]
+Let's execute the code step by step:
+
+1. The function f is defined, which takes a single argument s.
+2. The function is called with the argument "hi", so within the function, s is initially "hi".
+3. Inside the function, s is concatenated with itself, so s becomes "hihi".
+4. The function then returns a new string that starts with "b", followed by the value of s (which is now "hihi"), and ends with "a".
+5. The return value of the function is therefore "bhihia".
+[/THOUGHT]
+[ANSWER]
+assert f("hi") == "bhihia"
+[/ANSWER]

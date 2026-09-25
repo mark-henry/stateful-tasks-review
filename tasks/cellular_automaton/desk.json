@@ -1,0 +1,60 @@
+{
+  "slug": "cellular_automaton",
+  "primary_source": {
+    "paper": "Neary, T. & Woods, D., \"P-completeness of Cellular Automaton Rule 110\"",
+    "year": 2006,
+    "url": "https://doi.org/10.1007/11786986_13",
+    "repo": null
+  },
+  "trace_available": false,
+  "trace_source": null,
+  "format_description": "NOTE: no published format exists (trace_available=false); this describes the format THIS repo chose, now at revision 3 (2026-09-18). One step = one generation, rendered as a multi-line block: a `generation k:` header, then one line per cell of the form `  cell i: left cL=b, self ci=b, right cR=b -> LSR -> b  row so far: <bits with _ for cells not yet computed>` (neighbours named by index AND value; the running row grows by exactly one bit per line), then `  row: <bits>` restating the completed running row. The batch-1 format (one line `generation k: <bits>` per generation, no per-cell work) is retained as the `format=\"rows\"` knob value.",
+  "steps_in_trace": null,
+  "tokens_per_step": {
+    "gemma2": null,
+    "llama3": null,
+    "qwen2": null
+  },
+  "tokens_total": {
+    "gemma2": null,
+    "llama3": null,
+    "qwen2": null
+  },
+  "step_delimitable": null,
+  "state_at_fixed_position": null,
+  "state_bits": 8.0,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "P-complete",
+  "theory_citation": "Neary, T. & Woods, D. (2006), 'P-completeness of Cellular Automaton Rule 110', ICALP 2006, LNCS 4051, DOI 10.1007/11786986_13, shows predicting Rule 110's state is P-complete (relies on Cook, M. (2004), 'Universality in Elementary Cellular Automata', Complex Systems 15(1), for Rule 110's Turing-completeness). This is the worst case over the rule knob: Rule 90 is additive/linear over GF(2) (x_{t+1,i} = x_{t,i-1} XOR x_{t,i+1}), so the whole width-w ring state after any number of steps is a single GF(2) matrix power applied to the initial vector -- computable by repeated squaring in O(log depth) matrix multiplications, i.e. solvable in NC1/TC0, not inherently serial (Wolfram, S. (1984), 'Universality and complexity in cellular automata', Physica D 10, classifies additive rules including 90 and 150). Most of the other 254 rules are uncharacterized; only Rule 110 (and a few of its Cook-conjugate variants) are known P-complete.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 256,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "depth",
+    "granularity": "integer step count (secondary knobs: rule in 0-255, an 8-bit lookup table; width, the ring size, default 8)",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": null,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Neary, T. & Woods, D. (2006), 'P-completeness of Cellular Automaton Rule 110', ICALP 2006",
+      "metric": "computational complexity classification only (theory, not an empirical LLM/model benchmark)",
+      "models": "none -- pure complexity-theory result, no language models evaluated",
+      "values": "Rule 110 state-prediction problem is P-complete under log-space reductions; no accuracy/token numbers to report"
+    },
+    {
+      "paper": "Cook, M. (2004), 'Universality in Elementary Cellular Automata', Complex Systems 15(1)",
+      "metric": "Turing-completeness proof for Rule 110 (cyclic tag system encoding)",
+      "models": "none -- pure computability result, no language models evaluated",
+      "values": "not applicable"
+    }
+  ],
+  "notes": "CORRECTION to the task brief: the brief suggested citing Liu, Ash, Goel, Krishnamurthy, Zhang, 'Transformers Learn Shortcuts to Automata' (arXiv:2210.10749, 2022) as a paper that 'used CAs.' Full-text verification of the arXiv HTML (v2) found zero occurrences of 'cellular automaton', 'rule 110', or 'rule 90'; the paper's semiautomata examples are explicitly a mod-2 counter, a 2-state memory unit, Grid_n gridworlds, permutation/solvable-group automata (up to a Rubik's-Cube-sized group), parity, and Dyck languages (Figure 1) -- i.e. the automata already covered by this repo's separate s5_composition, parity_coinflip, and dyck task slugs, not 1-D elementary cellular automata. Liu et al. 2022 is therefore not usable as primary_source for this task, and it has no CA content to trace at all. Extensive search (GitHub repo/code search, HuggingFace dataset search, arXiv API queries for 'cellular automaton'+'chain-of-thought', 'elementary cellular automaton'+'language model', 'rule 110'+'language model', lm-evaluation-harness and BIG-bench task listings) turned up no paper or benchmark that publishes an LLM-facing CoT/scratchpad trace of a 1-D elementary CA simulation -- see SOURCING.md for the full candidate list (vendor/shortcut_automata is the Liu et al. paper's project *website*, code-free; vendor/rule110_span_long is an unlabeled raw-bitstring HF corpus with no generator or metadata). primary_source is instead set to the Neary & Woods 2006 P-completeness result, the actual theoretical anchor for this task's difficulty claim and the citation given directly in the task assignment; it is a pure theory paper with no example trace, hence trace_available=false and every trace-dependent field (tokens_per_step, tokens_total, format_description, step_delimitable, state_at_fixed_position, state_atomic_tokens, format_natural) is null rather than hand-estimated, per AMENDMENT 2. Definition-derived fields (state_bits, theory_class, answer_space, etc.) use the task's stated default width=8: state space is 2^8=256 configurations per step (8 bits), independent of depth (state_bounded=true; only the width knob grows it). state_bits/answer_space would need recomputing if the eventual default width value changes. UPDATE 2026-09-18 (implementation phase, AMENDMENT 3 format choice): batch 1 ran the one-row-per-generation format and models botched the per-cell lookups with no visible work (e.g. DeepSeek at depth 4, generation 0 = 01010110, wrote `generation 1: 11111101` where the correct row is 11111110 -- a wrap-around error at cell 8). The default trace format is now a per-cell scratchpad; see format_description and README :: Format decision. tokens_per_step and tokens_total remain null because AMENDMENT 2 defines them over the PUBLISHED format and there is still no published trace for this task; recording our own format's counts in those fields would corrupt the cross-task collation. For reference, measured with tokenizers 0.21.1 against local tokenizer.json files (unsloth/gemma-2-2b, NousResearch/Meta-Llama-3-8B, Qwen/Qwen2-7B) over 50 instances at the default rule 110 / width 8 / depth 14: per-cell format ~123.2 (gemma2), ~100.5 (llama3), ~122.1 (qwen2) tokens per generation, i.e. ~1725 / ~1407 / ~1710 tokens for a depth-14 gold trace; legacy rows format ~15.2 / ~9.5 / ~15.1 tokens per generation. Prompt is ~197 / ~176 / ~200 tokens. state_atomic_tokens stays null for the same published-format reason, but measured on our rows: gemma-2 and Qwen2 split a bit run into one token per digit (atomic), Llama-3 merges digits into runs of up to three (not atomic); a three-bit neighbourhood on a cell line is 1 token under Llama-3 and 3 under gemma-2/Qwen2. DEPTHS was also retuned to [1, 2, 4, 6, 10, 14] (batch 1: [2, 4, 8, 12, 16, 24]); 16 is avoided because 216 of the 256 width-8 rule-110 orbits have period 16, making generation 16 equal generation 0 for ~20% of instances. FORMAT REVISION 3 (2026-09-18): revision 2's bare per-cell lookups (`cell 8: 110 -> 1` then `row: <bits>`) scored DeepSeek 0.78/0.54/0.36 and Qwen-9B 0.59/0.44/0.12 at depths 1/2/4, with two format-induced failure modes in the diffs: (1) periodic wrap-around -- `cell 8: 110 -> 1` where gold is `111 -> 0`, i.e. the wrong right neighbour for the last cell, because a bare triple does not say which cells it came from; (2) row assembly -- all eight cell lines correct then `row: 10000011` where gold is `10000101`, i.e. transcribing eight bits gathered from eight preceding lines. Revision 3 names each neighbour by index and value and carries a running row that extends the previous line's by exactly one bit, so neither operation requires gathering from earlier lines. Cost: measured with tokenizers 0.21.1 against local tokenizer.json files (unsloth/gemma-2-2b, NousResearch/Meta-Llama-3-8B, Qwen/Qwen2-7B) over 50 instances at rule 110 / width 8 / depth 14: ~358.2 (gemma2), ~313.5 (llama3), ~356.1 (qwen2) tokens per generation, vs ~123/~101/~122 for revision 2 and ~15.2/~9.5/~15.1 for the rows format. DEPTHS retuned again to [1, 2, 3, 4, 6, 10] (revision 2: [1, 2, 4, 6, 10, 14]): the measured knee is between depth 2 and 6, depths 1/2/4 are retained for comparability with the second-chance run, and ~358 tok/generation prices the old top of 14 at ~5k tokens for a depth both models floor anyway."
+}

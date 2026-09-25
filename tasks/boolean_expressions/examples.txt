@@ -1,0 +1,133 @@
+# boolean_expressions -- rendered examples (python3 task.py --demo)
+# format: BBH CoT (Suzgun et al. 2022). depth = named sub-expression
+# resolutions on the critical path == len(steps).
+# ANSWER_FORMAT: exactly one word, either True or False
+# DEPTHS: [2, 3, 4, 6, 8, 12, 16]
+
+==============================================================================
+PUBLISHED EXEMPLAR (verbatim, exemplars(3, 0)[0])
+==============================================================================
+PROMPT: not ( ( not not True ) ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = not ( ( not not True ) ) = not ( ( A ) )" where "A = not not True".
+Let's evaluate A: A = not not True = not (not True) = not False = True.
+Plugging in A, we get: Z = not ( ( A ) ) = not ( ( True ) ) = not True = False. So the answer is False.
+Answer: False
+STATES: A=True | Z=False
+
+==============================================================================
+DEPTH 2
+==============================================================================
+--- depth=2 seed=0 (operators=3, elementary critical path=5) ---
+PROMPT: ( not ( True or False and True ) ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = ( not ( True or False and True ) ) = ( not A )" where "A = ( True or False and True )".
+Let's evaluate A: A = ( True or False and True ) = ( True or False ) = True.
+Plugging in A, we get: Z = ( not A ) = ( not True ) = False. So the answer is False.
+Answer: False
+STATES: A=True | Z=False
+
+--- depth=2 seed=1 (operators=3, elementary critical path=5) ---
+PROMPT: ( not ( False and False or False ) ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = ( not ( False and False or False ) ) = ( not ( A ) )" where "A = False and False or False".
+Let's evaluate A: A = False and False or False = False or False = False.
+Plugging in A, we get: Z = ( not ( A ) ) = ( not ( False ) ) = ( not False ) = True. So the answer is True.
+Answer: True
+STATES: A=False | Z=True
+
+--- depth=2 seed=2 (operators=3, elementary critical path=4) ---
+PROMPT: ( False or False or False or False ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = ( False or False or False or False ) = ( A or False )" where "A = False or False or False".
+Let's evaluate A: A = False or False or False = False or False = False.
+Plugging in A, we get: Z = ( A or False ) = ( False or False ) = False. So the answer is False.
+Answer: False
+STATES: A=False | Z=False
+
+==============================================================================
+DEPTH 16
+==============================================================================
+--- depth=16 seed=0 (operators=22, elementary critical path=26) ---
+PROMPT: ( not True or not not not not ( ( True or True ) and ( True and ( ( not ( True and ( True and not ( not ( False or True ) or ( False or False ) ) ) ) ) or ( False or False ) ) ) ) or False ) and ( True or False ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = ( not True or not not not not ( ( True or True ) and ( True and ( ( not ( True and ( True and not ( not ( False or True ) or ( False or False ) ) ) ) ) or ( False or False ) ) ) ) or False ) and ( True or False ) = ( O ) and ( True or False )" where "A = not ( False or True )", "B = A or ( False or False )", "C = not ( B )", "D = True and C", "E = True and ( D )", "F = ( not ( E ) )", "G = ( F or ( False or False ) )", "H = True and G", "I = ( ( True or True ) and ( H ) )", "J = not I", "K = not J", "L = not K", "M = not L", "N = not True or M" and "O = N or False".
+Let's evaluate A: A = not ( False or True ) = not True = False.
+Let's evaluate B: B = A or ( False or False ) = False or ( False or False ) = False or False = False.
+Let's evaluate C: C = not ( B ) = not ( False ) = not False = True.
+Let's evaluate D: D = True and C = True and True = True.
+Let's evaluate E: E = True and ( D ) = True and ( True ) = True and True = True.
+Let's evaluate F: F = ( not ( E ) ) = ( not ( True ) ) = ( not True ) = False.
+Let's evaluate G: G = ( F or ( False or False ) ) = ( False or ( False or False ) ) = ( False or False ) = False.
+Let's evaluate H: H = True and G = True and False = False.
+Let's evaluate I: I = ( ( True or True ) and ( H ) ) = ( ( True or True ) and ( False ) ) = ( True and False ) = False.
+Let's evaluate J: J = not I = not False = True.
+Let's evaluate K: K = not J = not True = False.
+Let's evaluate L: L = not K = not False = True.
+Let's evaluate M: M = not L = not True = False.
+Let's evaluate N: N = not True or M = not True or False = False or False = False.
+Let's evaluate O: O = N or False = False or False = False.
+Plugging in O, we get: Z = ( O ) and ( True or False ) = ( False ) and ( True or False ) = False and ( True or False ) = False and True = False. So the answer is False.
+Answer: False
+STATES: A=False | B=False | C=True | D=True | E=True | F=False | G=False | H=False | I=False | J=True | K=False | L=True | M=False | N=False | O=False | Z=False
+
+--- depth=16 seed=1 (operators=20, elementary critical path=25) ---
+PROMPT: not not not ( ( False or True ) and not ( False or ( not ( not ( True and not ( ( ( True or True or True ) and ( True or True ) and True ) or False ) ) or False ) ) ) or False and False ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = not not not ( ( False or True ) and not ( False or ( not ( not ( True and not ( ( ( True or True or True ) and ( True or True ) and True ) or False ) ) or False ) ) ) or False and False ) = not O" where "A = True or True or True", "B = ( A ) and ( True or True )", "C = ( B and True )", "D = C or False", "E = not ( D )", "F = True and E", "G = not ( F )", "H = ( G or False )", "I = ( not H )", "J = False or I", "K = not ( J )", "L = ( False or True ) and K", "M = L or False and False", "N = not ( M )" and "O = not N".
+Let's evaluate A: A = True or True or True = True or True = True.
+Let's evaluate B: B = ( A ) and ( True or True ) = ( True ) and ( True or True ) = True and ( True or True ) = True and True = True.
+Let's evaluate C: C = ( B and True ) = ( True and True ) = True.
+Let's evaluate D: D = C or False = True or False = True.
+Let's evaluate E: E = not ( D ) = not ( True ) = not True = False.
+Let's evaluate F: F = True and E = True and False = False.
+Let's evaluate G: G = not ( F ) = not ( False ) = not False = True.
+Let's evaluate H: H = ( G or False ) = ( True or False ) = True.
+Let's evaluate I: I = ( not H ) = ( not True ) = False.
+Let's evaluate J: J = False or I = False or False = False.
+Let's evaluate K: K = not ( J ) = not ( False ) = not False = True.
+Let's evaluate L: L = ( False or True ) and K = ( False or True ) and True = True and True = True.
+Let's evaluate M: M = L or False and False = True or False and False = True or False = True.
+Let's evaluate N: N = not ( M ) = not ( True ) = not True = False.
+Let's evaluate O: O = not N = not False = True.
+Plugging in O, we get: Z = not O = not True = False. So the answer is False.
+Answer: False
+STATES: A=True | B=True | C=True | D=True | E=False | F=False | G=True | H=True | I=False | J=False | K=True | L=True | M=True | N=False | O=True | Z=False
+
+--- depth=16 seed=2 (operators=21, elementary critical path=27) ---
+PROMPT: ( not not not ( not ( ( True or False ) and ( ( ( False and True ) or not ( not ( not True or not not ( not True or ( not ( not True or True ) ) ) ) ) ) or False ) or False ) ) ) is
+GOLD:
+Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = ( not not not ( not ( ( True or False ) and ( ( ( False and True ) or not ( not ( not True or not not ( not True or ( not ( not True or True ) ) ) ) ) ) or False ) or False ) ) ) = ( not O )" where "A = ( not True or True )", "B = ( not A )", "C = not True or B", "D = not ( C )", "E = not D", "F = not True or E", "G = ( not ( F ) )", "H = not G", "I = ( ( False and True ) or H )", "J = I or False", "K = ( True or False ) and ( J )", "L = ( K or False )", "M = ( not L )", "N = not M" and "O = not N".
+Let's evaluate A: A = ( not True or True ) = ( False or True ) = True.
+Let's evaluate B: B = ( not A ) = ( not True ) = False.
+Let's evaluate C: C = not True or B = not True or False = False or False = False.
+Let's evaluate D: D = not ( C ) = not ( False ) = not False = True.
+Let's evaluate E: E = not D = not True = False.
+Let's evaluate F: F = not True or E = not True or False = False or False = False.
+Let's evaluate G: G = ( not ( F ) ) = ( not ( False ) ) = ( not False ) = True.
+Let's evaluate H: H = not G = not True = False.
+Let's evaluate I: I = ( ( False and True ) or H ) = ( ( False and True ) or False ) = ( False or False ) = False.
+Let's evaluate J: J = I or False = False or False = False.
+Let's evaluate K: K = ( True or False ) and ( J ) = ( True or False ) and ( False ) = True and False = False.
+Let's evaluate L: L = ( K or False ) = ( False or False ) = False.
+Let's evaluate M: M = ( not L ) = ( not False ) = True.
+Let's evaluate N: N = not M = not True = False.
+Let's evaluate O: O = not N = not False = True.
+Plugging in O, we get: Z = ( not O ) = ( not True ) = False. So the answer is False.
+Answer: False
+STATES: A=True | B=False | C=False | D=True | E=False | F=False | G=True | H=False | I=False | J=False | K=False | L=False | M=True | N=False | O=True | Z=False
+

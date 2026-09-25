@@ -1,0 +1,672 @@
+=== depth=2 instance=0 seed=2000 ===
+--- prompt ---
+Simulate a m-tag system. Stop upon reaching the halt condition or 2 steps.
+
+## Rules for Simulation:
+1. In each transition, the machine performs the following steps:
+   - If the queue length is less than m, halt
+   - Read the head symbol of queue
+   - Append symbols to the tail based on the head symbol and the corresponding transition rule
+   - Delete m symbols from the head of the queue
+
+2. The machine halt if:
+   - The queue's length is less than m.
+
+## The Only Problem to Solve:
+m: 2
+Alphabet: {A, B, C, D, E}
+Init: [D C]
+Transition Rules:
+A : A D E E
+B : D A D
+C : A E A D
+D : B C E
+E : D E
+
+--- gold CoT ---
+### step 0:
+   - Action: Init
+   - Queue State: [D C]
+
+### step 1:
+   - Head Symbol: D
+   - Action: Append B C E to the end of the queue. Remove D C from the head.
+   - Queue State: [B C E]
+
+### step 2:
+   - Head Symbol: B
+   - Action: Append D A D to the end of the queue. Remove B C from the head.
+   - Queue State: [E D A D]
+
+Answer: [E D A D]
+
+=== depth=2 instance=1 seed=2001 ===
+--- prompt ---
+Simulate a m-tag system. Stop upon reaching the halt condition or 2 steps.
+
+## Rules for Simulation:
+1. In each transition, the machine performs the following steps:
+   - If the queue length is less than m, halt
+   - Read the head symbol of queue
+   - Append symbols to the tail based on the head symbol and the corresponding transition rule
+   - Delete m symbols from the head of the queue
+
+2. The machine halt if:
+   - The queue's length is less than m.
+
+## The Only Problem to Solve:
+m: 2
+Alphabet: {A, B, C, D, E}
+Init: [B C A B D A C]
+Transition Rules:
+A : A E A D E
+B : C
+C : D B
+D : A C
+E : E C D
+
+--- gold CoT ---
+### step 0:
+   - Action: Init
+   - Queue State: [B C A B D A C]
+
+### step 1:
+   - Head Symbol: B
+   - Action: Append C to the end of the queue. Remove B C from the head.
+   - Queue State: [A B D A C C]
+
+### step 2:
+   - Head Symbol: A
+   - Action: Append A E A D E to the end of the queue. Remove A B from the head.
+   - Queue State: [D A C C A E A D E]
+
+Answer: [D A C C A E A D E]
+
+=== depth=2 instance=2 seed=2002 ===
+--- prompt ---
+Simulate a m-tag system. Stop upon reaching the halt condition or 2 steps.
+
+## Rules for Simulation:
+1. In each transition, the machine performs the following steps:
+   - If the queue length is less than m, halt
+   - Read the head symbol of queue
+   - Append symbols to the tail based on the head symbol and the corresponding transition rule
+   - Delete m symbols from the head of the queue
+
+2. The machine halt if:
+   - The queue's length is less than m.
+
+## The Only Problem to Solve:
+m: 2
+Alphabet: {A, B, C, D, E}
+Init: [B E E E C E]
+Transition Rules:
+A : C
+B : A B B D A
+C : B A B B B
+D : A A B B
+E : C D D C E
+
+--- gold CoT ---
+### step 0:
+   - Action: Init
+   - Queue State: [B E E E C E]
+
+### step 1:
+   - Head Symbol: B
+   - Action: Append A B B D A to the end of the queue. Remove B E from the head.
+   - Queue State: [E E C E A B B D A]
+
+### step 2:
+   - Head Symbol: E
+   - Action: Append C D D C E to the end of the queue. Remove E E from the head.
+   - Queue State: [C E A B B D A C D D C E]
+
+Answer: [C E A B B D A C D D C E]
+
+=== depth=30 instance=0 seed=30000 ===
+--- prompt ---
+Simulate a m-tag system. Stop upon reaching the halt condition or 30 steps.
+
+## Rules for Simulation:
+1. In each transition, the machine performs the following steps:
+   - If the queue length is less than m, halt
+   - Read the head symbol of queue
+   - Append symbols to the tail based on the head symbol and the corresponding transition rule
+   - Delete m symbols from the head of the queue
+
+2. The machine halt if:
+   - The queue's length is less than m.
+
+## The Only Problem to Solve:
+m: 2
+Alphabet: {A, B, C, D, E}
+Init: [C E]
+Transition Rules:
+A : A C
+B : A E
+C : C A D
+D : E E
+E : D E C
+
+--- gold CoT ---
+### step 0:
+   - Action: Init
+   - Queue State: [C E]
+
+### step 1:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C E from the head.
+   - Queue State: [C A D]
+
+### step 2:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C A from the head.
+   - Queue State: [D C A D]
+
+### step 3:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D C from the head.
+   - Queue State: [A D E E]
+
+### step 4:
+   - Head Symbol: A
+   - Action: Append A C to the end of the queue. Remove A D from the head.
+   - Queue State: [E E A C]
+
+### step 5:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E E from the head.
+   - Queue State: [A C D E C]
+
+### step 6:
+   - Head Symbol: A
+   - Action: Append A C to the end of the queue. Remove A C from the head.
+   - Queue State: [D E C A C]
+
+### step 7:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D E from the head.
+   - Queue State: [C A C E E]
+
+### step 8:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C A from the head.
+   - Queue State: [C E E C A D]
+
+### step 9:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C E from the head.
+   - Queue State: [E C A D C A D]
+
+### step 10:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E C from the head.
+   - Queue State: [A D C A D D E C]
+
+### step 11:
+   - Head Symbol: A
+   - Action: Append A C to the end of the queue. Remove A D from the head.
+   - Queue State: [C A D D E C A C]
+
+### step 12:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C A from the head.
+   - Queue State: [D D E C A C C A D]
+
+### step 13:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D D from the head.
+   - Queue State: [E C A C C A D E E]
+
+### step 14:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E C from the head.
+   - Queue State: [A C C A D E E D E C]
+
+### step 15:
+   - Head Symbol: A
+   - Action: Append A C to the end of the queue. Remove A C from the head.
+   - Queue State: [C A D E E D E C A C]
+
+### step 16:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C A from the head.
+   - Queue State: [D E E D E C A C C A D]
+
+### step 17:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D E from the head.
+   - Queue State: [E D E C A C C A D E E]
+
+### step 18:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E D from the head.
+   - Queue State: [E C A C C A D E E D E C]
+
+### step 19:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E C from the head.
+   - Queue State: [A C C A D E E D E C D E C]
+
+### step 20:
+   - Head Symbol: A
+   - Action: Append A C to the end of the queue. Remove A C from the head.
+   - Queue State: [C A D E E D E C D E C A C]
+
+### step 21:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C A from the head.
+   - Queue State: [D E E D E C D E C A C C A D]
+
+### step 22:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D E from the head.
+   - Queue State: [E D E C D E C A C C A D E E]
+
+### step 23:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E D from the head.
+   - Queue State: [E C D E C A C C A D E E D E C]
+
+### step 24:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E C from the head.
+   - Queue State: [D E C A C C A D E E D E C D E C]
+
+### step 25:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D E from the head.
+   - Queue State: [C A C C A D E E D E C D E C E E]
+
+### step 26:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C A from the head.
+   - Queue State: [C C A D E E D E C D E C E E C A D]
+
+### step 27:
+   - Head Symbol: C
+   - Action: Append C A D to the end of the queue. Remove C C from the head.
+   - Queue State: [A D E E D E C D E C E E C A D C A D]
+
+### step 28:
+   - Head Symbol: A
+   - Action: Append A C to the end of the queue. Remove A D from the head.
+   - Queue State: [E E D E C D E C E E C A D C A D A C]
+
+### step 29:
+   - Head Symbol: E
+   - Action: Append D E C to the end of the queue. Remove E E from the head.
+   - Queue State: [D E C D E C E E C A D C A D A C D E C]
+
+### step 30:
+   - Head Symbol: D
+   - Action: Append E E to the end of the queue. Remove D E from the head.
+   - Queue State: [C D E C E E C A D C A D A C D E C E E]
+
+Answer: [C D E C E E C A D C A D A C D E C E E]
+
+=== depth=30 instance=1 seed=30001 ===
+--- prompt ---
+Simulate a m-tag system. Stop upon reaching the halt condition or 30 steps.
+
+## Rules for Simulation:
+1. In each transition, the machine performs the following steps:
+   - If the queue length is less than m, halt
+   - Read the head symbol of queue
+   - Append symbols to the tail based on the head symbol and the corresponding transition rule
+   - Delete m symbols from the head of the queue
+
+2. The machine halt if:
+   - The queue's length is less than m.
+
+## The Only Problem to Solve:
+m: 2
+Alphabet: {A, B, C, D, E}
+Init: [C A B D C D B D]
+Transition Rules:
+A : C B A C B
+B : D C B
+C : A B C E D
+D : C A E B E
+E : B E B
+
+--- gold CoT ---
+### step 0:
+   - Action: Init
+   - Queue State: [C A B D C D B D]
+
+### step 1:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C A from the head.
+   - Queue State: [B D C D B D A B C E D]
+
+### step 2:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B D from the head.
+   - Queue State: [C D B D A B C E D D C B]
+
+### step 3:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C D from the head.
+   - Queue State: [B D A B C E D D C B A B C E D]
+
+### step 4:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B D from the head.
+   - Queue State: [A B C E D D C B A B C E D D C B]
+
+### step 5:
+   - Head Symbol: A
+   - Action: Append C B A C B to the end of the queue. Remove A B from the head.
+   - Queue State: [C E D D C B A B C E D D C B C B A C B]
+
+### step 6:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C E from the head.
+   - Queue State: [D D C B A B C E D D C B C B A C B A B C E D]
+
+### step 7:
+   - Head Symbol: D
+   - Action: Append C A E B E to the end of the queue. Remove D D from the head.
+   - Queue State: [C B A B C E D D C B C B A C B A B C E D C A E B E]
+
+### step 8:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C B from the head.
+   - Queue State: [A B C E D D C B C B A C B A B C E D C A E B E A B C E D]
+
+### step 9:
+   - Head Symbol: A
+   - Action: Append C B A C B to the end of the queue. Remove A B from the head.
+   - Queue State: [C E D D C B C B A C B A B C E D C A E B E A B C E D C B A C B]
+
+### step 10:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C E from the head.
+   - Queue State: [D D C B C B A C B A B C E D C A E B E A B C E D C B A C B A B C E D]
+
+### step 11:
+   - Head Symbol: D
+   - Action: Append C A E B E to the end of the queue. Remove D D from the head.
+   - Queue State: [C B C B A C B A B C E D C A E B E A B C E D C B A C B A B C E D C A E B E]
+
+### step 12:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C B from the head.
+   - Queue State: [C B A C B A B C E D C A E B E A B C E D C B A C B A B C E D C A E B E A B C E D]
+
+### step 13:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C B from the head.
+   - Queue State: [A C B A B C E D C A E B E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D]
+
+### step 14:
+   - Head Symbol: A
+   - Action: Append C B A C B to the end of the queue. Remove A C from the head.
+   - Queue State: [B A B C E D C A E B E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B]
+
+### step 15:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B A from the head.
+   - Queue State: [B C E D C A E B E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B]
+
+### step 16:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B C from the head.
+   - Queue State: [E D C A E B E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B]
+
+### step 17:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E D from the head.
+   - Queue State: [C A E B E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B]
+
+### step 18:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C A from the head.
+   - Queue State: [E B E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D]
+
+### step 19:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E B from the head.
+   - Queue State: [E A B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B]
+
+### step 20:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E A from the head.
+   - Queue State: [B C E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B]
+
+### step 21:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B C from the head.
+   - Queue State: [E D C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B]
+
+### step 22:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E D from the head.
+   - Queue State: [C B A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B]
+
+### step 23:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C B from the head.
+   - Queue State: [A C B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D]
+
+### step 24:
+   - Head Symbol: A
+   - Action: Append C B A C B to the end of the queue. Remove A C from the head.
+   - Queue State: [B A B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B]
+
+### step 25:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B A from the head.
+   - Queue State: [B C E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B]
+
+### step 26:
+   - Head Symbol: B
+   - Action: Append D C B to the end of the queue. Remove B C from the head.
+   - Queue State: [E D C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B D C B]
+
+### step 27:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E D from the head.
+   - Queue State: [C A E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B D C B B E B]
+
+### step 28:
+   - Head Symbol: C
+   - Action: Append A B C E D to the end of the queue. Remove C A from the head.
+   - Queue State: [E B E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B D C B B E B A B C E D]
+
+### step 29:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E B from the head.
+   - Queue State: [E A B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B D C B B E B A B C E D B E B]
+
+### step 30:
+   - Head Symbol: E
+   - Action: Append B E B to the end of the queue. Remove E A from the head.
+   - Queue State: [B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B]
+
+Answer: [B C E D A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B D C B B E B A B C E D C B A C B D C B D C B B E B A B C E D B E B B E B]
+
+=== depth=30 instance=2 seed=30002 ===
+--- prompt ---
+Simulate a m-tag system. Stop upon reaching the halt condition or 30 steps.
+
+## Rules for Simulation:
+1. In each transition, the machine performs the following steps:
+   - If the queue length is less than m, halt
+   - Read the head symbol of queue
+   - Append symbols to the tail based on the head symbol and the corresponding transition rule
+   - Delete m symbols from the head of the queue
+
+2. The machine halt if:
+   - The queue's length is less than m.
+
+## The Only Problem to Solve:
+m: 2
+Alphabet: {A, B, C, D, E}
+Init: [A E D E A B C B C]
+Transition Rules:
+A : A E B
+B : B
+C : B B D
+D : B A C D D
+E : B A B E E
+
+--- gold CoT ---
+### step 0:
+   - Action: Init
+   - Queue State: [A E D E A B C B C]
+
+### step 1:
+   - Head Symbol: A
+   - Action: Append A E B to the end of the queue. Remove A E from the head.
+   - Queue State: [D E A B C B C A E B]
+
+### step 2:
+   - Head Symbol: D
+   - Action: Append B A C D D to the end of the queue. Remove D E from the head.
+   - Queue State: [A B C B C A E B B A C D D]
+
+### step 3:
+   - Head Symbol: A
+   - Action: Append A E B to the end of the queue. Remove A B from the head.
+   - Queue State: [C B C A E B B A C D D A E B]
+
+### step 4:
+   - Head Symbol: C
+   - Action: Append B B D to the end of the queue. Remove C B from the head.
+   - Queue State: [C A E B B A C D D A E B B B D]
+
+### step 5:
+   - Head Symbol: C
+   - Action: Append B B D to the end of the queue. Remove C A from the head.
+   - Queue State: [E B B A C D D A E B B B D B B D]
+
+### step 6:
+   - Head Symbol: E
+   - Action: Append B A B E E to the end of the queue. Remove E B from the head.
+   - Queue State: [B A C D D A E B B B D B B D B A B E E]
+
+### step 7:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B A from the head.
+   - Queue State: [C D D A E B B B D B B D B A B E E B]
+
+### step 8:
+   - Head Symbol: C
+   - Action: Append B B D to the end of the queue. Remove C D from the head.
+   - Queue State: [D A E B B B D B B D B A B E E B B B D]
+
+### step 9:
+   - Head Symbol: D
+   - Action: Append B A C D D to the end of the queue. Remove D A from the head.
+   - Queue State: [E B B B D B B D B A B E E B B B D B A C D D]
+
+### step 10:
+   - Head Symbol: E
+   - Action: Append B A B E E to the end of the queue. Remove E B from the head.
+   - Queue State: [B B D B B D B A B E E B B B D B A C D D B A B E E]
+
+### step 11:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B B from the head.
+   - Queue State: [D B B D B A B E E B B B D B A C D D B A B E E B]
+
+### step 12:
+   - Head Symbol: D
+   - Action: Append B A C D D to the end of the queue. Remove D B from the head.
+   - Queue State: [B D B A B E E B B B D B A C D D B A B E E B B A C D D]
+
+### step 13:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B D from the head.
+   - Queue State: [B A B E E B B B D B A C D D B A B E E B B A C D D B]
+
+### step 14:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B A from the head.
+   - Queue State: [B E E B B B D B A C D D B A B E E B B A C D D B B]
+
+### step 15:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B E from the head.
+   - Queue State: [E B B B D B A C D D B A B E E B B A C D D B B B]
+
+### step 16:
+   - Head Symbol: E
+   - Action: Append B A B E E to the end of the queue. Remove E B from the head.
+   - Queue State: [B B D B A C D D B A B E E B B A C D D B B B B A B E E]
+
+### step 17:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B B from the head.
+   - Queue State: [D B A C D D B A B E E B B A C D D B B B B A B E E B]
+
+### step 18:
+   - Head Symbol: D
+   - Action: Append B A C D D to the end of the queue. Remove D B from the head.
+   - Queue State: [A C D D B A B E E B B A C D D B B B B A B E E B B A C D D]
+
+### step 19:
+   - Head Symbol: A
+   - Action: Append A E B to the end of the queue. Remove A C from the head.
+   - Queue State: [D D B A B E E B B A C D D B B B B A B E E B B A C D D A E B]
+
+### step 20:
+   - Head Symbol: D
+   - Action: Append B A C D D to the end of the queue. Remove D D from the head.
+   - Queue State: [B A B E E B B A C D D B B B B A B E E B B A C D D A E B B A C D D]
+
+### step 21:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B A from the head.
+   - Queue State: [B E E B B A C D D B B B B A B E E B B A C D D A E B B A C D D B]
+
+### step 22:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B E from the head.
+   - Queue State: [E B B A C D D B B B B A B E E B B A C D D A E B B A C D D B B]
+
+### step 23:
+   - Head Symbol: E
+   - Action: Append B A B E E to the end of the queue. Remove E B from the head.
+   - Queue State: [B A C D D B B B B A B E E B B A C D D A E B B A C D D B B B A B E E]
+
+### step 24:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B A from the head.
+   - Queue State: [C D D B B B B A B E E B B A C D D A E B B A C D D B B B A B E E B]
+
+### step 25:
+   - Head Symbol: C
+   - Action: Append B B D to the end of the queue. Remove C D from the head.
+   - Queue State: [D B B B B A B E E B B A C D D A E B B A C D D B B B A B E E B B B D]
+
+### step 26:
+   - Head Symbol: D
+   - Action: Append B A C D D to the end of the queue. Remove D B from the head.
+   - Queue State: [B B B A B E E B B A C D D A E B B A C D D B B B A B E E B B B D B A C D D]
+
+### step 27:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B B from the head.
+   - Queue State: [B A B E E B B A C D D A E B B A C D D B B B A B E E B B B D B A C D D B]
+
+### step 28:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B A from the head.
+   - Queue State: [B E E B B A C D D A E B B A C D D B B B A B E E B B B D B A C D D B B]
+
+### step 29:
+   - Head Symbol: B
+   - Action: Append B to the end of the queue. Remove B E from the head.
+   - Queue State: [E B B A C D D A E B B A C D D B B B A B E E B B B D B A C D D B B B]
+
+### step 30:
+   - Head Symbol: E
+   - Action: Append B A B E E to the end of the queue. Remove E B from the head.
+   - Queue State: [B A C D D A E B B A C D D B B B A B E E B B B D B A C D D B B B B A B E E]
+
+Answer: [B A C D D A E B B A C D D B B B A B E E B B B D B A C D D B B B B A B E E]
+

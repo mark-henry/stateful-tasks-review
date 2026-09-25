@@ -1,0 +1,440 @@
+===== depth=1 seed=1000 rule=110 width=8 format=cells =====
+--- prompt ---
+An elementary cellular automaton runs rule 110 on a ring of 8 cells. The cells are numbered 1 to 8 from left to right, and the ring is circular: the left neighbour of cell 1 is cell 8, and the right neighbour of cell 8 is cell 1.
+In each generation, every cell is updated at the same time. A cell's new value depends on the three cells (left neighbour, itself, right neighbour) in the current generation, according to the rule table:
+
+111 -> 0   110 -> 1   101 -> 1   100 -> 0
+011 -> 1   010 -> 1   001 -> 1   000 -> 0
+
+Generation 0 is:
+
+10110110
+
+Run the automaton for 1 generation. What is generation 1?
+--- gold CoT ---
+generation 1:
+  cell 1: left c8=0, self c1=1, right c2=0 -> 010 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=1 -> 101 -> 1  row so far: 11______
+  cell 3: left c2=0, self c3=1, right c4=1 -> 011 -> 1  row so far: 111_____
+  cell 4: left c3=1, self c4=1, right c5=0 -> 110 -> 1  row so far: 1111____
+  cell 5: left c4=1, self c5=0, right c6=1 -> 101 -> 1  row so far: 11111___
+  cell 6: left c5=0, self c6=1, right c7=1 -> 011 -> 1  row so far: 111111__
+  cell 7: left c6=1, self c7=1, right c8=0 -> 110 -> 1  row so far: 1111111_
+  cell 8: left c7=1, self c8=0, right c1=1 -> 101 -> 1  row so far: 11111111
+  row: 11111111
+Answer: 11111111
+
+===== depth=1 seed=1001 rule=110 width=8 format=cells =====
+--- prompt ---
+An elementary cellular automaton runs rule 110 on a ring of 8 cells. The cells are numbered 1 to 8 from left to right, and the ring is circular: the left neighbour of cell 1 is cell 8, and the right neighbour of cell 8 is cell 1.
+In each generation, every cell is updated at the same time. A cell's new value depends on the three cells (left neighbour, itself, right neighbour) in the current generation, according to the rule table:
+
+111 -> 0   110 -> 1   101 -> 1   100 -> 0
+011 -> 1   010 -> 1   001 -> 1   000 -> 0
+
+Generation 0 is:
+
+10011101
+
+Run the automaton for 1 generation. What is generation 1?
+--- gold CoT ---
+generation 1:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=1 -> 001 -> 1  row so far: 101_____
+  cell 4: left c3=0, self c4=1, right c5=1 -> 011 -> 1  row so far: 1011____
+  cell 5: left c4=1, self c5=1, right c6=1 -> 111 -> 0  row so far: 10110___
+  cell 6: left c5=1, self c6=1, right c7=0 -> 110 -> 1  row so far: 101101__
+  cell 7: left c6=1, self c7=0, right c8=1 -> 101 -> 1  row so far: 1011011_
+  cell 8: left c7=0, self c8=1, right c1=1 -> 011 -> 1  row so far: 10110111
+  row: 10110111
+Answer: 10110111
+
+===== depth=1 seed=1002 rule=110 width=8 format=cells =====
+--- prompt ---
+An elementary cellular automaton runs rule 110 on a ring of 8 cells. The cells are numbered 1 to 8 from left to right, and the ring is circular: the left neighbour of cell 1 is cell 8, and the right neighbour of cell 8 is cell 1.
+In each generation, every cell is updated at the same time. A cell's new value depends on the three cells (left neighbour, itself, right neighbour) in the current generation, according to the rule table:
+
+111 -> 0   110 -> 1   101 -> 1   100 -> 0
+011 -> 1   010 -> 1   001 -> 1   000 -> 0
+
+Generation 0 is:
+
+00010111
+
+Run the automaton for 1 generation. What is generation 1?
+--- gold CoT ---
+generation 1:
+  cell 1: left c8=1, self c1=0, right c2=0 -> 100 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=0 -> 000 -> 0  row so far: 00______
+  cell 3: left c2=0, self c3=0, right c4=1 -> 001 -> 1  row so far: 001_____
+  cell 4: left c3=0, self c4=1, right c5=0 -> 010 -> 1  row so far: 0011____
+  cell 5: left c4=1, self c5=0, right c6=1 -> 101 -> 1  row so far: 00111___
+  cell 6: left c5=0, self c6=1, right c7=1 -> 011 -> 1  row so far: 001111__
+  cell 7: left c6=1, self c7=1, right c8=1 -> 111 -> 0  row so far: 0011110_
+  cell 8: left c7=1, self c8=1, right c1=0 -> 110 -> 1  row so far: 00111101
+  row: 00111101
+Answer: 00111101
+
+===== depth=10 seed=1000 rule=110 width=8 format=cells =====
+--- prompt ---
+An elementary cellular automaton runs rule 110 on a ring of 8 cells. The cells are numbered 1 to 8 from left to right, and the ring is circular: the left neighbour of cell 1 is cell 8, and the right neighbour of cell 8 is cell 1.
+In each generation, every cell is updated at the same time. A cell's new value depends on the three cells (left neighbour, itself, right neighbour) in the current generation, according to the rule table:
+
+111 -> 0   110 -> 1   101 -> 1   100 -> 0
+011 -> 1   010 -> 1   001 -> 1   000 -> 0
+
+Generation 0 is:
+
+01011000
+
+Run the automaton for 10 generations. What is generation 10?
+--- gold CoT ---
+generation 1:
+  cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=0 -> 010 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=0, right c4=1 -> 101 -> 1  row so far: 111_____
+  cell 4: left c3=0, self c4=1, right c5=1 -> 011 -> 1  row so far: 1111____
+  cell 5: left c4=1, self c5=1, right c6=0 -> 110 -> 1  row so far: 11111___
+  cell 6: left c5=1, self c6=0, right c7=0 -> 100 -> 0  row so far: 111110__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 1111100_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 11111000
+  row: 11111000
+generation 2:
+  cell 1: left c8=0, self c1=1, right c2=1 -> 011 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=1, right c3=1 -> 111 -> 0  row so far: 10______
+  cell 3: left c2=1, self c3=1, right c4=1 -> 111 -> 0  row so far: 100_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 1000____
+  cell 5: left c4=1, self c5=1, right c6=0 -> 110 -> 1  row so far: 10001___
+  cell 6: left c5=1, self c6=0, right c7=0 -> 100 -> 0  row so far: 100010__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 1000100_
+  cell 8: left c7=0, self c8=0, right c1=1 -> 001 -> 1  row so far: 10001001
+  row: 10001001
+generation 3:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=0 -> 000 -> 0  row so far: 100_____
+  cell 4: left c3=0, self c4=0, right c5=1 -> 001 -> 1  row so far: 1001____
+  cell 5: left c4=0, self c5=1, right c6=0 -> 010 -> 1  row so far: 10011___
+  cell 6: left c5=1, self c6=0, right c7=0 -> 100 -> 0  row so far: 100110__
+  cell 7: left c6=0, self c7=0, right c8=1 -> 001 -> 1  row so far: 1001101_
+  cell 8: left c7=0, self c8=1, right c1=1 -> 011 -> 1  row so far: 10011011
+  row: 10011011
+generation 4:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=1 -> 001 -> 1  row so far: 101_____
+  cell 4: left c3=0, self c4=1, right c5=1 -> 011 -> 1  row so far: 1011____
+  cell 5: left c4=1, self c5=1, right c6=0 -> 110 -> 1  row so far: 10111___
+  cell 6: left c5=1, self c6=0, right c7=1 -> 101 -> 1  row so far: 101111__
+  cell 7: left c6=0, self c7=1, right c8=1 -> 011 -> 1  row so far: 1011111_
+  cell 8: left c7=1, self c8=1, right c1=1 -> 111 -> 0  row so far: 10111110
+  row: 10111110
+generation 5:
+  cell 1: left c8=0, self c1=1, right c2=0 -> 010 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=1 -> 101 -> 1  row so far: 11______
+  cell 3: left c2=0, self c3=1, right c4=1 -> 011 -> 1  row so far: 111_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 1110____
+  cell 5: left c4=1, self c5=1, right c6=1 -> 111 -> 0  row so far: 11100___
+  cell 6: left c5=1, self c6=1, right c7=1 -> 111 -> 0  row so far: 111000__
+  cell 7: left c6=1, self c7=1, right c8=0 -> 110 -> 1  row so far: 1110001_
+  cell 8: left c7=1, self c8=0, right c1=1 -> 101 -> 1  row so far: 11100011
+  row: 11100011
+generation 6:
+  cell 1: left c8=1, self c1=1, right c2=1 -> 111 -> 0  row so far: 0_______
+  cell 2: left c1=1, self c2=1, right c3=1 -> 111 -> 0  row so far: 00______
+  cell 3: left c2=1, self c3=1, right c4=0 -> 110 -> 1  row so far: 001_____
+  cell 4: left c3=1, self c4=0, right c5=0 -> 100 -> 0  row so far: 0010____
+  cell 5: left c4=0, self c5=0, right c6=0 -> 000 -> 0  row so far: 00100___
+  cell 6: left c5=0, self c6=0, right c7=1 -> 001 -> 1  row so far: 001001__
+  cell 7: left c6=0, self c7=1, right c8=1 -> 011 -> 1  row so far: 0010011_
+  cell 8: left c7=1, self c8=1, right c1=1 -> 111 -> 0  row so far: 00100110
+  row: 00100110
+generation 7:
+  cell 1: left c8=0, self c1=0, right c2=0 -> 000 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=1 -> 001 -> 1  row so far: 01______
+  cell 3: left c2=0, self c3=1, right c4=0 -> 010 -> 1  row so far: 011_____
+  cell 4: left c3=1, self c4=0, right c5=0 -> 100 -> 0  row so far: 0110____
+  cell 5: left c4=0, self c5=0, right c6=1 -> 001 -> 1  row so far: 01101___
+  cell 6: left c5=0, self c6=1, right c7=1 -> 011 -> 1  row so far: 011011__
+  cell 7: left c6=1, self c7=1, right c8=0 -> 110 -> 1  row so far: 0110111_
+  cell 8: left c7=1, self c8=0, right c1=0 -> 100 -> 0  row so far: 01101110
+  row: 01101110
+generation 8:
+  cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=1 -> 011 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=1, right c4=0 -> 110 -> 1  row so far: 111_____
+  cell 4: left c3=1, self c4=0, right c5=1 -> 101 -> 1  row so far: 1111____
+  cell 5: left c4=0, self c5=1, right c6=1 -> 011 -> 1  row so far: 11111___
+  cell 6: left c5=1, self c6=1, right c7=1 -> 111 -> 0  row so far: 111110__
+  cell 7: left c6=1, self c7=1, right c8=0 -> 110 -> 1  row so far: 1111101_
+  cell 8: left c7=1, self c8=0, right c1=0 -> 100 -> 0  row so far: 11111010
+  row: 11111010
+generation 9:
+  cell 1: left c8=0, self c1=1, right c2=1 -> 011 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=1, right c3=1 -> 111 -> 0  row so far: 10______
+  cell 3: left c2=1, self c3=1, right c4=1 -> 111 -> 0  row so far: 100_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 1000____
+  cell 5: left c4=1, self c5=1, right c6=0 -> 110 -> 1  row so far: 10001___
+  cell 6: left c5=1, self c6=0, right c7=1 -> 101 -> 1  row so far: 100011__
+  cell 7: left c6=0, self c7=1, right c8=0 -> 010 -> 1  row so far: 1000111_
+  cell 8: left c7=1, self c8=0, right c1=1 -> 101 -> 1  row so far: 10001111
+  row: 10001111
+generation 10:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=0 -> 000 -> 0  row so far: 100_____
+  cell 4: left c3=0, self c4=0, right c5=1 -> 001 -> 1  row so far: 1001____
+  cell 5: left c4=0, self c5=1, right c6=1 -> 011 -> 1  row so far: 10011___
+  cell 6: left c5=1, self c6=1, right c7=1 -> 111 -> 0  row so far: 100110__
+  cell 7: left c6=1, self c7=1, right c8=1 -> 111 -> 0  row so far: 1001100_
+  cell 8: left c7=1, self c8=1, right c1=1 -> 111 -> 0  row so far: 10011000
+  row: 10011000
+Answer: 10011000
+
+===== depth=10 seed=1001 rule=110 width=8 format=cells =====
+--- prompt ---
+An elementary cellular automaton runs rule 110 on a ring of 8 cells. The cells are numbered 1 to 8 from left to right, and the ring is circular: the left neighbour of cell 1 is cell 8, and the right neighbour of cell 8 is cell 1.
+In each generation, every cell is updated at the same time. A cell's new value depends on the three cells (left neighbour, itself, right neighbour) in the current generation, according to the rule table:
+
+111 -> 0   110 -> 1   101 -> 1   100 -> 0
+011 -> 1   010 -> 1   001 -> 1   000 -> 0
+
+Generation 0 is:
+
+00010000
+
+Run the automaton for 10 generations. What is generation 10?
+--- gold CoT ---
+generation 1:
+  cell 1: left c8=0, self c1=0, right c2=0 -> 000 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=0 -> 000 -> 0  row so far: 00______
+  cell 3: left c2=0, self c3=0, right c4=1 -> 001 -> 1  row so far: 001_____
+  cell 4: left c3=0, self c4=1, right c5=0 -> 010 -> 1  row so far: 0011____
+  cell 5: left c4=1, self c5=0, right c6=0 -> 100 -> 0  row so far: 00110___
+  cell 6: left c5=0, self c6=0, right c7=0 -> 000 -> 0  row so far: 001100__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 0011000_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 00110000
+  row: 00110000
+generation 2:
+  cell 1: left c8=0, self c1=0, right c2=0 -> 000 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=1 -> 001 -> 1  row so far: 01______
+  cell 3: left c2=0, self c3=1, right c4=1 -> 011 -> 1  row so far: 011_____
+  cell 4: left c3=1, self c4=1, right c5=0 -> 110 -> 1  row so far: 0111____
+  cell 5: left c4=1, self c5=0, right c6=0 -> 100 -> 0  row so far: 01110___
+  cell 6: left c5=0, self c6=0, right c7=0 -> 000 -> 0  row so far: 011100__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 0111000_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 01110000
+  row: 01110000
+generation 3:
+  cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=1 -> 011 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=1, right c4=1 -> 111 -> 0  row so far: 110_____
+  cell 4: left c3=1, self c4=1, right c5=0 -> 110 -> 1  row so far: 1101____
+  cell 5: left c4=1, self c5=0, right c6=0 -> 100 -> 0  row so far: 11010___
+  cell 6: left c5=0, self c6=0, right c7=0 -> 000 -> 0  row so far: 110100__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 1101000_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 11010000
+  row: 11010000
+generation 4:
+  cell 1: left c8=0, self c1=1, right c2=1 -> 011 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=1, right c3=0 -> 110 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=0, right c4=1 -> 101 -> 1  row so far: 111_____
+  cell 4: left c3=0, self c4=1, right c5=0 -> 010 -> 1  row so far: 1111____
+  cell 5: left c4=1, self c5=0, right c6=0 -> 100 -> 0  row so far: 11110___
+  cell 6: left c5=0, self c6=0, right c7=0 -> 000 -> 0  row so far: 111100__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 1111000_
+  cell 8: left c7=0, self c8=0, right c1=1 -> 001 -> 1  row so far: 11110001
+  row: 11110001
+generation 5:
+  cell 1: left c8=1, self c1=1, right c2=1 -> 111 -> 0  row so far: 0_______
+  cell 2: left c1=1, self c2=1, right c3=1 -> 111 -> 0  row so far: 00______
+  cell 3: left c2=1, self c3=1, right c4=1 -> 111 -> 0  row so far: 000_____
+  cell 4: left c3=1, self c4=1, right c5=0 -> 110 -> 1  row so far: 0001____
+  cell 5: left c4=1, self c5=0, right c6=0 -> 100 -> 0  row so far: 00010___
+  cell 6: left c5=0, self c6=0, right c7=0 -> 000 -> 0  row so far: 000100__
+  cell 7: left c6=0, self c7=0, right c8=1 -> 001 -> 1  row so far: 0001001_
+  cell 8: left c7=0, self c8=1, right c1=1 -> 011 -> 1  row so far: 00010011
+  row: 00010011
+generation 6:
+  cell 1: left c8=1, self c1=0, right c2=0 -> 100 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=0 -> 000 -> 0  row so far: 00______
+  cell 3: left c2=0, self c3=0, right c4=1 -> 001 -> 1  row so far: 001_____
+  cell 4: left c3=0, self c4=1, right c5=0 -> 010 -> 1  row so far: 0011____
+  cell 5: left c4=1, self c5=0, right c6=0 -> 100 -> 0  row so far: 00110___
+  cell 6: left c5=0, self c6=0, right c7=1 -> 001 -> 1  row so far: 001101__
+  cell 7: left c6=0, self c7=1, right c8=1 -> 011 -> 1  row so far: 0011011_
+  cell 8: left c7=1, self c8=1, right c1=0 -> 110 -> 1  row so far: 00110111
+  row: 00110111
+generation 7:
+  cell 1: left c8=1, self c1=0, right c2=0 -> 100 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=1 -> 001 -> 1  row so far: 01______
+  cell 3: left c2=0, self c3=1, right c4=1 -> 011 -> 1  row so far: 011_____
+  cell 4: left c3=1, self c4=1, right c5=0 -> 110 -> 1  row so far: 0111____
+  cell 5: left c4=1, self c5=0, right c6=1 -> 101 -> 1  row so far: 01111___
+  cell 6: left c5=0, self c6=1, right c7=1 -> 011 -> 1  row so far: 011111__
+  cell 7: left c6=1, self c7=1, right c8=1 -> 111 -> 0  row so far: 0111110_
+  cell 8: left c7=1, self c8=1, right c1=0 -> 110 -> 1  row so far: 01111101
+  row: 01111101
+generation 8:
+  cell 1: left c8=1, self c1=0, right c2=1 -> 101 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=1 -> 011 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=1, right c4=1 -> 111 -> 0  row so far: 110_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 1100____
+  cell 5: left c4=1, self c5=1, right c6=1 -> 111 -> 0  row so far: 11000___
+  cell 6: left c5=1, self c6=1, right c7=0 -> 110 -> 1  row so far: 110001__
+  cell 7: left c6=1, self c7=0, right c8=1 -> 101 -> 1  row so far: 1100011_
+  cell 8: left c7=0, self c8=1, right c1=0 -> 010 -> 1  row so far: 11000111
+  row: 11000111
+generation 9:
+  cell 1: left c8=1, self c1=1, right c2=1 -> 111 -> 0  row so far: 0_______
+  cell 2: left c1=1, self c2=1, right c3=0 -> 110 -> 1  row so far: 01______
+  cell 3: left c2=1, self c3=0, right c4=0 -> 100 -> 0  row so far: 010_____
+  cell 4: left c3=0, self c4=0, right c5=0 -> 000 -> 0  row so far: 0100____
+  cell 5: left c4=0, self c5=0, right c6=1 -> 001 -> 1  row so far: 01001___
+  cell 6: left c5=0, self c6=1, right c7=1 -> 011 -> 1  row so far: 010011__
+  cell 7: left c6=1, self c7=1, right c8=1 -> 111 -> 0  row so far: 0100110_
+  cell 8: left c7=1, self c8=1, right c1=1 -> 111 -> 0  row so far: 01001100
+  row: 01001100
+generation 10:
+  cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=0 -> 010 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=0, right c4=0 -> 100 -> 0  row so far: 110_____
+  cell 4: left c3=0, self c4=0, right c5=1 -> 001 -> 1  row so far: 1101____
+  cell 5: left c4=0, self c5=1, right c6=1 -> 011 -> 1  row so far: 11011___
+  cell 6: left c5=1, self c6=1, right c7=0 -> 110 -> 1  row so far: 110111__
+  cell 7: left c6=1, self c7=0, right c8=0 -> 100 -> 0  row so far: 1101110_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 11011100
+  row: 11011100
+Answer: 11011100
+
+===== depth=10 seed=1002 rule=110 width=8 format=cells =====
+--- prompt ---
+An elementary cellular automaton runs rule 110 on a ring of 8 cells. The cells are numbered 1 to 8 from left to right, and the ring is circular: the left neighbour of cell 1 is cell 8, and the right neighbour of cell 8 is cell 1.
+In each generation, every cell is updated at the same time. A cell's new value depends on the three cells (left neighbour, itself, right neighbour) in the current generation, according to the rule table:
+
+111 -> 0   110 -> 1   101 -> 1   100 -> 0
+011 -> 1   010 -> 1   001 -> 1   000 -> 0
+
+Generation 0 is:
+
+00100100
+
+Run the automaton for 10 generations. What is generation 10?
+--- gold CoT ---
+generation 1:
+  cell 1: left c8=0, self c1=0, right c2=0 -> 000 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=1 -> 001 -> 1  row so far: 01______
+  cell 3: left c2=0, self c3=1, right c4=0 -> 010 -> 1  row so far: 011_____
+  cell 4: left c3=1, self c4=0, right c5=0 -> 100 -> 0  row so far: 0110____
+  cell 5: left c4=0, self c5=0, right c6=1 -> 001 -> 1  row so far: 01101___
+  cell 6: left c5=0, self c6=1, right c7=0 -> 010 -> 1  row so far: 011011__
+  cell 7: left c6=1, self c7=0, right c8=0 -> 100 -> 0  row so far: 0110110_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 01101100
+  row: 01101100
+generation 2:
+  cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=1 -> 011 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=1, right c4=0 -> 110 -> 1  row so far: 111_____
+  cell 4: left c3=1, self c4=0, right c5=1 -> 101 -> 1  row so far: 1111____
+  cell 5: left c4=0, self c5=1, right c6=1 -> 011 -> 1  row so far: 11111___
+  cell 6: left c5=1, self c6=1, right c7=0 -> 110 -> 1  row so far: 111111__
+  cell 7: left c6=1, self c7=0, right c8=0 -> 100 -> 0  row so far: 1111110_
+  cell 8: left c7=0, self c8=0, right c1=0 -> 000 -> 0  row so far: 11111100
+  row: 11111100
+generation 3:
+  cell 1: left c8=0, self c1=1, right c2=1 -> 011 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=1, right c3=1 -> 111 -> 0  row so far: 10______
+  cell 3: left c2=1, self c3=1, right c4=1 -> 111 -> 0  row so far: 100_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 1000____
+  cell 5: left c4=1, self c5=1, right c6=1 -> 111 -> 0  row so far: 10000___
+  cell 6: left c5=1, self c6=1, right c7=0 -> 110 -> 1  row so far: 100001__
+  cell 7: left c6=1, self c7=0, right c8=0 -> 100 -> 0  row so far: 1000010_
+  cell 8: left c7=0, self c8=0, right c1=1 -> 001 -> 1  row so far: 10000101
+  row: 10000101
+generation 4:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=0 -> 000 -> 0  row so far: 100_____
+  cell 4: left c3=0, self c4=0, right c5=0 -> 000 -> 0  row so far: 1000____
+  cell 5: left c4=0, self c5=0, right c6=1 -> 001 -> 1  row so far: 10001___
+  cell 6: left c5=0, self c6=1, right c7=0 -> 010 -> 1  row so far: 100011__
+  cell 7: left c6=1, self c7=0, right c8=1 -> 101 -> 1  row so far: 1000111_
+  cell 8: left c7=0, self c8=1, right c1=1 -> 011 -> 1  row so far: 10001111
+  row: 10001111
+generation 5:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=0 -> 000 -> 0  row so far: 100_____
+  cell 4: left c3=0, self c4=0, right c5=1 -> 001 -> 1  row so far: 1001____
+  cell 5: left c4=0, self c5=1, right c6=1 -> 011 -> 1  row so far: 10011___
+  cell 6: left c5=1, self c6=1, right c7=1 -> 111 -> 0  row so far: 100110__
+  cell 7: left c6=1, self c7=1, right c8=1 -> 111 -> 0  row so far: 1001100_
+  cell 8: left c7=1, self c8=1, right c1=1 -> 111 -> 0  row so far: 10011000
+  row: 10011000
+generation 6:
+  cell 1: left c8=0, self c1=1, right c2=0 -> 010 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=0 -> 100 -> 0  row so far: 10______
+  cell 3: left c2=0, self c3=0, right c4=1 -> 001 -> 1  row so far: 101_____
+  cell 4: left c3=0, self c4=1, right c5=1 -> 011 -> 1  row so far: 1011____
+  cell 5: left c4=1, self c5=1, right c6=0 -> 110 -> 1  row so far: 10111___
+  cell 6: left c5=1, self c6=0, right c7=0 -> 100 -> 0  row so far: 101110__
+  cell 7: left c6=0, self c7=0, right c8=0 -> 000 -> 0  row so far: 1011100_
+  cell 8: left c7=0, self c8=0, right c1=1 -> 001 -> 1  row so far: 10111001
+  row: 10111001
+generation 7:
+  cell 1: left c8=1, self c1=1, right c2=0 -> 110 -> 1  row so far: 1_______
+  cell 2: left c1=1, self c2=0, right c3=1 -> 101 -> 1  row so far: 11______
+  cell 3: left c2=0, self c3=1, right c4=1 -> 011 -> 1  row so far: 111_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 1110____
+  cell 5: left c4=1, self c5=1, right c6=0 -> 110 -> 1  row so far: 11101___
+  cell 6: left c5=1, self c6=0, right c7=0 -> 100 -> 0  row so far: 111010__
+  cell 7: left c6=0, self c7=0, right c8=1 -> 001 -> 1  row so far: 1110101_
+  cell 8: left c7=0, self c8=1, right c1=1 -> 011 -> 1  row so far: 11101011
+  row: 11101011
+generation 8:
+  cell 1: left c8=1, self c1=1, right c2=1 -> 111 -> 0  row so far: 0_______
+  cell 2: left c1=1, self c2=1, right c3=1 -> 111 -> 0  row so far: 00______
+  cell 3: left c2=1, self c3=1, right c4=0 -> 110 -> 1  row so far: 001_____
+  cell 4: left c3=1, self c4=0, right c5=1 -> 101 -> 1  row so far: 0011____
+  cell 5: left c4=0, self c5=1, right c6=0 -> 010 -> 1  row so far: 00111___
+  cell 6: left c5=1, self c6=0, right c7=1 -> 101 -> 1  row so far: 001111__
+  cell 7: left c6=0, self c7=1, right c8=1 -> 011 -> 1  row so far: 0011111_
+  cell 8: left c7=1, self c8=1, right c1=1 -> 111 -> 0  row so far: 00111110
+  row: 00111110
+generation 9:
+  cell 1: left c8=0, self c1=0, right c2=0 -> 000 -> 0  row so far: 0_______
+  cell 2: left c1=0, self c2=0, right c3=1 -> 001 -> 1  row so far: 01______
+  cell 3: left c2=0, self c3=1, right c4=1 -> 011 -> 1  row so far: 011_____
+  cell 4: left c3=1, self c4=1, right c5=1 -> 111 -> 0  row so far: 0110____
+  cell 5: left c4=1, self c5=1, right c6=1 -> 111 -> 0  row so far: 01100___
+  cell 6: left c5=1, self c6=1, right c7=1 -> 111 -> 0  row so far: 011000__
+  cell 7: left c6=1, self c7=1, right c8=0 -> 110 -> 1  row so far: 0110001_
+  cell 8: left c7=1, self c8=0, right c1=0 -> 100 -> 0  row so far: 01100010
+  row: 01100010
+generation 10:
+  cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> 1  row so far: 1_______
+  cell 2: left c1=0, self c2=1, right c3=1 -> 011 -> 1  row so far: 11______
+  cell 3: left c2=1, self c3=1, right c4=0 -> 110 -> 1  row so far: 111_____
+  cell 4: left c3=1, self c4=0, right c5=0 -> 100 -> 0  row so far: 1110____
+  cell 5: left c4=0, self c5=0, right c6=0 -> 000 -> 0  row so far: 11100___
+  cell 6: left c5=0, self c6=0, right c7=1 -> 001 -> 1  row so far: 111001__
+  cell 7: left c6=0, self c7=1, right c8=0 -> 010 -> 1  row so far: 1110011_
+  cell 8: left c7=1, self c8=0, right c1=0 -> 100 -> 0  row so far: 11100110
+  row: 11100110
+Answer: 11100110
+
+===== depth=10 seed=1000 rule=110 width=8 format=rows (legacy) =====
+--- gold CoT ---
+generation 1: 11111000
+generation 2: 10001001
+generation 3: 10011011
+generation 4: 10111110
+generation 5: 11100011
+generation 6: 00100110
+generation 7: 01101110
+generation 8: 11111010
+generation 9: 10001111
+generation 10: 10011000
+Answer: 10011000
+

@@ -1,0 +1,42 @@
+{
+  "slug": "web_of_lies",
+  "primary_source": {
+    "paper": "Suzgun et al. 2022, \"Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them\"",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.09261",
+    "repo": "https://github.com/suzgunmirac/BIG-Bench-Hard"
+  },
+  "trace_available": true,
+  "trace_source": "tasks/web_of_lies/published_trace.txt -- first exemplar of the official 3-shot CoT prompt, copied verbatim from the vendored repo tasks/web_of_lies/vendor/bbh/cot-prompts/web_of_lies.txt (suzgunmirac/BIG-Bench-Hard, commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d).",
+  "format_description": "One explicitly numbered sentence per person in the chain, '(k) <Name> says <claim>. Since we know from (k-1) that <prior truth-value>, if <Name> says <claim>, then <Name> tells the truth/lies.', ending with a summary sentence restating the queried person's truth value and the Yes/No answer.",
+  "steps_in_trace": 5,
+  "tokens_per_step": {"gemma2": 42.4, "llama3": 43.0, "qwen2": 42.8},
+  "tokens_total": {"gemma2": 212, "llama3": 215, "qwen2": 214},
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 1.0,
+  "state_bounded": true,
+  "state_atomic_tokens": false,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "No paper found constructing a constant-depth transformer for this exact word-problem framing, but structurally the task is iterated boolean composition (truth-value of person k = truth-value of person k-1 XOR 'claims lies'), the same shape Chiang & Cholak 2022 (ACL, arXiv:2202.12172) show is computable by an explicit constant-depth transformer for raw PARITY; the underlying boolean function is TC0 by the same construction argument, just dressed in natural-language names and verbs.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 2,
+  "error_diagnostic": true,
+  "knob": {"name": "depth (chain length / number of people)", "granularity": "1", "tokens_flat_across_knob": true},
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "high",
+  "paraphrasable": true,
+  "format_natural": true,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Suzgun et al. 2022 (arXiv:2210.09261), Table 3, web_of_lies row",
+      "metric": "Per-task accuracy on the fixed 250-example set, answer-only (no-CoT) vs 3-shot CoT prompting, and average human-rater accuracy",
+      "models": "Codex (code-davinci-002); InstructGPT (text-davinci-002); PaLM-540B; average human rater",
+      "values": "Codex: no-CoT 51.6%, CoT 95.2%. InstructGPT: no-CoT 51.6%, CoT 95.2%. PaLM-540B: no-CoT 51.2%, CoT 100%. Human rater average: 81.3%. (Extracted via ar5iv HTML render of the arXiv source, not the original PDF table directly -- flagged for a spot-check; the Codex/InstructGPT figures matching exactly at 51.6% is plausible given both sit at the ~50% guessing floor, but is also consistent with an HTML-table extraction artifact.)"
+    }
+  ],
+  "notes": "Binary answer (Yes/No), 50% guessing floor -- published no-CoT numbers (~51%) sit almost exactly at that floor, consistent with the task being unsolvable without tracking the truth-value chain; CoT prompting drives accuracy to or above human-rater level (81.3%), which is why Suzgun et al. treat this as an 'emergent-CoT' task. Unlike coin-flip, the PUBLISHED format here genuinely is a rigid, numbered, per-person scratchpad (not a global shortcut) -- step_delimitable, state_at_fixed_position, error_diagnostic, and interp_tractable are all TRUE as published, which is the main contrast with parity_coinflip's finding this session. state_atomic_tokens is false because the truth-value is expressed as the multi-token phrase 'tells the truth'/'lies' embedded in a sentence, not a single symbol. tokens_flat_across_knob is a reasoned true (the per-person template repeats structurally) rather than measured across depths, since only one 5-step exemplar was locatable; flag this if it matters for precision later. contamination_risk is 'high' because the fixed 250-example set carries a canary GUID and is a well-known BBH benchmark almost certainly in frontier-model pretraining corpora. Vendored (phase-1 pass): canonical dataset + CoT prompt (suzgunmirac/BIG-Bench-Hard, MIT, commit 9ee07bd4) and lm-evaluation-harness's BBH task configs + answer-extraction regex/filter code (EleutherAI, MIT-family license, commit ad8737ae) for the tolerant yes/no parsing approach. No existing repo provides a procedural generator for fresh, non-contaminated web-of-lies chains, nor an independent reference solver -- both must be written from scratch if/when task.py is built (still not written, per the phase-1 and phase-2 amendments). Tokenizers used: unsloth/gemma-2-2b (mirror; the gated google/gemma-2-2b was inaccessible without an HF token here), NousResearch/Meta-Llama-3-8B (mirror; gated meta-llama/Meta-Llama-3-8B likewise inaccessible), Qwen/Qwen2-7B (ungated, fetched directly). All token counts are real tokenizer.json encodes of the published_trace.txt CoT text (everything after 'A:'), not hand estimates."
+}

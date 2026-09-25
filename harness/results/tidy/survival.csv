@@ -1,0 +1,64 @@
+slug,format,model,passes,working_depth,best_depth,best_gap,best_acc_cot,best_acc_nocot,deepest_passing_depth,deepest_acc_cot,tok_per_step_at_best,verdict_text,best_p,fail_reason,second_chance_text,task_verdict,n_depths
+addition,published,qwen9b,False,,24,0.0000,0.0000,0.0000,,,77.6825,"— (no gap; best gap 0.00 at d24, acc 0.00)",1.0000,no gap,fail d24: 0.00 / 0.00 / +0.00,survives (1 model),7
+addition,published,llama70b,False,,2,0.5000,0.6200,0.1200,,,64.8100,"— (acc<0.7; best gap 0.50 at d2, acc 0.62)",4.172e-07,acc<0.7,fail d2: 0.62 / 0.12 / +0.50,survives (1 model),7
+addition,published,ds,True,2,2,0.9200,1.0000,0.0800,2,1.0000,30.4400,"d2 / d2 (1.00, 0.92)",2.842e-14,,PASS d2: 1.00 / 0.08 / +0.92,survives (1 model),7
+addition,ergonomic,qwen9b,False,,4,0.0000,1.0000,1.0000,,,29.1500,"— (no gap; best gap 0.00 at d4, acc 1.00)",1.0000,no gap,fail d4: 1.00 / 1.00 / +0.00,passes through with † (Nye 2021: fine-tuned on the scratchpad format),7
+addition,ergonomic,ds,False,,6,0.0000,1.0000,1.0000,,,26.9000,"— (no gap; best gap 0.00 at d6, acc 1.00)",1.0000,no gap,fail d6: 1.00 / 1.00 / +0.00,passes through with † (Nye 2021: fine-tuned on the scratchpad format),7
+blocksworld,published,qwen9b,True,2,2,0.2800,0.9200,0.6400,6,0.7200,205.9700,"d2 / d2 (0.92, 0.28)",0.0026,,PASS d2: 0.92 / 0.64 / +0.28,survives (all models),10
+blocksworld,published,llama70b,True,16,24,0.3800,0.9600,0.5800,24,0.9600,152.0392,"d16 / d24 (0.96, 0.38)",3.815e-06,,PASS d24: 0.96 / 0.58 / +0.38,survives (all models),6
+blocksworld,published,ds,True,24,24,0.2600,0.9000,0.6400,24,0.9000,91.4758,"d24 / d24 (0.90, 0.26)",0.0023,,PASS d24: 0.90 / 0.64 / +0.26,survives (all models),6
+boolean_expressions,published,qwen9b,True,3,12,0.3600,0.7000,0.3400,12,0.7000,43.1650,"d3 / d12 (0.70, 0.36)",5.335e-04,,PASS d12: 0.70 / 0.34 / +0.36,survives (all models),10
+boolean_expressions,published,llama70b,True,4,4,0.2600,0.8800,0.6200,4,0.8800,49.6350,"d4 / d4 (0.88, 0.26)",0.0023,,PASS d4: 0.88 / 0.62 / +0.26,survives (all models),7
+boolean_expressions,published,ds,True,4,8,0.4000,0.9600,0.5600,12,0.8400,43.5000,"d4 / d8 (0.96, 0.40)",1.907e-06,,PASS d8: 0.96 / 0.56 / +0.40,survives (all models),7
+cellular_automaton,ours,qwen9b,False,,2,0.1600,0.1600,0.0000,,,91.1400,"— (no gap; best gap 0.16 at d2, acc 0.16)",0.0078,no gap,fail d2: 0.16 / 0.00 / +0.16,passes through with * (no published CoT trace; format is ours),6
+cellular_automaton,ours,llama70b,False,,2,0.0400,0.0400,0.0000,,,290.7400,"— (no gap; best gap 0.04 at d2, acc 0.04)",0.5000,no gap,fail d2: 0.04 / 0.00 / +0.04,passes through with * (no published CoT trace; format is ours),6
+cellular_automaton,ours,ds,False,,2,0.5400,0.5400,0.0000,,,160.2200,"— (acc<0.7; best gap 0.54 at d2, acc 0.54)",1.490e-08,acc<0.7,fail d2: 0.54 / 0.00 / +0.54,passes through with * (no published CoT trace; format is ours),6
+cellular_automaton,cells2,qwen9b,False,,1,0.5726,0.5926,0.0200,,,134.0000,"— (acc<0.7; best gap 0.57 at d1, acc 0.59)",3.052e-05,acc<0.7,fail d1: 0.59 / 0.02 / +0.57,survives (1 model),6
+cellular_automaton,cells2,ds,True,1,1,0.7600,0.7800,0.0200,1,0.7800,123.6600,"d1 / d1 (0.78, 0.76)",7.276e-12,,PASS d1: 0.78 / 0.02 / +0.76,survives (1 model),6
+cellular_automaton,cells3,qwen9b,True,1,1,0.9800,1.0000,0.0200,3,0.8200,371.0000,"d1 / d1 (1.00, 0.98)",3.553e-15,,PASS d1: 1.00 / 0.02 / +0.98,survives (all models),6
+cellular_automaton,cells3,ds,True,1,1,0.9600,0.9800,0.0200,4,0.8200,320.0000,"d1 / d1 (0.98, 0.96)",7.105e-15,,PASS d1: 0.98 / 0.02 / +0.96,survives (all models),6
+cruxeval,published,qwen9b,True,1,6,0.4200,0.8600,0.4400,12,0.8200,49.4700,"d1 / d6 (0.86, 0.42)",9.537e-07,,PASS d6: 0.86 / 0.44 / +0.42,survives (2 models),7
+cruxeval,published,llama70b,False,,15,0.3000,0.5600,0.2600,,,21.5387,"— (acc<0.7; best gap 0.30 at d15, acc 0.56)",2.747e-04,acc<0.7,fail d15: 0.56 / 0.26 / +0.30,survives (2 models),7
+cruxeval,published,ds,True,1,6,0.3600,0.8600,0.5000,12,0.7400,42.4067,"d1 / d6 (0.86, 0.36)",7.629e-06,,PASS d6: 0.86 / 0.50 / +0.36,survives (2 models),7
+cup_shuffling,published,qwen9b,True,2,12,0.7600,0.9800,0.2200,16,0.8400,27.4767,"d2 / d12 (0.98, 0.76)",7.276e-12,,PASS d12: 0.98 / 0.22 / +0.76,survives (all models),10
+cup_shuffling,published,llama70b,True,2,3,0.7400,1.0000,0.2600,12,1.0000,38.0867,"d2 / d3 (1.00, 0.74)",1.455e-11,,PASS d3: 1.00 / 0.26 / +0.74,survives (all models),7
+cup_shuffling,published,ds,True,2,3,0.7800,1.0000,0.2200,24,0.9600,38.1467,"d2 / d3 (1.00, 0.78)",3.638e-12,,PASS d3: 1.00 / 0.22 / +0.78,survives (all models),7
+dyck,published,qwen9b,True,4,8,0.6800,0.8800,0.2000,16,0.8400,20.0225,"d4 / d8 (0.88, 0.68)",1.164e-10,,PASS d8: 0.88 / 0.20 / +0.68,survives (all models),9
+dyck,published,llama70b,True,4,8,0.3000,0.8200,0.5200,8,0.8200,18.9750,"d4 / d8 (0.82, 0.30)",7.286e-04,,PASS d8: 0.82 / 0.52 / +0.30,survives (all models),6
+dyck,published,ds,True,4,24,0.6800,0.8600,0.1800,48,0.7600,12.6125,"d4 / d24 (0.86, 0.68)",1.164e-10,,PASS d24: 0.86 / 0.18 / +0.68,survives (all models),6
+entity_tracking_boxes,ours,qwen9b,True,4,8,0.4200,0.8200,0.4000,8,0.8200,22.6650,"d4 / d8 (0.82, 0.42)",5.722e-06,,PASS d8: 0.82 / 0.40 / +0.42,survives (2 models),9
+entity_tracking_boxes,ours,llama70b,False,,26,0.1000,0.8400,0.7400,,,12.8038,"— (no gap; best gap 0.10 at d26, acc 0.84)",0.2266,no gap,fail d26: 0.84 / 0.74 / +0.10,survives (2 models),7
+entity_tracking_boxes,ours,ds,True,8,36,0.3800,0.9800,0.6000,36,0.9800,21.2339,"d8 / d36 (0.98, 0.38)",2.098e-05,,PASS d36: 0.98 / 0.60 / +0.38,survives (2 models),7
+hanoi,published,qwen9b,False,,5,0.0800,0.0800,0.0000,,,14.7800,"— (no gap; best gap 0.08 at d5, acc 0.08)",0.1250,no gap,fail d5: 0.08 / 0.00 / +0.08,fails batch 1,6
+hanoi,published,llama70b,False,,2,0.1000,0.1400,0.0400,,,92.0700,"— (no gap; best gap 0.10 at d2, acc 0.14)",0.1797,no gap,fail d2: 0.14 / 0.04 / +0.10,fails batch 1,6
+hanoi,published,ds,False,,2,0.4200,0.5000,0.0800,,,737.8600,"— (acc<0.7; best gap 0.42 at d2, acc 0.50)",5.722e-06,acc<0.7,fail d2: 0.50 / 0.08 / +0.42,fails batch 1,6
+hanoi,execute,qwen9b,True,2,8,0.8600,0.9600,0.1000,16,0.8600,30.7000,"d2 / d8 (0.96, 0.86)",2.274e-13,,PASS d8: 0.96 / 0.10 / +0.86,survives (all models),6
+hanoi,execute,ds,True,8,32,0.9800,1.0000,0.0200,32,1.0000,44.5112,"d8 / d32 (1.00, 0.98)",3.553e-15,,PASS d32: 1.00 / 0.02 / +0.98,survives (all models),6
+multiplication,published,qwen9b,False,,30,0.0400,0.0800,0.0400,,,82.1233,"— (no gap; best gap 0.04 at d30, acc 0.08)",0.6250,no gap,fail d30: 0.08 / 0.04 / +0.04,"DROPPED: Qwen3.5-9B: acc(no-CoT)=1.0 through 3x3 digits, scratchpad only hurts; no CoT gap to study",7
+multiplication,published,llama70b,False,,20,0.0600,0.1200,0.0600,,,52.1930,"— (no gap; best gap 0.06 at d20, acc 0.12)",0.3750,no gap,fail d20: 0.12 / 0.06 / +0.06,"DROPPED: Qwen3.5-9B: acc(no-CoT)=1.0 through 3x3 digits, scratchpad only hurts; no CoT gap to study",7
+nested_arithmetic,published,qwen9b,True,2,7,0.9600,0.9600,0.0000,20,0.7800,85.6829,"d2 / d7 (0.96, 0.96)",7.105e-15,,PASS d7: 0.96 / 0.00 / +0.96,survives (all models),9
+nested_arithmetic,published,llama70b,True,2,7,0.9400,0.9600,0.0200,10,0.7600,62.5743,"d2 / d7 (0.96, 0.94)",1.421e-14,,PASS d7: 0.96 / 0.02 / +0.94,survives (all models),6
+nested_arithmetic,published,ds,True,3,7,0.9200,0.9200,0.0000,14,0.7000,62.6829,"d3 / d7 (0.92, 0.92)",2.842e-14,,PASS d7: 0.92 / 0.00 / +0.92,survives (all models),6
+random_lookup_table,published,qwen9b,False,,2,0.3200,0.4400,0.1200,,,9.9200,"— (acc<0.7; best gap 0.32 at d2, acc 0.44)",0.0015,acc<0.7,fail d2: 0.44 / 0.12 / +0.32,survives (1 model),7
+random_lookup_table,published,llama70b,False,,4,0.4000,0.5200,0.1200,,,8.2850,"— (acc<0.7; best gap 0.40 at d4, acc 0.52)",8.798e-05,acc<0.7,fail d4: 0.52 / 0.12 / +0.40,survives (1 model),7
+random_lookup_table,published,ds,True,2,24,0.8600,1.0000,0.1400,48,0.8600,18.7108,"d2 / d24 (1.00, 0.86)",2.274e-13,,PASS d24: 1.00 / 0.14 / +0.86,survives (1 model),7
+random_lookup_table,ergonomic,qwen9b,True,2,8,0.9600,1.0000,0.0400,48,0.9600,26.6250,"d2 / d8 (1.00, 0.96)",7.105e-15,,PASS d8: 1.00 / 0.04 / +0.96,survives (all models),7
+random_lookup_table,ergonomic,ds,True,2,8,0.9200,1.0000,0.0800,48,1.0000,25.5825,"d2 / d8 (1.00, 0.92)",2.842e-14,,PASS d8: 1.00 / 0.08 / +0.92,survives (all models),7
+s5_composition,published,qwen9b,False,,2,0.0400,0.0600,0.0200,,,22.5000,"— (no gap; best gap 0.04 at d2, acc 0.06)",0.5000,no gap,fail d2: 0.06 / 0.02 / +0.04,survives (1 model),7
+s5_composition,published,llama70b,False,,4,0.4800,0.4800,0.0000,,,132.7050,"— (acc<0.7; best gap 0.48 at d4, acc 0.48)",1.192e-07,acc<0.7,fail d4: 0.48 / 0.00 / +0.48,survives (1 model),7
+s5_composition,published,ds,True,12,16,0.8800,0.8800,0.0000,16,0.8800,84.5888,"d12 / d16 (0.88, 0.88)",1.137e-13,,PASS d16: 0.88 / 0.00 / +0.88,survives (1 model),7
+s5_composition,published,dspro,False,,2,0.0400,0.0800,0.0400,,,15.0000,"— (no gap; best gap 0.04 at d2, acc 0.08)",0.6250,no gap,fail d2: 0.08 / 0.04 / +0.04,survives (1 model),7
+s5_composition,ergonomic,qwen9b,True,2,2,0.9200,0.9200,0.0000,8,0.7800,61.5000,"d2 / d2 (0.92, 0.92)",2.842e-14,,PASS d2: 0.92 / 0.00 / +0.92,survives (all models),7
+s5_composition,ergonomic,ds,True,2,4,1.0000,1.0000,0.0000,16,0.7000,46.5000,"d2 / d4 (1.00, 1.00)",1.776e-15,,PASS d4: 1.00 / 0.00 / +1.00,survives (all models),7
+synthetic_program_trace,published,qwen9b,True,12,32,0.8600,0.9400,0.0800,48,0.7600,30.2844,"d12 / d32 (0.94, 0.86)",2.274e-13,,PASS d32: 0.94 / 0.08 / +0.86,survives (all models),8
+synthetic_program_trace,published,llama70b,True,12,48,0.9600,1.0000,0.0400,72,0.8600,29.7171,"d12 / d48 (1.00, 0.96)",7.105e-15,,PASS d48: 1.00 / 0.04 / +0.96,survives (all models),6
+synthetic_program_trace,published,ds,True,20,72,1.0000,1.0000,0.0000,72,1.0000,19.6531,"d20 / d72 (1.00, 1.00)",1.776e-15,,PASS d72: 1.00 / 0.00 / +1.00,survives (all models),6
+threesum,published,qwen9b,False,,2,-0.2000,0.2200,0.4200,,,246.7600,"— (no gap; best gap -0.20 at d2, acc 0.22)",0.1102,no gap,fail d2: 0.22 / 0.42 / -0.20,passes through with † (Pfau 2024: trained from scratch on the token format),6
+threesum,published,llama70b,False,,22,0.0400,0.5800,0.5400,,,12.1173,"— (no gap; best gap 0.04 at d22, acc 0.58)",0.7266,no gap,fail d22: 0.58 / 0.54 / +0.04,passes through with † (Pfau 2024: trained from scratch on the token format),6
+threesum,published,ds,False,,2,-0.1600,0.2800,0.4400,,,1460.1800,"— (no gap; best gap -0.16 at d2, acc 0.28)",0.0574,no gap,fail d2: 0.28 / 0.44 / -0.16,passes through with † (Pfau 2024: trained from scratch on the token format),6
+threesum,published,dspro,False,,12,0.0714,0.5714,0.5000,,,10.0136,"— (no gap; best gap 0.07 at d12, acc 0.57)",0.6291,no gap,fail d12: 0.57 / 0.50 / +0.07,passes through with † (Pfau 2024: trained from scratch on the token format),6
+threesum,ergonomic,qwen9b,True,2,4,0.4600,0.9800,0.5200,8,0.9200,560.2700,"d2 / d4 (0.98, 0.46)",1.550e-06,,PASS d4: 0.98 / 0.52 / +0.46,survives (all models),6
+threesum,ergonomic,ds,True,2,4,0.5200,1.0000,0.4800,12,0.9200,398.4750,"d2 / d4 (1.00, 0.52)",2.980e-08,,PASS d4: 1.00 / 0.48 / +0.52,survives (all models),6
+turing_machine,published,qwen9b,True,2,2,0.8600,0.9000,0.0400,5,0.7200,70.9400,"d2 / d2 (0.90, 0.86)",2.274e-13,,PASS d2: 0.90 / 0.04 / +0.86,survives (all models),9
+turing_machine,published,llama70b,True,2,2,0.9200,0.9400,0.0200,4,0.8200,71.7000,"d2 / d2 (0.94, 0.92)",2.842e-14,,PASS d2: 0.94 / 0.02 / +0.92,survives (all models),6
+turing_machine,published,ds,True,2,8,1.0000,1.0000,0.0000,30,0.9400,56.0100,"d2 / d8 (1.00, 1.00)",1.776e-15,,PASS d8: 1.00 / 0.00 / +1.00,survives (all models),6

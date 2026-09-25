@@ -1,0 +1,69 @@
+SOURCE: Shojaee, Mirzadeh, Alizadeh, Horton, Bengio, Farajtabar, "The Illusion of Thinking:
+Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem
+Complexity", arXiv:2506.06941v3 (2025), Appendix "Qualitative Examples of Thoughts in LRMs",
+subsection "Example of failures in constraint understanding and verification for River Crossing
+with N=2". https://arxiv.org/html/2506.06941v3 (rendered HTML; captured 2026-09-12).
+Model: Claude-3.7-Sonnet (thinking), full <think>...</think> block + final answer, verbatim from
+the paper's own transcript of a real model response. Whitespace/line-wrap only normalized during
+HTML-to-text extraction (tags stripped); no words added, removed, or reordered. The paper
+presents this as an example of the model reaching an internally-consistent-looking but WRONG
+final answer (see "Wrong conclusion!" annotation at the end, which is the paper's own gloss,
+not part of the model output).
+==============================================================================
+
+ Example of failures in constraint understanding and verification for River Crossing with N = 2 N=2 : 
+ <think> 
+ Comprehension 
+ Ok, this is a constraint-based puzzle. Let me try to understand the puzzle. We have two actors: a1 and a2, two agents: A1 and A2 where …
+The constraints are: (1) no actor can be in the presence of another agent unless their own agent is also present, (2) the boat cannot travel empty, …
+Let’s understand the constraints more clearly ….
+Wait, I’m realizing that the constraint is not clear to me. Let me restate it.. Actor a1 cannot be in the presence of agent A2 unless agent A1 is also present. 
+ … 
+ Given these constraints, let’s think through the solution. … 
+ Solution 
+ Now let’s start solving.
+First move: Two people have to cross from left to right. Let’s try with Move 1: [a1, a2] cross from left to right
+Left side: A1, A2
+Right side: a1, a2. 
+ … 
+ False violation alarm! (Both agents are still in the left bank) 
+ Hmm, but now we have a problem. We need to send someone back from the right to the left, but neither actor can go back alone (because they’d meet the other agent without their own). 
+ … 
+ Let’s try another approach with Move 1: [A1, A2] cross from left to right, Left side: a1, a2, Right side: A1, A2,
+Now, one agent has to come back so Move 2: [A1] comes back from right to left, Left side: a1, a2, A1, Right side: A2.
+ But now we have a problem on the left side: a2 is with A1 but without A2, which violates our constraint. . 
+ … 
+ Let’s try another approach with Move 1: [a1, A1] cross from left to right, Left side: a2, A2, Right side: a1, A1. Move 2: [A1] comes back from right to left
+Left side: a2, A2, A1
+Right side: a1. 
+ … 
+ False violation alarm! (Agent A2 is still in the left bank) 
+ But now a2 is with A1 without A2, which violates our constraint. 
+ … 
+ Let’s try another approach with Move 1: [a2, A2] cross from left to right, Left side: a1, A1, Right side: a2, A2. Move 2: [A2] comes back from right to left, Left side: a1, A1, A2, Right side: a2 
+ … 
+ False violation alarm! (Agent A1 is still in the left bank) 
+ But now a1 is with A2 without A1, which violates our constraint. 
+ … 
+ Let me try to cross one actor-agent pair at a time. Initial state: a1: L, a2: L, A1: L, A2: L, boat on Left.; 
+ Move 1: [a1, A1] cross from left to right. State after Move 1: a1: R, a2: L, A1: R, A2: L, boat on Right; 
+ Move 2: [A1] comes back from right to left
+State after Move 2: a1: R, a2: L, A1: L, A2: L, boat on Left; 
+ Move 3: [a2, A2] cross from left to right. State after Move 3: a1: R, a2: R, A1: L, A2: R, boat on Right; 
+ Move 4: [A2] comes back from right to left. State after Move 4: a1: R, a2: R, A1: L, A2: L, boat on Left; 
+ Move 5: [A1, A2] cross from left to right. State after Move 5: a1: R, a2: R, A1: R, A2: R, boat on Right. 
+ … 
+ Violation missed in Move 3! (A2 and a1 are in the left bank without A1). 
+ Perfect! Everyone is now on the right side, and no actor was ever in the presence of another agent without their own agent also being present. 
+ … 
+ So this solution correct. All right, I’ll make this solution my final answer: 
+ moves=[[‘a1’, ‘A1’], [‘A1’], [‘a2’, ‘A2’], [‘A2’], [‘A1’, ‘A2’]] 
+ </think> 
+ Final Answer 
+ Final solution for the sequence of boat moves is: 
+ “
+moves=[[‘a1’, ‘A1’], [‘A1’], [‘a2’, ‘A2’], [‘A2’], [‘A1’, ‘A2’]]
+” 
+ … 
+ Wrong conclusion! The final solution is incorrect. 
+ This solution fulfills all requirements - everyone starts on the left side and ends on the right side, the boat always carries 1 or 2 people, and no actor is ever in the presence of another agent without their own agent also being present. 

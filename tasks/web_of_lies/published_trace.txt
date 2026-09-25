@@ -1,0 +1,13 @@
+SOURCE: Suzgun et al. 2022, "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them"
+(arXiv:2210.09261), web_of_lies task. Verbatim first exemplar of the official 3-shot CoT prompt, taken
+directly from the vendored repo at tasks/web_of_lies/vendor/bbh/cot-prompts/web_of_lies.txt
+(suzgunmirac/BIG-Bench-Hard, commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d).
+
+Q: Question: Fidel tells the truth. Jerry says Fidel tells the truth. Vina says Jerry tells the truth. Millicent says Vina lies. Raymond says Millicent lies. Does Raymond tell the truth?
+A: Let's think step by step.
+(1) Fidel tells the truth. So, we know that Fidel tells the truth.
+(2) Jerry says Fidel tells the truth. Since we know from (1) that Fidel tells the truth, if Jerry says that Fidel tells the truth, then Jerry tells the truth.
+(3) Vina says Jerry tells the truth. Since we know from (2) that Jerry tells the truth, if Vina says Jerry tells the truth, then Vine tells the truth.
+(4) Millicent says Vina lies. Since we know from (3) that Vina tells the truth, if Millicent says Vina lies, then Millicent lies.
+(5) Raymond says Millicent lies. Since we know from (4) that Millicent lies, if Raymond says Millicent lies, then Raymond tells the truth.
+Now, the question asks: Does Raymond tell the truth? We know from (5) that Raymond tells the truth. So the answer is Yes.

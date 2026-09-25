@@ -1,0 +1,54 @@
+{
+  "slug": "entity_tracking_boxes",
+  "primary_source": {
+    "paper": "Entity Tracking in Language Models",
+    "year": 2023,
+    "url": "https://aclanthology.org/2023.acl-long.213/",
+    "repo": "https://github.com/sebschu/entity-tracking-lms"
+  },
+  "trace_available": false,
+  "trace_source": null,
+  "format_description": null,
+  "steps_in_trace": null,
+  "tokens_per_step": {"gemma2": null, "llama3": null, "qwen2": null},
+  "tokens_total": {"gemma2": null, "llama3": null, "qwen2": null},
+  "step_delimitable": null,
+  "state_at_fixed_position": null,
+  "state_bits": 94.6,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "unclear",
+  "theory_citation": "Kim & Schuster 2023 do not analyze circuit/complexity class, and no follow-up paper found in sourcing does either. Each operation (move/remove/put) is a constant-time mutation touching at most two boxes (paper Sec. 3.2/4.3), which is structurally a bookkeeping/dictionary-update task rather than a non-commutative composition problem (contrast cup_shuffling's Barrington 1989 NC1 word-problem connection) -- but no citation formally places it in TC0/NC1/P-complete, so 'unclear' is the honest answer.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {"name": "numops (number of operations affecting the queried box)", "granularity": "1, evaluated over 0-7+ in the paper's Figure 2/5, with a fixed 12-operation scenario length by default", "tokens_flat_across_knob": null},
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": null,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Kim & Schuster 2023 (ACL), Figure 2",
+      "metric": "in-context (2-shot) accuracy predicting the full contents of a queried box, as a function of number of operations (0-7+) that changed that box",
+      "models": "GPT-3 davinci 175B; GPT-3.5 text-davinci-003; Flan-T5 base 250M and XL 3B; random baseline",
+      "values": "only text-davinci-003 clearly exceeds the random baseline, correctly predicting full contents after 7 operations in >25% of cases; GPT-3 davinci and both Flan-T5 sizes track close to a baseline that just repeats the initial/empty state and degrade toward near-0% as operations increase (no single tabulated numbers, read off curves)"
+    },
+    {
+      "paper": "Kim & Schuster 2023, Figure 5",
+      "metric": "in-context accuracy across the GPT-3/GPT-3.5 family, contrasting models pretrained with vs without code",
+      "models": "GPT-3 davinci; GPT-3 davinci-instruct-beta; GPT-3 text-davinci-001; GPT-3.5 code-davinci-002; GPT-3.5 text-davinci-002; GPT-3.5 text-davinci-003",
+      "values": "all three code-pretrained GPT-3.5 variants (code-davinci-002, text-davinci-002, text-davinci-003) systematically outperform the text-only GPT-3 variants at every operation count, suggesting code pretraining rather than RLHF alone drives non-trivial entity tracking (no single tabulated numbers, read off curves)"
+    },
+    {
+      "paper": "Kim & Schuster 2023, Section 5 / Figure 6",
+      "metric": "finetuned T5-base accuracy under several train/test splits (Base, NumOps, Vocab, AltForms) vs a random-initialization control",
+      "models": "T5-base finetuned on each split; T5-base trained from random initialization",
+      "values": "near-perfect accuracy on the Base split; still >45% correct on the NumOps split (finetuned only on <=2-operation examples, evaluated up to 12 operations); random-init control stays far below the pretrained-and-finetuned model at every operation count, showing pretraining (not just finetuning) is necessary; performance drops toward the random baseline only when AltForms (low demo/test lexical overlap) is combined with the <=2-op NumOps restriction"
+    }
+  ],
+  "notes": "trace_available is false and no published_trace.txt was written for this task: Kim & Schuster 2023 evaluate models purely in-context/finetuned on a direct cloze completion ('Box N contains ___'), with NO chain-of-thought or scratchpad prompting variant anywhere in the paper or the vendored repo (confirmed by reading the full paper, vendor/paper/kim_schuster_2023.pdf, and the repo's prompt templates in vendor/entity-tracking-lms/data, which are all single-turn cloze prompts). This is a genuine content gap in the published literature, not an oversight on our part -- flagging rather than inventing a format per AMENDMENT 2 step 2. state_bits (94.6) is a combinatorial estimate for the full 7-box joint state at the paper's default config (num_boxes=7, max_items_per_box=3, expected_items_per_box=2, |vocab|=100): log2(C(100,14)) + 14*log2(7) approximating 'choose which ~14 of 100 objects are placed, assign each to one of 7 boxes', ignoring the rarely-binding per-box cap of 3; the per-box state actually queried by the task is much smaller, log2(sum_{k=0}^{3} C(100,k)) = 17.35 bits. answer_space is null (unbounded) because a box can hold any 0..3-sized subset of the 100-word vocabulary in the general (cap>1) case; it collapses to a bounded 101-way answer (one of 100 objects, or 'empty') only if a from-scratch generator restricts max_items_per_box=1. Contrast with cup_shuffling: this task's difficulty (per the paper's own framing) looks like raw working-memory/serial-tracking load rather than algebraic composition hardness -- each op is an independent O(1) set mutation touching <=2 boxes, so there's no non-commutative-composition argument analogous to cup_shuffling's S_n word problem, which is why theory_class is 'unclear' rather than a specific class."
+}

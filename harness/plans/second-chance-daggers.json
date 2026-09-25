@@ -1,0 +1,6 @@
+{
+  "s5_composition":      {"knobs": {"format": "ergonomic"}},
+  "random_lookup_table": {"knobs": {"format": "ergonomic"}},
+  "threesum":            {"knobs": {"format": "ergonomic"}},
+  "addition":            {"knobs": {"format": "ergonomic"}}
+}

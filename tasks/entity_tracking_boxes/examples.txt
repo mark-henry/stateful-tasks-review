@@ -1,0 +1,180 @@
+==============================================================================
+depth=2  seed=1000  query_box=5  ops_touching_queried_box=1
+------------------------------------------------------------------------------
+PROMPT:
+Box 0 contains nothing, Box 1 contains the drink and the plant and the wheel, Box 2 contains the chemical and the document, Box 3 contains nothing, Box 4 contains the plate, Box 5 contains the bell and the card and the string, Box 6 contains the bag and the sheet. Remove the drink and the wheel from Box 1. Remove the bell and the string from Box 5.
+Question: What does Box 5 contain?
+------------------------------------------------------------------------------
+GOLD COT:
+After op 1: Box 1 contains the plant.
+After op 2: Box 5 contains the card.
+Box 5 contains the card.
+Answer: card
+
+==============================================================================
+depth=2  seed=1001  query_box=3  ops_touching_queried_box=1
+------------------------------------------------------------------------------
+PROMPT:
+Box 0 contains the cheese and the medicine and the train, Box 1 contains the boot and the radio and the shoe, Box 2 contains the painting, Box 3 contains the bag and the tape, Box 4 contains the bomb and the chemical and the engine, Box 5 contains the flower and the game and the plant, Box 6 contains the cream and the dress. Put the key into Box 3. Remove the cream from Box 6.
+Question: What does Box 3 contain?
+------------------------------------------------------------------------------
+GOLD COT:
+After op 1: Box 3 contains the bag and the key and the tape.
+After op 2: Box 6 contains the dress.
+Box 3 contains the bag and the key and the tape.
+Answer: bag, key, tape
+
+==============================================================================
+depth=2  seed=1002  query_box=5  ops_touching_queried_box=1
+------------------------------------------------------------------------------
+PROMPT:
+Box 0 contains the engine, Box 1 contains the bell and the dress and the fig, Box 2 contains the disk and the plane, Box 3 contains the rose, Box 4 contains the document and the rock and the sheet, Box 5 contains nothing, Box 6 contains the crown and the cup. Put the branch and the computer into Box 3. Put the meat and the ring into Box 5.
+Question: What does Box 5 contain?
+------------------------------------------------------------------------------
+GOLD COT:
+After op 1: Box 3 contains the branch and the computer and the rose.
+After op 2: Box 5 contains the meat and the ring.
+Box 5 contains the meat and the ring.
+Answer: meat, ring
+
+==============================================================================
+depth=36  seed=1000  query_box=5  ops_touching_queried_box=10
+------------------------------------------------------------------------------
+PROMPT:
+Box 0 contains the hat and the tie, Box 1 contains the bag, Box 2 contains the magazine, Box 3 contains the cheese and the medicine, Box 4 contains the plate and the suit, Box 5 contains the watch, Box 6 contains the coffee. Put the shell into Box 6. Move the tie from Box 0 to Box 6. Remove the cheese from Box 3. Move the bag from Box 1 to Box 4. Remove the bag and the suit from Box 4. Remove the magazine from Box 2. Put the chemical and the sheet into Box 4. Put the brick and the cup into Box 5. Remove the watch from Box 5. Put the brain into Box 5. Move the shell and the tie from Box 6 to Box 2. Remove the chemical and the plate from Box 4. Move the medicine from Box 3 to Box 4. Move the brain from Box 5 to Box 1. Move the medicine and the sheet from Box 4 to Box 0. Put the mirror into Box 4. Move the cup from Box 5 to Box 2. Put the cash into Box 3. Remove the brick from Box 5. Remove the brain from Box 1. Remove the mirror from Box 4. Move the coffee from Box 6 to Box 1. Remove the coffee from Box 1. Move the cup from Box 2 to Box 5. Put the ring into Box 6. Remove the hat and the medicine from Box 0. Put the bowl into Box 0. Remove the sheet from Box 0. Move the cup from Box 5 to Box 0. Put the cross into Box 0. Move the ring from Box 6 to Box 5. Remove the shell and the tie from Box 2. Remove the ring from Box 5. Put the jacket and the ticket into Box 2. Remove the cross from Box 0. Put the fan into Box 2.
+Question: What does Box 5 contain?
+------------------------------------------------------------------------------
+GOLD COT:
+After op 1: Box 6 contains the coffee and the shell.
+After op 2: Box 0 contains the hat, Box 6 contains the coffee and the shell and the tie.
+After op 3: Box 3 contains the medicine.
+After op 4: Box 1 contains nothing, Box 4 contains the bag and the plate and the suit.
+After op 5: Box 4 contains the plate.
+After op 6: Box 2 contains nothing.
+After op 7: Box 4 contains the chemical and the plate and the sheet.
+After op 8: Box 5 contains the brick and the cup and the watch.
+After op 9: Box 5 contains the brick and the cup.
+After op 10: Box 5 contains the brain and the brick and the cup.
+After op 11: Box 6 contains the coffee, Box 2 contains the shell and the tie.
+After op 12: Box 4 contains the sheet.
+After op 13: Box 3 contains nothing, Box 4 contains the medicine and the sheet.
+After op 14: Box 5 contains the brick and the cup, Box 1 contains the brain.
+After op 15: Box 4 contains nothing, Box 0 contains the hat and the medicine and the sheet.
+After op 16: Box 4 contains the mirror.
+After op 17: Box 5 contains the brick, Box 2 contains the cup and the shell and the tie.
+After op 18: Box 3 contains the cash.
+After op 19: Box 5 contains nothing.
+After op 20: Box 1 contains nothing.
+After op 21: Box 4 contains nothing.
+After op 22: Box 6 contains nothing, Box 1 contains the coffee.
+After op 23: Box 1 contains nothing.
+After op 24: Box 2 contains the shell and the tie, Box 5 contains the cup.
+After op 25: Box 6 contains the ring.
+After op 26: Box 0 contains the sheet.
+After op 27: Box 0 contains the bowl and the sheet.
+After op 28: Box 0 contains the bowl.
+After op 29: Box 5 contains nothing, Box 0 contains the bowl and the cup.
+After op 30: Box 0 contains the bowl and the cross and the cup.
+After op 31: Box 6 contains nothing, Box 5 contains the ring.
+After op 32: Box 2 contains nothing.
+After op 33: Box 5 contains nothing.
+After op 34: Box 2 contains the jacket and the ticket.
+After op 35: Box 0 contains the bowl and the cup.
+After op 36: Box 2 contains the fan and the jacket and the ticket.
+Box 5 contains nothing.
+Answer: nothing
+
+==============================================================================
+depth=36  seed=1001  query_box=6  ops_touching_queried_box=10
+------------------------------------------------------------------------------
+PROMPT:
+Box 0 contains the bottle and the knife, Box 1 contains the ball, Box 2 contains the cash and the fan and the rose, Box 3 contains the bag and the egg and the paper, Box 4 contains the crown and the drink, Box 5 contains nothing, Box 6 contains the bill and the glass. Put the shoe into Box 6. Remove the ball from Box 1. Remove the drink from Box 4. Put the bread and the cream into Box 5. Put the creature and the painting into Box 1. Move the crown from Box 4 to Box 0. Remove the bill from Box 6. Remove the bread from Box 5. Put the game into Box 6. Remove the game and the glass from Box 6. Remove the cash and the fan from Box 2. Remove the bottle and the knife from Box 0. Move the painting from Box 1 to Box 2. Move the crown from Box 0 to Box 2. Put the television into Box 4. Remove the painting and the rose from Box 2. Put the cross into Box 4. Remove the shoe from Box 6. Move the cream from Box 5 to Box 6. Move the crown from Box 2 to Box 4. Put the painting into Box 6. Remove the cross and the crown and the television from Box 4. Put the rose into Box 2. Remove the creature from Box 1. Remove the cream and the painting from Box 6. Remove the bag and the paper from Box 3. Move the egg from Box 3 to Box 2. Put the card and the magazine into Box 4. Move the egg and the rose from Box 2 to Box 5. Put the bread and the computer into Box 3. Put the fig into Box 6. Put the bag into Box 4. Remove the computer from Box 3. Put the bowl into Box 0. Move the fig from Box 6 to Box 0. Move the bag and the card from Box 4 to Box 2.
+Question: What does Box 6 contain?
+------------------------------------------------------------------------------
+GOLD COT:
+After op 1: Box 6 contains the bill and the glass and the shoe.
+After op 2: Box 1 contains nothing.
+After op 3: Box 4 contains the crown.
+After op 4: Box 5 contains the bread and the cream.
+After op 5: Box 1 contains the creature and the painting.
+After op 6: Box 4 contains nothing, Box 0 contains the bottle and the crown and the knife.
+After op 7: Box 6 contains the glass and the shoe.
+After op 8: Box 5 contains the cream.
+After op 9: Box 6 contains the game and the glass and the shoe.
+After op 10: Box 6 contains the shoe.
+After op 11: Box 2 contains the rose.
+After op 12: Box 0 contains the crown.
+After op 13: Box 1 contains the creature, Box 2 contains the painting and the rose.
+After op 14: Box 0 contains nothing, Box 2 contains the crown and the painting and the rose.
+After op 15: Box 4 contains the television.
+After op 16: Box 2 contains the crown.
+After op 17: Box 4 contains the cross and the television.
+After op 18: Box 6 contains nothing.
+After op 19: Box 5 contains nothing, Box 6 contains the cream.
+After op 20: Box 2 contains nothing, Box 4 contains the cross and the crown and the television.
+After op 21: Box 6 contains the cream and the painting.
+After op 22: Box 4 contains nothing.
+After op 23: Box 2 contains the rose.
+After op 24: Box 1 contains nothing.
+After op 25: Box 6 contains nothing.
+After op 26: Box 3 contains the egg.
+After op 27: Box 3 contains nothing, Box 2 contains the egg and the rose.
+After op 28: Box 4 contains the card and the magazine.
+After op 29: Box 2 contains nothing, Box 5 contains the egg and the rose.
+After op 30: Box 3 contains the bread and the computer.
+After op 31: Box 6 contains the fig.
+After op 32: Box 4 contains the bag and the card and the magazine.
+After op 33: Box 3 contains the bread.
+After op 34: Box 0 contains the bowl.
+After op 35: Box 6 contains nothing, Box 0 contains the bowl and the fig.
+After op 36: Box 4 contains the magazine, Box 2 contains the bag and the card.
+Box 6 contains nothing.
+Answer: nothing
+
+==============================================================================
+depth=36  seed=1002  query_box=2  ops_touching_queried_box=10
+------------------------------------------------------------------------------
+PROMPT:
+Box 0 contains the cheese and the ring and the shoe, Box 1 contains the clock and the key, Box 2 contains nothing, Box 3 contains the bag and the beer, Box 4 contains the gift, Box 5 contains the chemical, Box 6 contains nothing. Remove the bag from Box 3. Remove the ring and the shoe from Box 0. Remove the clock and the key from Box 1. Put the bomb and the card into Box 4. Remove the cheese from Box 0. Put the guitar and the ring into Box 0. Move the beer from Box 3 to Box 0. Remove the chemical from Box 5. Put the clock and the newspaper and the shell into Box 5. Move the clock and the shell from Box 5 to Box 3. Move the guitar from Box 0 to Box 2. Move the clock from Box 3 to Box 6. Put the chemical and the tie into Box 5. Remove the clock from Box 6. Put the television into Box 0. Move the shell from Box 3 to Box 2. Put the bottle and the wheel into Box 6. Put the bus into Box 2. Remove the tie from Box 5. Put the ticket into Box 6. Put the note into Box 5. Move the guitar from Box 2 to Box 3. Remove the bomb and the card from Box 4. Remove the shell from Box 2. Remove the bus from Box 2. Remove the bottle and the ticket from Box 6. Put the leaf into Box 3. Move the gift from Box 4 to Box 6. Move the ring from Box 0 to Box 6. Remove the beer from Box 0. Move the newspaper from Box 5 to Box 2. Move the guitar and the leaf from Box 3 to Box 2. Move the gift and the ring and the wheel from Box 6 to Box 1. Remove the guitar and the newspaper from Box 2. Move the chemical from Box 5 to Box 6. Remove the leaf from Box 2.
+Question: What does Box 2 contain?
+------------------------------------------------------------------------------
+GOLD COT:
+After op 1: Box 3 contains the beer.
+After op 2: Box 0 contains the cheese.
+After op 3: Box 1 contains nothing.
+After op 4: Box 4 contains the bomb and the card and the gift.
+After op 5: Box 0 contains nothing.
+After op 6: Box 0 contains the guitar and the ring.
+After op 7: Box 3 contains nothing, Box 0 contains the beer and the guitar and the ring.
+After op 8: Box 5 contains nothing.
+After op 9: Box 5 contains the clock and the newspaper and the shell.
+After op 10: Box 5 contains the newspaper, Box 3 contains the clock and the shell.
+After op 11: Box 0 contains the beer and the ring, Box 2 contains the guitar.
+After op 12: Box 3 contains the shell, Box 6 contains the clock.
+After op 13: Box 5 contains the chemical and the newspaper and the tie.
+After op 14: Box 6 contains nothing.
+After op 15: Box 0 contains the beer and the ring and the television.
+After op 16: Box 3 contains nothing, Box 2 contains the guitar and the shell.
+After op 17: Box 6 contains the bottle and the wheel.
+After op 18: Box 2 contains the bus and the guitar and the shell.
+After op 19: Box 5 contains the chemical and the newspaper.
+After op 20: Box 6 contains the bottle and the ticket and the wheel.
+After op 21: Box 5 contains the chemical and the newspaper and the note.
+After op 22: Box 2 contains the bus and the shell, Box 3 contains the guitar.
+After op 23: Box 4 contains the gift.
+After op 24: Box 2 contains the bus.
+After op 25: Box 2 contains nothing.
+After op 26: Box 6 contains the wheel.
+After op 27: Box 3 contains the guitar and the leaf.
+After op 28: Box 4 contains nothing, Box 6 contains the gift and the wheel.
+After op 29: Box 0 contains the beer and the television, Box 6 contains the gift and the ring and the wheel.
+After op 30: Box 0 contains the television.
+After op 31: Box 5 contains the chemical and the note, Box 2 contains the newspaper.
+After op 32: Box 3 contains nothing, Box 2 contains the guitar and the leaf and the newspaper.
+After op 33: Box 6 contains nothing, Box 1 contains the gift and the ring and the wheel.
+After op 34: Box 2 contains the leaf.
+After op 35: Box 5 contains the note, Box 6 contains the chemical.
+After op 36: Box 2 contains nothing.
+Box 2 contains nothing.
+Answer: nothing
+

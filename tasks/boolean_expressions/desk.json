@@ -1,0 +1,60 @@
+{
+  "slug": "boolean_expressions",
+  "primary_source": {
+    "paper": "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.09261",
+    "repo": "https://github.com/suzgunmirac/BIG-Bench-Hard (commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d)"
+  },
+  "trace_available": true,
+  "trace_source": "vendor/BIG-Bench-Hard/cot-prompts/boolean_expressions.txt (commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d), first full few-shot exemplar, saved verbatim to published_trace.txt",
+  "format_description": "Each step is a sentence naming and reducing one named sub-expression, e.g. \"Let's evaluate A: A = not not True = not (not True) = not False = True.\", with innermost sub-expressions evaluated first and then substituted back into the parent expression in a final 'Plugging in ...' sentence that states the answer.",
+  "steps_in_trace": 2,
+  "tokens_per_step": {
+    "gemma2": 75.0,
+    "llama3": 71.5,
+    "qwen2": 71.0
+  },
+  "tokens_total": {
+    "gemma2": 150,
+    "llama3": 143,
+    "qwen2": 142
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 1.0,
+  "state_bounded": true,
+  "state_atomic_tokens": true,
+  "theory_class": "NC1-hard",
+  "theory_citation": "Buss, S.R. 1987, 'The Boolean Formula Value Problem Is in ALOGTIME,' STOC 1987 -- established Boolean formula evaluation as the canonical NC1-complete (ALOGTIME-complete) problem.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 2,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "nesting depth / operator count",
+    "granularity": "integer; canonical BBH examples use roughly 4-8 operators. google/BIG-bench's task.py generator (SOURCING.md candidate) exposes expression_lengths directly, tuple-valued, 1-14 (complexity exponential in length)",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "medium",
+  "paraphrasable": true,
+  "format_natural": true,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Suzgun et al. 2022 (arXiv:2210.09261), Table 3",
+      "metric": "few-shot answer-only (AO) vs few-shot CoT accuracy on the 250 canonical BBH boolean_expressions examples, plus random baseline, prior BIG-Bench SOTA, and human-rater avg/max for this task",
+      "models": "InstructGPT text-davinci-002, Codex code-davinci-002, PaLM 540B",
+      "values": "random=50.0%, prior_BIG-Bench_SOTA=68.5%, human_avg=79.4%, human_max=100%; InstructGPT AO=90.0%->CoT=87.6%; Codex AO=88.4%->CoT=92.8% (cross-checked exactly against vendored code-davinci-002 eval_metrics.jsonl); PaLM-540B AO=83.2%->CoT=80.0%"
+    },
+    {
+      "paper": "google/BIG-bench boolean_expressions task README (vendor/BIG-bench-google), pre-CoT era",
+      "metric": "GPT-2-XL accuracy at two expression_lengths settings of the task's own generator knob, vs a small (n=6) human baseline; no CoT prompting existed at time of this eval",
+      "models": "GPT-2-XL, human (n=6)",
+      "values": "GPT2-XL @3-shot/short-expressions=61.25%, human_avg_same_setting=83.33%; GPT2-XL @expression_lengths=8=52.75%"
+    }
+  ],
+  "notes": "tokens_per_step / tokens_total measured with real tokenizers loaded via huggingface_hub + tokenizers on published_trace.txt's CoT completion (the 'A: ...' portion only; 2 reduction steps in this particular exemplar -- 'Let's evaluate A: ...' and the final 'Plugging in A, we get: ...' sentence -- since this trace's expression only has one named sub-expression to resolve before the top-level combination): gemma2 tokenizer.json from unsloth/gemma-2-2b (ungated mirror of google/gemma-2-2b, 401 gated), llama3 tokenizer.json from NousResearch/Meta-Llama-3-8B (ungated mirror of meta-llama/Meta-Llama-3-8B, also 401 gated), qwen2 tokenizer.json from Qwen/Qwen2-7B directly (ungated). state_atomic_tokens=true verified empirically: 'True', 'False', 'not', 'and', 'or' (space-prefixed, as they appear mid-sentence) each encode as exactly one token across all three tokenizers. tokens_flat_across_knob left null rather than guessed: each reduction sentence's length depends on how much of the parent expression must be re-quoted in the 'Z = ... = ...' framing, which was not measured across a range of depths in this pass (deferred implementation work). Canonical BBH boolean_expressions has a binary True/False answer space -- an expected property of the canonical published task, not a defect (a richer non-binary variant would be a separate slug, out of scope for these desk metrics per AMENDMENT 2's instruction to describe the task AS PUBLISHED). contamination_risk medium: the 250 canonical BBH examples are mirrored across at least 6 HuggingFace dataset repos found during search (lukaemon/bbh, maveriq/bigbenchhard, Joschka/big_bench_hard, SaylorTwift/bbh, RUCAIBox/bbh, GPTTT/bigbenchhard) and are almost certainly in recent pretraining corpora. Calibration point from Table 3: CoT does NOT help (and slightly hurts) 2 of 3 model families on this task (InstructGPT 90.0%->87.6%, PaLM 540B 83.2%->80.0%; only Codex improves), and all three are already above the 79.4% human average with answer-only prompting alone -- the canonical difficulty is near-ceiling, a fact worth carrying into any later generator-design phase."
+}

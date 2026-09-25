@@ -1,0 +1,13 @@
+slug,format,model,depth,n,acc_cot,acc_nocot,ko0,ko25,ko50,ko75,filler,filler_recovery,cont_redacted,cont_plain,cont_k,kept_reasoning_ko50
+addition,published,ds,2,50,1.0,0.08,1.0,1.0,1.0,1.0,1.0,0.92,,,,0.02
+blocksworld,published,qwen9b,2,50,0.92,0.64,0.62,0.0,0.44,0.92,0.66,0.02,0.76,0.94,1,0.04
+boolean_expressions,published,qwen9b,12,50,0.7,0.34,0.46,0.48,0.48,0.54,0.52,0.18,1.0,1.0,6,0.22
+cruxeval,published,qwen9b,6,50,0.86,0.44,0.38,0.38,0.44,0.86,0.4,-0.04,0.36,0.72,3,0.2
+cup_shuffling,published,qwen9b,12,50,0.98,0.22,0.26,0.26,0.34,0.28,0.14,-0.08,0.3,0.98,6,0.14
+dyck,published,qwen9b,8,50,0.88,0.2,0.2,0.02,0.1,0.0,0.14,-0.06,0.38,0.88,4,0.52
+entity_tracking_boxes,ours,qwen9b,8,50,0.82,0.4,0.4,0.1,0.24,0.58,0.36,-0.04,0.28,0.78,4,0.5
+nested_arithmetic,published,qwen9b,7,50,0.96,0.0,0.0,0.0,0.0,0.0,0.0,0.00,1.0,1.0,3,0.44
+random_lookup_table,published,ds,24,50,1.0,0.14,0.06,0.08,0.12,0.12,0.12,-0.02,0.68,0.88,12,0.0
+s5_composition,published,ds,16,50,0.88,0.0,0.0,0.04,0.0,0.0,0.02,0.02,0.0,0.0,8,0.32
+synthetic_program_trace,published,qwen9b,32,50,0.94,0.08,0.02,0.02,0.04,0.14,0.04,-0.04,0.96,0.96,16,0.3
+turing_machine,published,qwen9b,2,50,0.9,0.04,0.02,0.0,0.0,0.0,0.02,-0.02,0.2,0.92,1,0.0

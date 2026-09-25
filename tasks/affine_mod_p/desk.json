@@ -1,0 +1,46 @@
+{
+  "slug": "affine_mod_p",
+  "primary_source": {
+    "paper": "Liu, Bingbin; Ash, Jordan T.; Goel, Surbhi; Krishnamurthy, Akshay; Zhang, Cyril. \"Transformers Learn Shortcuts to Automata.\"",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.10749",
+    "repo": "https://huggingface.co/datasets/synthseq/automata (commit cf2b63456a57d26cb5261cf9fb3b9dc80bdfa69d) -- the authors' own dataset-generator release, vendored at tasks/affine_mod_p/vendor/synthseq_automata/; implements CyclicAutomaton, DihedralAutomaton, SymmetricAutomaton, AlternatingAutomaton, QuaternionAutomaton as numpy/HF-datasets generators, but does NOT implement AGL(1,p) affine maps. No other code repo for this paper was released (the GitHub repo ClaraBing/shortcut_automata is a static project-website only, checked and confirmed empty of code/data)."
+  },
+  "trace_available": false,
+  "trace_source": null,
+  "format_description": "No worked example (numeric or natural-language) of this task, or of AGL(1,p) at all, appears anywhere in the paper or its vendored dataset code; the paper's general (non-affine) semiautomaton experiments represent each step as a single categorical input-symbol token sigma_t at a fixed sequence position, with the model predicting the resulting state q_t at that same position (a sequence-to-sequence classification format, not a generated CoT/scratchpad text), and a separate ablation (used only for the parity/C2 task, Appendix B.3) instead interleaves abstract tokens (sigma_1, q_1, sigma_2, q_2, ...) -- neither format is rendered as natural language and neither was ever instantiated for the affine group.",
+  "steps_in_trace": null,
+  "tokens_per_step": {"gemma2": null, "llama3": null, "qwen2": null},
+  "tokens_total": {"gemma2": null, "llama3": null, "qwen2": null},
+  "step_delimitable": null,
+  "state_at_fixed_position": null,
+  "state_bits": 2.807354922057604,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Liu, Ash, Goel, Krishnamurthy, Zhang, \"Transformers Learn Shortcuts to Automata\" (arXiv:2210.10749, ICLR 2023), Theorem 2: constant-depth Transformer shortcuts exist for any semiautomaton whose transformation (semi)group is solvable, via a Krohn-Rhodes cascade decomposition into modular counters and reset units. AGL(1,p), the group of invertible affine maps x -> ax+b mod p, is solvable (it is the semidirect product Z_p^* semidirect Z_p of two abelian groups, i.e. has a normal abelian subgroup Z_p with abelian quotient Z_p^*), so Theorem 2 applies to it by direct extension of the paper's argument -- AGL(1,p) itself is not one of the groups the paper trains/tests (see synthseq/automata registry: cyclic, dihedral, symmetric, alternating, quaternion only).",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 7,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "depth (number of sequential affine-map compositions applied to the state)",
+    "granularity": "integer, step size 1, no natural ceiling; a secondary knob is the modulus p (integer >= 2, task as scoped uses small p such as 7 or 11)",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Liu, Ash, Goel, Krishnamurthy, Zhang, \"Transformers Learn Shortcuts to Automata\" (arXiv:2210.10749, ICLR 2023)",
+      "metric": "in-distribution simulation accuracy (>99% threshold) and empirical shortcut circuit depth vs. group solvability, for small from-scratch Transformers trained end-to-end on the group-word-problem (sequence-to-state) task",
+      "models": "small Transformers trained from scratch on synthetic data (no pretrained/instruction-tuned LLMs evaluated); groups tested: C2-C8 (cyclic), dihedral, Q8 (quaternion), S5 (symmetric), A5 (alternating). AGL(1,p) was not among the tested groups.",
+      "values": "Section 4 (p.7): >99% in-distribution accuracy achieved for every semiautomaton tested including non-solvable A5/S5, but solvable groups (cyclic, dihedral, quaternion) reach this accuracy at shallow (near-constant) network depth matching the O(1)-depth bound of Theorem 2, while non-solvable S5/A5 require depth that grows with sequence length toward the O(log T) bound of Theorem 1 (Figure 3a and Appendix B.1); training for the deeper non-solvable-group networks also shows higher variance/instability (Figure 3b,c)."
+    }
+  ],
+  "notes": "AMENDMENT 2 desk-research pass (describing the task AS PUBLISHED, not our SPEC.md rigid-format version). Confirmed by full-text search of the ICLR 2023 camera-ready PDF (67 pages, fetched from arxiv.org/pdf/2210.10749, extracted with pdftotext -layout) that the strings 'affine' and 'AGL' never appear anywhere in the paper -- AGL(1,p) is purely this review's own theoretical extension of the paper's solvable-group shortcut theorem, not a group the authors studied. No published trace exists for this task: (1) the paper's main experiments (Section 4) are non-autoregressive sequence-to-sequence classification over one-hot input-symbol tokens, not a generated CoT/scratchpad -- there is no per-step natural-language or notational trace at all for the primary setup; (2) the one 'scratchpad' variant in the paper (Appendix B.3, interleaved sigma_t/q_t tokens with a recency-biased attention mechanism) is described only in abstract (sigma_1,q_1,sigma_2,q_2,...) notation, with no concrete rendered numeric example, and was applied only to the parity (C2) task for an out-of-distribution-robustness ablation, never to cyclic/dihedral/AGL groups; (3) the one paper figure with a concrete numeric state-trace example (Appendix B.4: 'the input sequence abababaaabab corresponds to states 012301244444') is for an unrelated (abab)* regex-recognizer automaton, not any group-word-problem task, so it was not used here per the instruction to prefer the primary paper's own task and not invent a substitute trace. The vendored synthseq/automata HF dataset (tasks/affine_mod_p/vendor/synthseq_automata/, commit cf2b63456a57d26cb5261cf9fb3b9dc80bdfa69d) was also checked directly: it emits only numpy int32 (input_ids, label_ids) tensors via a HuggingFace GeneratorBasedBuilder, no rendered text sequences and no AGL(1,p) class. Per AMENDMENT 2 step 3, since no trace exists, no tokenizer measurement was attempted (would be hand-estimation of a nonexistent artifact, which the instructions explicitly forbid) -- tokens_per_step and tokens_total are null for all three tokenizers (gemma2, llama3, qwen2) because there is nothing to tokenize, not because the tokenizers were unreachable. step_delimitable, state_at_fixed_position, and state_atomic_tokens are null because they describe properties of a rendered format that was never published for this task. format_natural is answered (false, not null) because it is inferable from the paper's stated methodology independent of any specific trace: the authors explicitly designed their input format as synthetic non-language tokens to get a 'pure analogue... with no confounds arising from the influence of a natural language corpus' (Related Work, 'Recurrent vs. non-recurrent sequence transduction') -- this is not a format a pretrained LLM would emit unprompted. state_bits (log2(7) for the default p=7 knob value) and all other task-theoretic fields are computed directly from the affine_mod_p task definition (see SOURCING.md), independent of the publication-trace question. answer_space=7 reflects the default modulus knob value (p=7); it changes with the p knob (e.g. 11 gives answer_space=11)."
+}

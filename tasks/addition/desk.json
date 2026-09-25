@@ -1,0 +1,60 @@
+{
+  "slug": "addition",
+  "primary_source": {
+    "paper": "Show Your Work: Scratchpads for Intermediate Computation with Language Models",
+    "year": 2021,
+    "url": "https://arxiv.org/abs/2112.00114",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": "Nye et al. 2021, arXiv:2112.00114v1, Section 2 'Method', Figure 2. Extracted verbatim by decoding the base64 plaintext blob embedded in the paper's own LaTeX-generated HTML (identical on arxiv.org/html and ar5iv.labs.arxiv.org mirrors). Saved to tasks/addition/published_trace.txt.",
+  "format_description": "Each step is one line inside a <scratch>...</scratch> block giving the still-unprocessed digit columns, the output digits accumulated so far (built right-to-left), and the running carry as a literal 'C: 0' or 'C: 1' token at the end of the line; the actual training target omits the paper's clarifying '#' comments (per the figure's own caption) and processes one digit column per line, right to left.",
+  "steps_in_trace": 2,
+  "tokens_per_step": {
+    "gemma2": 21.0,
+    "llama3": 21.0,
+    "qwen2": 21.0
+  },
+  "tokens_total": {
+    "gemma2": 42,
+    "llama3": 42,
+    "qwen2": 42
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 4.32,
+  "state_bounded": false,
+  "state_atomic_tokens": true,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Addition (iterated carry propagation) is computable by constant-depth, polynomial-size threshold circuits (TC0) via carry-lookahead/carry-save addition; see Vollmer, 'Introduction to Circuit Complexity' (1999). Nye et al.'s serial, right-to-left carry-chain scratchpad is the natural sequential algorithm a human/model would write, not a computational necessity -- a sufficiently wide parallel circuit could compute all carries in constant depth.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "digits",
+    "granularity": "integer, per-digit (operand width)",
+    "tokens_flat_across_knob": false
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "high",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Nye et al. 2021, 'Show Your Work: Scratchpads for Intermediate Computation with Language Models', arXiv:2112.00114",
+      "metric": "Figure 3: addition accuracy with vs. without scratchpad, in-distribution (1-8 digit operands) and out-of-distribution (9-10 digit operands)",
+      "models": "pre-trained dense decoder-only Transformer LMs ranging from 2M to 137B parameters (same checkpoints as Austin et al. 2021)",
+      "values": "Descriptive only -- Figure 3 is a rendered chart, not a text/data table, so exact accuracy percentages were not OCR'd or extracted; qualitatively, scratchpad models solve the task past a critical model size while no-scratchpad baselines fail even at the largest tested scale, and scratchpad models generalize to 9-10 digit OOD inputs while no-scratchpad models do not."
+    },
+    {
+      "paper": "Lanham et al. 2023, 'Measuring Faithfulness in Chain-of-Thought Reasoning', arXiv:2307.13702",
+      "metric": "Section 3.2 'Addition Tasks': synthetic multi-operand addition (2/4/8/16 operands of 2-3 digits each), measuring how often the model gives the same answer with vs. without CoT, across model sizes 13B-175B, as a controlled-difficulty follow-up to their Table 5 addition samples",
+      "models": "13B to 175B parameter RLHF-finetuned models (same family as their AQuA/LogiQA etc. experiments)",
+      "values": "Descriptive only -- paper reports CoT-consistency curves (Figure 8) by model size and operand count, not a single scalar; overall finding is that larger models show LESS faithful (more answer-changing) reasoning on these addition tasks, i.e. inverse scaling in faithfulness, not in raw accuracy."
+    }
+  ],
+  "notes": "Verbatim source: the published trace is Nye et al. 2021 Figure 2 (input 29+57), decoded byte-for-byte from a base64 data: URI embedded in the paper's own LaTeX/HTML source (confirmed identical between arxiv.org/html/2112.00114 and ar5iv.labs.arxiv.org/html/2112.00114). The figure's raw listing includes '#'-marked comments (e.g. '# added 9 + 7 = 6 carry 1'), but the caption explicitly states these 'are added for clarity and are not part of the target' -- so all token/step metrics above use the comment-stripped true target text (4 lines, 49 chars), not the annotated figure text saved in published_trace.txt. steps_in_trace=2 counts the two genuine digit-column additions the trace documents (matching the two comments in the source figure), not the 4 raw scratchpad lines (there is 1 setup line establishing 'C: 0' and 1 final consolidation line '0 8 6' that pads in the last carry digit before the leading zero is stripped for the final answer '8 6'). Token counts (tokenizers library, add_special_tokens=False) came out identical across all three tokenizers (42 tokens total / 21.0 per step) for this short example -- coincidental, not a general property. Tokenizer mirrors used per the task brief: qwen2 = Qwen/Qwen2-7B (official, ungated); llama3 = NousResearch/Meta-Llama-3-8B (ungated mirror of gated meta-llama/Meta-Llama-3-8B); gemma2 = unsloth/gemma-2-2b (ungated mirror of gated google/gemma-2-2b). All three tokenizer.json files fetched successfully via plain HTTPS, no auth needed. Key honest divergences from task.py's own (self-invented) desk.json, per AMENDMENT 2's instruction to describe the task AS PUBLISHED: (1) state_bounded=false here (vs true in task.py's desk.json) because Nye's published scratchpad re-writes the ENTIRE remaining-digit suffix and the entire accumulated-result-so-far on every line, so the literal per-line state representation grows with operand length, even though the genuinely new information per step (one result digit + one carry bit, log2(20)=4.32 bits, same as task.py's derivation) does not; (2) knob.tokens_flat_across_knob=false here (vs implicitly flat in task.py's rigid format) because every line's length scales with total digit count in the published notation, unlike task.py's fixed-shape 'step N: d+d+carry=sum -> digit d carry c' template; (3) format_natural=false here because Nye's specific comma-delimited/'C:' notation is a synthetic format invented for supervised fine-tuning, not something a pretrained model spontaneously emits -- contrast with Lanham et al. 2023's Table 5, where models given only a plain addition question spontaneously produce free-form associative-regrouping CoT (e.g. '264 + 964 = 264 + (900+64) = (264+900)+64 = 1164+64 = 1228'), not digit-column carry tracking, which is itself evidence against format_natural for the carry-scratchpad notation specifically; (4) contamination_risk=high here (vs low in task.py's desk.json) because this specific 29+57 example is one of the most widely reproduced illustrations of the scratchpad technique in blog posts, course slides, and follow-up papers, unlike task.py's freshly seeded random instances. Correction to prior sourcing docs: Lanham et al. 2023 DOES use addition as an explicit task (Section 3.2 'Addition Tasks', with a full example in Table 5), contrary to the earlier hedge in SOURCING.md/README.md that it was 'not confirmed'/'not one of its core benchmark tasks as far as could be determined' -- verified directly from the paper's HTML text. However, Lanham's addition task is free-form CoT (associative regrouping of multi-digit/multi-operand sums), not a carry-column scratchpad, so it does not supply an alternative structured trace for this schema's per-step fields; Nye et al. 2021 remains the primary source for the carry-based scratchpad format this task models. Faith-and-Fate (github.com/nouhadziri/faith-and-fate, commit 1e90edb54b4ed0fa150259a72c994b0fee90d388) was re-checked via the GitHub API tree listing and confirmed to contain no addition-related file anywhere in its 35-file tree (only dynamic_programming/, logic_puzzle/, multiplication/, data/) -- no addition trace available there."
+}

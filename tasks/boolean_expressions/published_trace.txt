@@ -1,0 +1,10 @@
+# Source: suzgunmirac/BIG-Bench-Hard, cot-prompts/boolean_expressions.txt, commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d
+# Paper: Suzgun et al. 2022, "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them," arXiv:2210.09261
+# This is the first full few-shot exemplar (verbatim) from that CoT prompt file.
+
+Q: not ( ( not not True ) ) is
+A: Let's think step by step.
+Remember that (i) expressions inside brackets are always evaluated first and that (ii) the order of operations from highest priority to lowest priority is "not", "and", "or", respectively.
+We first simplify this expression "Z" as follows: "Z = not ( ( not not True ) ) = not ( ( A ) )" where "A = not not True".
+Let's evaluate A: A = not not True = not (not True) = not False = True.
+Plugging in A, we get: Z = not ( ( A ) ) = not ( ( True ) ) = not True = False. So the answer is False.

@@ -1,0 +1,12 @@
+{
+  "nested_arithmetic":       {"model": "qwen9b", "depth": 7,  "knobs": {}},
+  "turing_machine":          {"model": "qwen9b", "depth": 4,  "knobs": {}},
+  "synthetic_program_trace": {"model": "qwen9b", "depth": 32, "knobs": {}},
+  "dyck":                    {"model": "qwen9b", "depth": 8,  "knobs": {}},
+  "cup_shuffling":           {"model": "qwen9b", "depth": 12, "knobs": {}},
+  "s5_composition":          {"model": "qwen9b", "depth": 8,  "knobs": {"format": "ergonomic"}},
+  "random_lookup_table":     {"model": "qwen9b", "depth": 24, "knobs": {"format": "ergonomic"}},
+  "threesum":                {"model": "qwen9b", "depth": 8,  "knobs": {"format": "ergonomic"}},
+  "hanoi":                   {"model": "qwen9b", "depth": 16, "knobs": {}},
+  "cellular_automaton":      {"model": "qwen9b", "depth": 3,  "knobs": {}}
+}

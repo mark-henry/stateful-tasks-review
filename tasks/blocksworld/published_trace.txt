@@ -1,0 +1,117 @@
+SOURCE: Stechly, Valmeekam & Kambhampati, "Chain of Thoughtlessness? An Analysis of CoT in Planning" (NeurIPS 2024, arXiv:2405.04776) -- companion code repo karthikv792/cot-planning, file example_query_prompts/blocksworld_state_tracking/upb.txt (the "Blocksworld Universal Algorithm" n-shot CoT prompt exemplar; vendored at tasks/blocksworld/vendor/cot-planning, commit in vendor/cot-planning.commit). Verbatim below (2 concatenated worked examples, 6 and 12 steps, exactly as they appear in the repo file used to build the paper's CoT prompts).
+---
+Here is an example problem:
+
+[STATEMENT]
+As initial conditions I have that, Block B is clear, Block C is clear, the hand is empty, Block C is on top of Block A, Block A is on the table, Block B is on the table.
+My goal is to have that Block A is on top of Block C and Block B is on top of Block A
+
+My plan is as follows:
+
+[PLAN]
+1. Current State: Block B is clear, Block C is clear, the hand is empty, Block C is on top of Block A, Block A is on the table and Block B is on the table
+   Action: unstack the Block C from on top of the Block A
+   Reason: The above action is applicable in the current state because its preconditions; Block C is clear, the hand is empty and Block C is on top of Block A, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, the hand is currently holding Block C, Block A is on the table and Block B is on the table
+
+2. Current State: Block A is clear, Block B is clear, the hand is currently holding Block C, Block A is on the table and Block B is on the table
+   Action: put down the Block C
+   Reason: The above action is applicable in the current state because its preconditions; the hand is currently holding Block C, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, Block C is clear, the hand is empty, Block A is on the table, Block B is on the table and Block C is on the table
+
+3. Current State: Block A is clear, Block B is clear, Block C is clear, the hand is empty, Block A is on the table, Block B is on the table and Block C is on the table
+   Action: pick up the Block A
+   Reason: The above action is applicable in the current state because its preconditions; Block A is clear, the hand is empty and Block A is on the table, are satisfied in the current state.
+   Resulting State: Block B is clear, Block C is clear, the hand is currently holding Block A, Block B is on the table and Block C is on the table
+
+4. Current State: Block B is clear, Block C is clear, the hand is currently holding Block A, Block B is on the table and Block C is on the table
+   Action: stack the Block A on top of the Block C
+   Reason: The above action is applicable in the current state because its preconditions; Block C is clear and the hand is currently holding Block A, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, the hand is empty, Block A is on top of Block C, Block B is on the table and Block C is on the table
+
+5. Current State: Block A is clear, Block B is clear, the hand is empty, Block A is on top of Block C, Block B is on the table and Block C is on the table
+   Action: pick up the Block B
+   Reason: The above action is applicable in the current state because its preconditions; Block B is clear, the hand is empty and Block B is on the table, are satisfied in the current state.
+   Resulting State: Block A is clear, the hand is currently holding Block B, Block A is on top of Block C and Block C is on the table
+
+6. Current State: Block A is clear, the hand is currently holding Block B, Block A is on top of Block C and Block C is on the table
+   Action: stack the Block B on top of the Block A
+   Reason: The above action is applicable in the current state because its preconditions; Block A is clear and the hand is currently holding Block B, are satisfied in the current state.
+   Resulting State: Block B is clear, the hand is empty, Block A is on top of Block C, Block B is on top of Block A and Block C is on the table
+
+Final State: Block B is clear, the hand is empty, Block A is on top of Block C, Block B is on top of Block A and Block C is on the table
+The goal conditions are satisfied in the final state. Hence, the above plan is valid.
+[PLAN END]
+
+Here is another example:
+
+[STATEMENT]
+As initial conditions I have that, Block B is clear, the hand is empty, Block A is on top of Block D, Block B is on top of Block C, Block C is on top of Block A and Block D is on the table.
+My goal is to have that Block C is on top of Block D, Block A is on top of Block C and Block B is on top of Block A.
+
+My plan is as follows:
+
+[PLAN]
+1. Current State: Block B is clear, the hand is empty, Block A is on top of Block D, Block B is on top of Block C, Block C is on top of Block A and Block D is on the table
+   Action: unstack the Block B from on top of the Block C
+   Reason: The above action is applicable in the current state because its preconditions; Block B is clear, the hand is empty and Block B is on top of Block C, are satisfied in the current state.
+   Resulting State: Block C is clear, the hand is currently holding Block B, Block A is on top of Block D, Block C is on top of Block A and Block D is on the table
+
+2. Current State: Block C is clear, the hand is currently holding Block B, Block A is on top of Block D, Block C is on top of Block A and Block D is on the table
+   Action: put down the Block B
+   Reason: The above action is applicable in the current state because its preconditions; the hand is currently holding Block B, are satisfied in the current state.
+   Resulting State: Block B is clear, Block C is clear, the hand is empty, Block A is on top of Block D, Block C is on top of Block A, Block B is on the table and Block D is on the table
+
+3. Current State: Block B is clear, Block C is clear, the hand is empty, Block A is on top of Block D, Block C is on top of Block A, Block B is on the table and Block D is on the table
+   Action: unstack the Block C from on top of the Block A
+   Reason: The above action is applicable in the current state because its preconditions; Block C is clear, the hand is empty and Block C is on top of Block A, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, the hand is currently holding Block C, Block A is on top of Block D, Block B is on the table and Block D is on the table
+
+4. Current State: Block A is clear, Block B is clear, the hand is currently holding Block C, Block A is on top of Block D, Block B is on the table and Block D is on the table
+   Action: stack the Block C on top of the Block B
+   Reason: The above action is applicable in the current state because its preconditions; Block B is clear and the hand is currently holding Block C, are satisfied in the current state.
+   Resulting State: Block A is clear, Block C is clear, the hand is empty, Block A is on top of Block D, Block C is on top of Block B, Block B is on the table and Block D is on the table
+
+5. Current State: Block A is clear, Block C is clear, the hand is empty, Block A is on top of Block D, Block C is on top of Block B, Block B is on the table and Block D is on the table
+   Action: unstack the Block A from on top of the Block D
+   Reason: The above action is applicable in the current state because its preconditions; Block A is clear, the hand is empty and Block A is on top of Block D, are satisfied in the current state.
+   Resulting State: Block C is clear, Block D is clear, the hand is currently holding Block A, Block C is on top of Block B, Block B is on the table and Block D is on the table
+
+6. Current State: Block C is clear, Block D is clear, the hand is currently holding Block A, Block C is on top of Block B, Block B is on the table and Block D is on the table
+   Action: put down the Block A
+   Reason: The above action is applicable in the current state because its preconditions; the hand is currently holding Block A, are satisfied in the current state.
+   Resulting State: Block A is clear, Block C is clear, Block D is clear, the hand is empty, Block C is on top of Block B, Block A is on the table, Block B is on the table and Block D is on the table
+
+7. Current State: Block A is clear, Block C is clear, Block D is clear, the hand is empty, Block C is on top of Block B, Block A is on the table, Block B is on the table and Block D is on the table
+   Action: unstack the Block C from on top of the Block B
+   Reason: The above action is applicable in the current state because its preconditions; Block C is clear, the hand is empty and Block C is on top of Block B, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, Block D is clear, the hand is currently holding Block C, Block A is on the table, Block B is on the table and Block D is on the table
+
+8. Current State: Block A is clear, Block B is clear, Block D is clear, the hand is currently holding Block C, Block A is on the table, Block B is on the table and Block D is on the table
+   Action: stack the Block C on top of the Block D
+   Reason: The above action is applicable in the current state because its preconditions; Block D is clear and the hand is currently holding Block C, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, Block C is clear, the hand is empty, Block C is on top of Block D, Block A is on the table, Block B is on the table and Block D is on the table
+
+9. Current State: Block A is clear, Block B is clear, Block C is clear, the hand is empty, Block C is on top of Block D, Block A is on the table, Block B is on the table and Block D is on the table
+   Action: pick up the Block A
+   Reason: The above action is applicable in the current state because its preconditions; Block A is clear, the hand is empty and Block A is on the table, are satisfied in the current state.
+   Resulting State: Block B is clear, Block C is clear, the hand is currently holding Block A, Block C is on top of Block D, Block B is on the table and Block D is on the table
+
+10. Current State: Block B is clear, Block C is clear, the hand is currently holding Block A, Block C is on top of Block D, Block B is on the table and Block D is on the table
+   Action: stack the Block A on top of the Block C
+   Reason: The above action is applicable in the current state because its preconditions; Block C is clear and the hand is currently holding Block A, are satisfied in the current state.
+   Resulting State: Block A is clear, Block B is clear, the hand is empty, Block A is on top of Block C, Block C is on top of Block D, Block B is on the table and Block D is on the table
+
+11. Current State: Block A is clear, Block B is clear, the hand is empty, Block A is on top of Block C, Block C is on top of Block D, Block B is on the table and Block D is on the table
+   Action: pick up the Block B
+   Reason: The above action is applicable in the current state because its preconditions; Block B is clear, the hand is empty and Block B is on the table, are satisfied in the current state.
+   Resulting State: Block A is clear, the hand is currently holding Block B, Block A is on top of Block C, Block C is on top of Block D and Block D is on the table
+
+12. Current State: Block A is clear, the hand is currently holding Block B, Block A is on top of Block C, Block C is on top of Block D and Block D is on the table
+   Action: stack the Block B on top of the Block A
+   Reason: The above action is applicable in the current state because its preconditions; Block A is clear and the hand is currently holding Block B, are satisfied in the current state.
+   Resulting State: Block B is clear, the hand is empty, Block A is on top of Block C, Block B is on top of Block A, Block C is on top of Block D and Block D is on the table
+
+Final State: Block B is clear, the hand is empty, Block A is on top of Block C, Block B is on top of Block A, Block C is on top of Block D and Block D is on the table
+The goal conditions are satisfied in the final state. Hence, the above plan is valid.
+[PLAN END]

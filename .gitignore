@@ -1,0 +1,32 @@
+# Python / uv
+__pycache__/
+*.py[oc]
+.venv/
+build/
+dist/
+*.egg-info/
+.DS_Store
+
+# Secrets (see harness/.env.example)
+.env
+.env.*
+!.env.example
+
+# Inspect .eval logs (~300 MB). Every table in harness/results/ was built from them; available on request.
+harness/results/logs/
+# Console transcripts of the runs (progress bars and retry warnings)
+harness/results/*.run.log
+
+# Upstream clones (1.2 GB). Each task's SOURCING.md pins the repository and commit.
+# The eight tasks that read upstream files at runtime keep only those files in vendor/;
+# their full clones live next to them in vendor_upstream/.
+tasks/*/vendor_upstream/
+tasks/*/vendor/
+!tasks/boolean_expressions/vendor/
+!tasks/cruxeval/vendor/
+!tasks/cup_shuffling/vendor/
+!tasks/dyck/vendor/
+!tasks/entity_tracking_boxes/vendor/
+!tasks/multiplication/vendor/
+!tasks/nested_arithmetic/vendor/
+!tasks/turing_machine/vendor/

@@ -1,0 +1,14 @@
+# Source: suzgunmirac/BIG-Bench-Hard, cot-prompts/dyck_languages.txt, commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d
+# Paper: Suzgun et al. 2022, "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them," arXiv:2210.09261
+# This is the first full few-shot exemplar (verbatim) from that CoT prompt file.
+
+Q: Complete the rest of the sequence, making sure that the parentheses are closed properly. Input: [ { [
+A: Let's think step by step.
+We should process each input one by one and keep track of the stack configuration.
+0: empty stack
+1: [ ; stack: [
+2: { ; stack: [ {
+3: [ ; stack: [ { [
+Now, we have reached the end. The final stack is "[ { [".
+We will need to pop out "[", "{", "[" one by one in that order.
+So, we need "]", "}", "]". So the answer is ] } ].

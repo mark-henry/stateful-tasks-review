@@ -1,0 +1,58 @@
+{
+  "slug": "synthetic_program_trace",
+  "primary_source": {
+    "paper": "Nye, Andreassen, Gur-Ari, Michalewski, Austin, Bieber, Dohan, Lewkowycz, Bosma, Luan, Sutton, Odena, 'Show Your Work: Scratchpads for Intermediate Computation with Language Models'",
+    "year": 2021,
+    "url": "https://arxiv.org/abs/2112.00114",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": "Nye et al. 2021 (arXiv:2112.00114v1), Appendix C 'Example few-shot prompt for synthetic Python experiments', first worked example (pp. 13-14): def f(v0) with a bounded while-loop, output = f(6). Chosen over the same paper's Figure 1 'remove_Occ' scratchpad example because it is a straight-line + bounded-loop INTEGER program (small ints, +=/*=, one while-loop), matching this task family exactly, whereas Figure 1 traces a string-manipulation function. Saved verbatim to published_trace.txt (transcribed by rendering the PDF at 400 DPI, since the figure/appendix text is a raster image, not selectable text).",
+  "format_description": "Each executed source line is emitted as a `line: <code>` entry (the line reproduced verbatim with its original indentation) immediately followed by a `state: {...}` entry giving the FULL current JSON dict of every local/global variable and its value (not just the one that changed); loops are fully unrolled so each iteration's body lines get their own line/state pairs; the trace opens with an initial `state: {}` before the first line and is bracketed by literal `[BEGIN]`/`[DONE]` markers.",
+  "steps_in_trace": 12,
+  "tokens_per_step": {"gemma2": 76.58333333333333, "llama3": 70.91666666666667, "qwen2": 73.25},
+  "tokens_total": {"gemma2": 919, "llama3": 851, "qwen2": 879},
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 20.0,
+  "state_bounded": false,
+  "state_atomic_tokens": false,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Merrill & Sabharwal, 'The Parallelism Tradeoff: Limitations of Log-Precision Transformers', TACL 2023: straight-line arithmetic over boundedly-many registers with ONE bounded for/while-loop (trip count fixed at generation time, not data-dependent) unrolls into fixed-arity operations over a bounded register set, i.e. constant-depth threshold-circuit (TC0) computation. Contrast with Nye et al. 2021's own 'execution of arbitrary programs' framing (Section 5, MBPP/CodeNet), which allows unbounded loops/recursion/data-dependent control flow and is NOT claimed TC0 by them -- solvable/TC0 applies specifically to this task's constrained bounded-loop design, not to Nye et al.'s general arbitrary-program task.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "depth",
+    "granularity": "1 executed statement; loop iterations are fully unrolled into separate line/state pairs (Nye et al.'s own convention -- Figure 1's caption: 'all loops are unrolled across time')",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Nye et al. 2021, arXiv:2112.00114, Table 2 (Section 5.1, 'Scratchpad Beats Direct Execution for Synthetic Python Programs')",
+      "metric": "per-task execution accuracy (%) on a 200-task synthetic-program test set (small-int variables, while-loops, if-statements, modified from Bieber et al. 2020) -- the closest published task to this one",
+      "models": "137B-parameter pretrained decoder-only Transformer, few-shot (n=3 examples) vs. the same model fine-tuned to convergence",
+      "values": "Direct prediction: few-shot 11%, fine-tuned 20%. Scratchpad tracing: few-shot 26.5%* (*few-shot accuracy criterion relaxed to accept the model's off-by-one variable-name error, see paper Appendix D), fine-tuned 41.5%."
+    },
+    {
+      "paper": "Nye et al. 2021, arXiv:2112.00114, Table 1 (Section 4, 'Polynomial Evaluation')",
+      "metric": "task accuracy (%) on a polynomial-evaluation test set (adjacent scratchpad task, same paper, same trace format style)",
+      "models": "137B-parameter pretrained decoder-only Transformer, few-shot (n=4) vs. an 8B-parameter model fine-tuned for 2000 steps",
+      "values": "Direct prediction: few-shot 8.8%, fine-tuning 31.8%. Scratchpad: few-shot 20.1%, fine-tuning 50.7%."
+    },
+    {
+      "paper": "Nye et al. 2021, arXiv:2112.00114, Table 3 (Section 5.2-5.3, real MBPP-program execution tracing)",
+      "metric": "per-task execution accuracy (%) on a 212-task MBPP test subset, across training-data variants",
+      "models": "137B-parameter pretrained decoder-only Transformer fine-tuned on MBPP / MBPP-aug / MBPP-aug+CodeNet / MBPP-aug+CodeNet+single-line datasets",
+      "values": "Direct execution: MBPP 10.3%, MBPP-aug 5.1%. Scratchpad tracing: MBPP 5.1%, MBPP-aug 17.3%, +CodeNet 26.6% (best), +CodeNet+single-line 25.2%, +single-line only 23.4%."
+    }
+  ],
+  "notes": "AMENDMENT 2 pass. trace_available=true: a genuine worked scratchpad trace for a bounded-loop integer program exists in Nye et al. 2021 Appendix C and is saved verbatim to published_trace.txt (12 line/state step-pairs, v0 doubling 6->12->24 across two while-loop iterations then exiting on the third condition check, final state assigns 'output': 24). Figure 1's remove_Occ example was considered but rejected as primary because it traces string manipulation, not the integer arithmetic + bounded-loop family this task targets; it is documented as a secondary same-paper example in published_trace.txt's header rather than used for the metrics below. No repo was found for Nye et al. 2021 (confirmed again in this pass: the paper's Acknowledgments/References list no code/data release, consistent with SOURCING.md's earlier negative search) -- all data comes from the PDF text itself (16-page version at arxiv.org/pdf/2112.00114, figures/appendices are raster images, transcribed by rendering at 400 DPI).\n\ntokens_per_step / tokens_total: measured with real tokenizers (tokenizers==0.21.1, huggingface_hub==0.32.3) against the FULL published_trace.txt file content (including its header/source-attribution block, per the task instructions), using tokenizer.json pulled live from the ungated ranked mirrors unsloth/gemma-2-2b, NousResearch/Meta-Llama-3-8B, and Qwen/Qwen2-7B. All three fetches succeeded -- no nulls needed. tokens_per_step = tokens_total / 12 (steps_in_trace). Because the count includes ~700 chars of our own header/source-citation text ahead of the actual prompt+trace, these tokens_total/tokens_per_step numbers are somewhat inflated relative to a 'trace body only' measurement; flagged here rather than silently deviating from the literal task instruction ('count tokens on the full published_trace.txt content').\n\nstate_bits=20.0 and state_bounded=false: carried forward from the Phase-1 desk.json as a forward design estimate for OUR eventual generator (2-3 tracked int variables, order-of-magnitude ~20 bits at default knob settings) -- this is a task-definition fact, not derived from the Nye trace, per the amendment's instructions. The Nye Appendix C trace itself is nonetheless a striking real-world confirmation of the exact risk flagged in Phase 1: v0 is doubled every loop iteration (6 -> 12 -> 24), so a variable's magnitude/bit-length grows with the loop trip count (= with depth) in this exact published example, validating state_bounded=false as a live design hazard our generator must explicitly gate (e.g. modular arithmetic, capped trip counts, or accepting growth and documenting it) rather than a hypothetical concern.\n\nstate_atomic_tokens=false (revised from Phase-1's speculative 'true'): now derived from the actual published format rather than assumed. The published state representation is a full JSON dict per step (quoted keys, colons, braces, commas, and a placeholder string for function objects like \"<callable_object f>\"), not a bare symbol -- even though the individual integer VALUES inside it (6, 12, 24, 2, 1, 0) are small enough to plausibly tokenize atomically in most of these three tokenizers, the state token as published is a multi-token JSON fragment, not one atomic token. This also means state_at_fixed_position=true (state always the line immediately following its line:) is a positional guarantee, not a single-token guarantee.\n\nformat_natural=false: confirmed via the paper's own Section 5.1 discussion and Appendix D -- few-shot models do not spontaneously produce this exact line:/state: JSON format correctly; the paper documents a specific, systematic few-shot failure mode (predicting the final line's key as the internal variable name 'v0' instead of 'output') that required a relaxed scoring criterion, underscoring that the format is imposed/trained-for rather than natural.\n\ncontamination_risk='low' for our own generator's freshly-seeded instances (large combinatorial space, same reasoning as Phase 1). Flagged separately: the specific Nye et al. Appendix C f(v0)/f(6) example transcribed into published_trace.txt is a published few-shot prompt from a well-known paper and could itself be memorized by models trained on ML papers -- irrelevant to our own generator's contamination risk as long as we don't reuse it as a literal benchmark instance (we should not).\n\nAll other fields (state_bounded, theory_class, local_redundancy, prompt_recomputable, knob, counterfactual_defined, ground_truth_cost, paraphrasable, interp_tractable) carried forward from the Phase-1 desk.json's design reasoning, which remains valid as task-family/design facts independent of which published trace was found. theory_citation is newly added per the AMENDMENT 2 schema (Phase-1 only cited complexity-theory reasoning inline in notes without a formal citation) -- see theory_citation field for the specific paper and the caveat that this classification is about OUR bounded-loop task design, not Nye et al.'s more general arbitrary-program execution task. Vendored candidates and full search history unchanged from SOURCING.md (wojciechz/learning_to_execute confirmed in this pass, via direct inspection of data.lua's to_data(), to have NO scratchpad -- only final printed output digits; BIG-bench auto_debugging remains a fixed 34-item dataset with no generator, useful only for prompt-phrasing precedent)."
+}

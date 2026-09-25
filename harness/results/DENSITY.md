@@ -1,0 +1,79 @@
+# Load-bearing token density — ballpark from the trace format
+
+## Method
+
+Density = share of CoT tokens whose removal would change the answer. Not measured directly (needs attention masking);
+estimated from the format. For each gold step (split exactly as batch 3's `gold_prefix`), tokens are counted with the
+`Qwen/Qwen3.5-9B` tokenizer on `format_cot` as it sits in the assistant turn, each token assigned to the step its first character
+falls in. `state_tokens` = tokens overlapping the step's state field(s): a per-task regex (`density.py: SPANS`) taking the
+whole value of every field that reports the post-step state (labels such as `stack:` excluded). For the ten tasks with
+`corrupt_step`, every character the corruption rewrites (k = 1, d/2, d; 30 instances) must fall inside an extracted span:
+coverage column below. `state_frac` = mean state tokens / mean step tokens is an upper bound on density (all state
+tokens load-bearing, all scaffolding not). `density_est` = state_frac x mean propagation (BENCH3.md: share of answers
+a corrupted step changes). bits/step from `desk.json` (hanoi rescaled to the disks actually used). n = 30 instances per
+row, `instance_seed(0, depth, i)`, depths and knobs from `plans/batch3.json` (batch-2 plan for tasks not in batch 3).
+Where a format writes the state twice, the canonical-copy-only figure is given too.
+
+## Table
+
+| task | format | depth | step tok | state tok | state_frac | canonical copy (tok / frac) | mean prop. | density_est | bits/step | bits/state tok | estimable | corrupt edits in span | step-length spread |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| nested_arithmetic | published | 7 | 46.69 | 2.87 | 0.062 | 2.4 tok / 0.052 | 0.96 | 0.059 | 11.34 | 3.949 | yes | 121/121 | first 64.9, middle 44.4, last 39.8, within-trace sd 18.7 |
+| turing_machine | published | 4 | 51.27 | 10.15 | 0.198 | · | 0.51 | 0.101 | · | · | yes | 129/129 | first 49.5, middle 51.6, last 52.5, within-trace sd 2.2 |
+| synthetic_program_trace† | published | 32 | 29.86 | 18.46 | 0.618 | · | 0.65 | 0.402 | 20.0 | 1.083 | yes | 91/91 | first 19.0, middle 30.4, last 23.9, within-trace sd 4.7 |
+| dyck | published | 8 | 7.87 | 1.87 | 0.238 | · | 0.53 | 0.126 | 2.0 | 1.069 | yes | 90/90 | first 7.0, middle 7.8, last 8.9, within-trace sd 0.9 |
+| cup_shuffling | published | 12 | 23.35 | 12.9 | 0.552 | · | 0.73 | 0.403 | 2.585 | 0.2 | yes | 287/287 | first 23.1, middle 23.3, last 24.1, within-trace sd 0.4 |
+| s5_composition† | ergonomic | 8 | 56 | 14 | 0.25 | 5.0 tok / 0.089 | 0.89 | 0.223 | 6.907 | 0.493 | yes | 360/360 | first 56.0, middle 56.0, last 56.0, within-trace sd 0.0 |
+| s5_composition† | published | 8 | 17 | 5 | 0.294 | · | · | · | 6.907 | 1.381 | partial | 180/180 | first 17.0, middle 17.0, last 17.0, within-trace sd 0.0 |
+| random_lookup_table† | ergonomic | 24 | 25.62 | 4 | 0.156 | 2.0 tok / 0.078 | 0.99 | 0.155 | 3.322 | 0.83 | yes | 180/180 | first 25.0, middle 25.6, last 26.0, within-trace sd 0.5 |
+| random_lookup_table† | published | 24 | 6.58 | 2 | 0.304 | · | · | · | 3.322 | 1.661 | partial | 90/90 | first 6.0, middle 6.6, last 7.0, within-trace sd 0.5 |
+| threesum† | ergonomic | 8 | 71.54 | 21.54 | 0.301 | 1.0 tok / 0.014 | -0.11 | · | 3.322 | 0.154 | no | 388/388 | first 71.5, middle 71.5, last 71.7, within-trace sd 0.5 |
+| threesum† | published | 8 | 16.3 | 1.3 | 0.08 | · | · | · | 3.322 | 2.555 | no | 90/90 | first 16.1, middle 16.2, last 17.1, within-trace sd 0.6 |
+| hanoi | execute | 16 | 27.32 | 12.89 | 0.472 | · | 0.33 | 0.156 | 6.34 | 0.492 | yes | 180/180 | first 26.9, middle 27.3, last 27.7, within-trace sd 1.0 |
+| cellular_automaton* | cells | 3 | 358 | 61 | 0.17 | 8.0 tok / 0.022 | 0.88 | 0.15 | 8.0 | 0.131 | yes | 407/407 | first 358.0, middle 358.0, last 358.0, within-trace sd 0.0 |
+| addition† | ergonomic | 2 | 21.9 | 2 | 0.091 | · | · | · | 4.32 | 2.16 | partial | · | first 21.4, last 22.4, within-trace sd 0.5 |
+| addition† | published | 2 | 10 | 3 | 0.3 | · | · | · | 4.32 | 1.44 | partial | · | first 11.0, last 9.0, within-trace sd 1.0 |
+| boolean_expressions | published | 12 | 22.3 | 1.08 | 0.049 | 1.0 tok / 0.045 | · | · | 1.0 | 0.923 | partial | · | first 21.0, middle 21.4, last 32.4, within-trace sd 6.2 |
+| blocksworld | published | 2 | 150.32 | 43.35 | 0.288 | · | · | · | 6.97 | 0.161 | partial | · | first 154.6, last 146.0, within-trace sd 4.3 |
+| entity_tracking_boxes* | published | 8 | 16.12 | 10.12 | 0.628 | · | · | · | 94.6 | · | partial | · | first 16.8, middle 15.8, last 17.1, within-trace sd 4.6 |
+| cruxeval | published | 6 | 21.41 | · | · | · | · | · | · | · | no | · | first 21.7, middle 21.7, last 20.0, within-trace sd 4.7 |
+
+## What was counted as state
+
+Step 2 of instance 0 per row, counted state in `⟦ ⟧`; for multi-line steps, the first 2 lines that carry state.
+
+- **nested_arithmetic (published)**: `Let's calculate B = (-8 * 7 + -6 - 0) = ((-8 * 7) + -6 - 0) = (-56 + -6 - 0) = ((-56 + -6) - 0) = (-62 - 0) = ⟦-62⟧.`
+- **turing_machine (published)**: `- Queue State: ⟦[C A D D]⟧`
+- **synthetic_program_trace† (published)**: `state: ⟦{"v0": 9}⟧`
+- **dyck (published)**: `2: ] ; stack: ⟦empty⟧`
+- **cup_shuffling (published)**: `(2) Alice and Bob trade positions: ⟦Alice: striker, Bob: goalkeeper, Claire: benchwarmer⟧.`
+- **s5_composition† (ergonomic)**: `step 2: apply 14532 to 45132 -> take positions 1,4,5,3,2 of 45132 -> ⟦4 3 2 1 5⟧ -> ⟦43215⟧`
+- **s5_composition† (published)**: `step 2: 14532 -> ⟦43215⟧`
+- **random_lookup_table† (ergonomic)**: `step 2: apply F3 to X1. F3: X1 -> ⟦X5⟧. Now at ⟦X5⟧.`
+- **random_lookup_table† (published)**: `T1_3 ⟦X5⟧`
+- **threesum† (ergonomic)**: `(2,4,5): 151 + 411 + 522 -> (1+4+5, 5+1+2, 1+1+2) = ⟦(10, 8, 4)⟧ -> ⟦(0, 8, 4)⟧ mod 10 -> ⟦no⟧`
+- **threesum† (published)**: `2- 4- 5- 5 1 2 ⟦8⟧`
+- **hanoi (execute)**: `move 2: [2, 2, 1] -> ⟦[[4, 1], [3, 2], []]⟧`
+- **cellular_automaton* (cells)**: `cell 1: left c8=0, self c1=0, right c2=1 -> 001 -> ⟦1⟧  row so far: ⟦1_______⟧` / `cell 2: left c1=0, self c2=1, right c3=0 -> 010 -> ⟦1⟧  row so far: ⟦11______⟧`
+- **addition† (ergonomic)**: `tens: 2 + 5 + 0 = 7 -> write ⟦7⟧, carry ⟦0⟧`
+- **addition† (published)**: `, ⟦7 5⟧ C: ⟦0⟧`
+- **boolean_expressions (published)**: `Let's evaluate B: B = ( False or True ) and ( A ) = ( False or True ) and ( False ) = True and False = ⟦False⟧.`
+- **blocksworld (published)**: `Resulting State: ⟦Block B is clear, Block D is clear, the hand is empty, Block B is on top of Block C, Block D is on top of Block A, Block A is on the table and`
+- **entity_tracking_boxes* (published)**: `After op 2: ⟦Box 2 contains nothing, Box 4 contains the sheet⟧.`
+
+## Too wild to estimate
+
+- **threesum (ergonomic)**: propagation is negative (-0.11): the clean continuation already fails (cont 0.34-0.54), so a corrupted step has nothing to break. The load-bearing state is the enumeration position (which candidate triple comes next); it shows up only as the step label (i,j,k), which is scaffolding here and which corrupt_step never touches, so the counted span (sums + verdict) is not what the model relies on. desk.json's 3.32 bits is one mod-10 digit, not this state.
+- **threesum (published)**: format for a model trained from scratch; the real state is the enumeration position, written only as the index label; no propagation measured.
+- **cruxeval (published)**: free prose/code-delta trace: no fixed state field; each step reports only the variable a line touches, so the program state is never written in full.
+- **boolean_expressions (published)**: state is one True/False token per step (1 bit); knockout curve is flat, so it is unclear the value chain is read at all; no propagation measured.
+- **entity_tracking_boxes (published)**: delta format: each step lists only the boxes the operation touched, so the full 94.6-bit state is never written in one step (bits per state token left blank); no propagation measured.
+- **blocksworld (published)**: the step restates the previous state (Current State) and the action's preconditions in prose; only the Resulting State line counted; no propagation measured.
+- **published † formats (s5_composition, random_lookup_table, threesum, addition)**: state_frac is real, but no propagation was measured in these formats (batch 3 ran the ergonomic ones), and batch 1 showed they do not transfer by prompting.
+
+## Estimable, with caveats
+
+- **cellular_automaton (cells)**: the running row is rewritten after every cell (9 copies of the 8-cell row per generation); the full count is an upper bound, the canonical row: line alone is the floor.
+- **hanoi (execute)**: each state is recomputable from the prompt's move list, so the model can route around a corrupted state (propagation 0.33); density reflects that redundancy, not a bad measurement.
+- **turing_machine (published)**: desk.json has no state_bits (queue length unbounded), so no bits per state token.
+- **s5_composition, random_lookup_table (ergonomic)**: the ergonomic step writes the new state twice (spaced and packed; mapping result and `Now at`); both copies are counted. The canonical-copy column gives the single-copy floor.

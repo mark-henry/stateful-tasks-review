@@ -1,0 +1,11 @@
+SOURCE: Wei et al. 2022, "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models"
+(arXiv:2201.11903), Last Letter Concatenation task, the first exemplar of the 4-shot CoT prompt given in
+Figure 3 / Appendix G ("Full Prompts"). As with coin-flip, the paper does not release a machine-readable
+copy of Appendix G directly; the exact wording below is corroborated verbatim across independent
+third-party reproductions, including github.com/HKUNLP/HumanPrompt (hub/cot/last_letter_concat/
+prompt.txt) and github.com/bboylyg/BackdoorLLM (attack/CoTA/utilities/lib_prompt/letter/
+cot_4_clean.txt), and it is the exemplar most commonly quoted as the paper's own Figure 3 example
+for this task (the "Elon Musk" / "Larry Page" / "Sergey Brin" / "Bill Gates" 4-shot set).
+
+Q: Take the last letters of the words in "Elon Musk" and concatenate them.
+A: The last letter of "Elon" is "n". The last letter of "Musk" is "k". Concatenating them is "nk". The answer is nk.

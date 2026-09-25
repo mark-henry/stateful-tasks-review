@@ -1,0 +1,72 @@
+# Source: arXiv:2506.06941 (Shojaee, Mirzadeh, Alizadeh, Horton, Bengio, Farajtabar, "The Illusion of
+# Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem
+# Complexity", Apple, 2025), Appendix -- Tower of Hanoi system/user prompt template. Text verified
+# verbatim via WebFetch against https://arxiv.org/html/2506.06941, and cross-checked byte-for-byte
+# against vendor/illusion_of_thinking/run_hanoi_experiment.py (commit
+# fc1bc18128b914b54579397c36bb88cf281ef404), whose SYSTEM_PROMPT / USER_PROMPT_TEMPLATE constants
+# reproduce this exact appendix text (that repo is a third-party reproduction of the paper, not an
+# Apple release; Apple published no code/data -- see SOURCING.md). The worked example embedded in the
+# system prompt ("a solution might be: moves = [[1, 0, 2], ...]") is the only concrete example
+# trace/exemplar published for this task; the paper does not print an actual model-generated
+# reasoning/CoT trace anywhere in the main text or appendix (confirmed via the same fetch).
+#
+# This is the PLANNING formulation (model produces the full move list from scratch), which is the
+# paper's own/AS-PUBLISHED formulation -- distinct from the tracking reformulation this project's
+# earlier phase was asked to consider for task.py.
+
+=== SYSTEM PROMPT (verbatim) ===
+You are a helpful assistant. Solve this puzzle for me.
+There are three pegs and n disks of different sizes stacked on the first peg. The disks are numbered from 1 (smallest) to n (largest). Disk moves in this puzzle should follow:
+
+1. Only one disk can be moved at a time.
+
+2. Each move consists of taking the upper disk from one stack and placing it on top of another stack.
+
+3. A larger disk may not be placed on top of a smaller disk.
+
+The goal is to move the entire stack to the third peg.
+Example: With 3 disks numbered 1 (smallest), 2, and 3 (largest), the initial state is [[3, 2, 1], [], []], and a solution might be:
+
+moves = [[1, 0, 2], [2, 0, 1], [1, 2, 1], [3, 0, 2],
+         [1, 1, 0], [2, 1, 2], [1, 0, 2]]
+
+This means: Move disk 1 from peg 0 to peg 2, then move disk 2 from peg 0 to peg 1, and so on.
+Requirements:
+
+• When exploring potential solutions in your thinking process, always include the corresponding complete list of moves.
+
+• The positions are 0-indexed (the leftmost peg is 0).
+
+• Ensure your final answer includes the complete list of moves in the format:
+  moves = [[disk_id, from_peg, to_peg], ...]
+
+=== USER PROMPT TEMPLATE (verbatim, {N} = disk count) ===
+I have a puzzle with {N} disks of different sizes with
+Initial configuration:
+
+• Peg 0: {N} (bottom), ... 2, 1 (top)
+
+• Peg 1: (empty)
+
+• Peg 2: (empty)
+
+Goal configuration:
+
+• Peg 0: (empty)
+
+• Peg 1: (empty)
+
+• Peg 2: {N} (bottom), ... 2, 1 (top)
+
+Rules:
+
+• Only one disk can be moved at a time.
+
+• Only the top disk from any stack can be moved.
+
+• A larger disk may not be placed on top of a smaller disk.
+
+Find the sequence of moves to transform the initial configuration into the goal configuration.
+
+=== THE WORKED EXAMPLE TRACE ITSELF (extracted, N=3, 7 steps = 2^3-1 optimal) ===
+moves = [[1, 0, 2], [2, 0, 1], [1, 2, 1], [3, 0, 2], [1, 1, 0], [2, 1, 2], [1, 0, 2]]

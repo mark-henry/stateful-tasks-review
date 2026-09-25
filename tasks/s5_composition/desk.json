@@ -1,0 +1,58 @@
+{
+  "slug": "s5_composition",
+  "primary_source": {
+    "paper": "Liu, Ash, Goel, Krishnamurthy, Zhang - Transformers Learn Shortcuts to Automata",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.10749",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": "belindal/state-tracking, permutation_task.py, commit fc63e2db262265f42e9d2ac5c05888284f843b4c (paper: \"(How) Do Language Models Track State?\", arXiv:2503.02854) -- NOT the primary source paper, which has no textual trace; see notes.",
+  "format_description": "A 'story' is a space-separated sequence of depth many actions, each action a length-n digit string (a permutation of 1..n in one-line notation, e.g. '53124' for n=5); resulting states are NOT written inline and must be tracked internally / are recorded only for separate supervision.",
+  "steps_in_trace": 8,
+  "tokens_per_step": {"gemma2": 6.0, "llama3": 3.0, "qwen2": 5.875},
+  "tokens_total": {"gemma2": 48, "llama3": 24, "qwen2": 47},
+  "step_delimitable": true,
+  "state_at_fixed_position": false,
+  "state_bits": 6.906890595608519,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "NC1-hard",
+  "theory_citation": "Barrington 1989 (bounded-width polynomial-size branching programs recognize exactly NC1): the word problem for any non-solvable finite group is NC1-complete under projections; S_n for n>=5 is non-solvable, so this task is NC1-complete for n>=5 (schema only offers 'NC1-hard', which is implied by 'complete'). n=3/n=4 give solvable S_n, a contrast case outside this hardness class (Barrington & Thérien 1988 classify solvable-group word problems into weaker classes).",
+  "local_redundancy": "low",
+  "prompt_recomputable": true,
+  "answer_space": 120,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "depth (called story_length in the repo's CLI, --story-length)",
+    "granularity": "integer >=1; repo CLI default is 100 for actual training corpora, this trace uses 8 for a short readable example",
+    "tokens_flat_across_knob": true
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Liu, Ash, Goel, Krishnamurthy, Zhang, \"Transformers Learn Shortcuts to Automata\" (arXiv:2210.10749, NeurIPS 2023)",
+      "metric": "existence of low-effective-depth 'shortcut' solutions (e.g. layerwise probing / minimum depth needed for the trained transformer to match automaton state) as a function of group solvability",
+      "models": "small transformers trained from scratch (not open-weight LLMs); exact architecture sizes not independently re-verified in this desk pass",
+      "values": "qualitative only in this desk pass: shortcuts exist and generalize for solvable groups (e.g. S3/S4 word problems, modular counting) but not for non-solvable S5; precise accuracy/depth numbers from the paper were not re-extracted here and should be pulled from the PDF directly before quoting"
+    },
+    {
+      "paper": "\"(How) Do Language Models Track State?\" (arXiv:2503.02854, code at github.com/belindal/state-tracking)",
+      "metric": "length-generalization accuracy of GPT-2/Pythia-70M fine-tuned on S3 vs S5 permutation-tracking stories; activation patching / probing localization of the tracked state",
+      "models": "gpt2, EleutherAI/pythia-70M (per repo README)",
+      "values": "not independently re-extracted from the paper in this desk pass (would require reading the PDF's result tables/figures directly rather than the repo README alone)"
+    },
+    {
+      "paper": "Merrill & Sabharwal, \"The Expressive Power of Transformers with Chain of Thought\" (arXiv:2310.07923, ICLR 2024)",
+      "metric": "theoretical circuit-complexity bounds on what constant-depth transformers can compute with T steps of CoT",
+      "models": "n/a (theoretical, no trained models)",
+      "values": "theoretical bounds only, not a benchmark accuracy number; relevant conclusion is that a small/logarithmic number of CoT steps keeps a transformer within TC0/NC1-adjacent power, motivating why a non-solvable-group word problem (needing genuinely many serial steps) is a meaningful CoT-forcing test case"
+    }
+  ],
+  "notes": "AMENDMENT 2 pass: describes the task AS PUBLISHED, not our rigid reformatted interface. Key finding: NONE of the three originally-assigned sources (Liu et al. 2022, Barrington 1989, Merrill & Sabharwal 2023) publish an actual textual CoT/scratchpad trace of an S5 instance -- Liu et al.'s setup feeds transformers the automaton as direct categorical/numeric sequences for final-state classification (no natural-language text at all, so no BPE-tokenizer-relevant trace exists for that paper's OWN format), and the other two are pure theory with no example instances. published_trace.txt therefore uses the closest available published, code-verified TEXTUAL rendering of the identical S_n word-problem construction: belindal/state-tracking (arXiv:2503.02854), a follow-up paper that actually trains GPT-2/Pythia on this task as text. This substitution is flagged in trace_source and published_trace.txt's header for transparency. Notable published-format property: the tracked STATE is never written into the visible text at all (only the action sequence is shown) -- state_at_fixed_position is therefore false and state_atomic_tokens is null (inapplicable, not merely false, since no state token exists in-line to judge). Token counts measured with real tokenizer.json files: Qwen/Qwen2-7B fetched directly from the official HF repo; google/gemma-2-2b and meta-llama/Meta-Llama-3-8B are gated on HF (401 GatedRepoError when fetched anonymously), so their tokenizer.json files were instead pulled from unsloth/gemma-2-2b and NousResearch/Meta-Llama-3-8B respectively -- both are well-known unmodified re-hosts of the identical official tokenizer (same vocab/merges), used only to route around HF's gating, not a substitute algorithm. state_bits uses the n=5 instance shown in the trace (log2(5!)=log2(120)); the n knob (3 vs 5) is the theory-relevant knob and changes theory_class qualitatively, but the schema's single `knob` field is used for depth per SPEC's stated difficulty-knob convention -- n's effect is called out separately in theory_citation."
+}

@@ -1,0 +1,72 @@
+{
+  "slug": "cruxeval",
+  "primary_source": {
+    "paper": "Gu, Roziere, Leather, Solar-Lezama, Synnaeve, Wang. 'CRUXEval: A Benchmark for Code Reasoning, Understanding and Execution.'",
+    "year": 2024,
+    "url": "https://arxiv.org/abs/2401.03065",
+    "repo": "https://github.com/facebookresearch/cruxeval"
+  },
+  "trace_available": true,
+  "trace_source": "vendor/cruxeval_repo/prompts.py, make_cot_output_prompt() few-shot example (facebookresearch/cruxeval, commit 190faf16d175b5847b0af05d937872b1fb395942); byte-identical copy also present in vendor/lm_eval_harness_cruxeval/cruxeval_output_cot.yaml. The paper's own Appendix D.3 ('Chain of Thought Prompts') presumably contains this same text but was not retrievable via available web-fetch tools in this pass (the HTML render truncates before Appendix D.3, no PDF-appendix fetch succeeded); the repo's embedded copy is used as the acceptable substitute per task instructions.",
+  "format_description": "A step is an informal, freely-worded natural-language sentence inside a [THOUGHT] block, in this exemplar numbered 1-5 (e.g. '3. Inside the function, s is concatenated with itself, so s becomes \"hihi\".'); it narrates one unit of execution (function entry, an assignment, the return computation) but the prompt instruction ('Execute the program step by step... provide the full assertion... in [ANSWER] and [/ANSWER] tags') never mandates numbering or any per-line template, so the numbered format is only an artifact of this one hardcoded example, not an enforced convention.",
+  "steps_in_trace": 5,
+  "tokens_per_step": {
+    "gemma2": 85.4,
+    "llama3": 76.0,
+    "qwen2": 80.0
+  },
+  "tokens_total": {
+    "gemma2": 427,
+    "llama3": 380,
+    "qwen2": 400
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": false,
+  "state_bits": null,
+  "state_bounded": false,
+  "state_atomic_tokens": false,
+  "theory_class": "P-complete",
+  "theory_citation": "Coarse label for general program/circuit evaluation (Ladner 1975, 'The circuit value problem is log space complete for P'); CRUXEval instances are deliberately filtered by the paper's authors to short (3-13 line), low-memory, human-solvable-in-under-a-minute functions, so sampled instances sit far below worst-case complexity -- this label describes the task class, not the typical instance.",
+  "local_redundancy": "medium",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "executed-line / trace-length count of the sampled function (not a generator parameter -- the published dataset of 800 code/input/output triples is fixed; 'depth' would have to be an emergent bucketing of which fixed instance is sampled)",
+    "granularity": "per-instance (discrete, dictated by the natural line-count distribution of the fixed 800-row dataset, not chosen by us)",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": false,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "high",
+  "paraphrasable": false,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Gu et al. 2024, arXiv:2401.03065",
+      "metric": "pass@1, CRUXEval-O (output prediction) with CoT prompting",
+      "models": "GPT-4",
+      "values": "81% (abstract) / 81.9% (body text) -- same headline figure at different reported precision"
+    },
+    {
+      "paper": "Gu et al. 2024, arXiv:2401.03065",
+      "metric": "pass@1, CRUXEval-I (input prediction) with CoT prompting",
+      "models": "GPT-4",
+      "values": "75%"
+    },
+    {
+      "paper": "Gu et al. 2024, arXiv:2401.03065",
+      "metric": "pass@1, CRUXEval-I / CRUXEval-O with CoT prompting",
+      "models": "Code Llama 34B",
+      "values": "50% (input prediction), 46% (output prediction)"
+    },
+    {
+      "paper": "Gu et al. 2024, arXiv:2401.03065",
+      "metric": "qualitative effect of CoT vs direct prediction (full per-model Table 3 breakdown, Appendix C.2, was not retrievable via available web tools in this pass)",
+      "models": "Code Llama 13B, GPT-3.5-Turbo, WizardCoder, Phind, StarCoder, DeepSeek-Coder, and other leaderboard models",
+      "values": "CoT improves Code Llama 34B and GPT-4 on both directions; improves GPT-3.5-Turbo on output prediction only; does not help Code Llama 13B on either direction; exact per-model numbers for the rest of the leaderboard were not confirmed in this pass"
+    }
+  ],
+  "notes": "AMENDMENT 2 pass: desk.json fully replaced (not merged) to describe the task AS PUBLISHED -- the paper's own 1-shot [PYTHON]/[THOUGHT]/[ANSWER] CoT prompt (make_cot_output_prompt in vendor/cruxeval_repo/prompts.py), not SPEC.md's rigid one-line-per-step format and not a settrace-based mechanical variant (no settrace-based tracer or Instance.steps/states structure exists in any vendored candidate -- see SOURCING.md). Key changes from the old phase-1 desk.json: trace_available is now true (a real worked example was found and saved verbatim to published_trace.txt, whereas phase 1 had no trace and left tokens/state fields null pending an implementation decision); step_delimitable is now true and state_at_fixed_position is now false, both newly assessed directly against the published exemplar's free-prose numbered-sentence format (informal narration, not a fixed-column state slot) rather than assumed; tokens_per_step/tokens_total are now real tokenizer counts (tokenizers package, tokenizer.json pulled from HF hub for unsloth/gemma-2-2b, NousResearch/Meta-Llama-3-8B, Qwen/Qwen2-7B -- all three ungated mirrors fetched successfully, no nulls needed) instead of the phase-1 nulls. Carried forward genuinely-still-true facts from phase 1: contamination_risk=high (CRUXEval is a well-known, actively-leaderboarded, HF-hosted public benchmark in circulation since Jan 2024 -- still the single biggest weakness of this task as a clean stateful-CoT probe); the P-complete theory_class as a coarse worst-case label for general program evaluation, with the same caveat that the paper's own instances are curated to be short and low-memory (now expressed via theory_citation); state_bounded=false and state_atomic_tokens=false because the tracked execution state (local variables / intermediate values, e.g. the string 'hihi' in the worked example) is an arbitrary Python value embedded in prose, sized and typed per-instance, and does not tokenize atomically. answer_space=null (unbounded: an arbitrary Python literal). knob.tokens_flat_across_knob=null because this desk pass has only one worked example at one trace length (5 narrated steps for a 2-line function body) -- assessing flatness across trace length would require sampling and rendering CoT length across multiple dataset instances, which is generator/implementation work out of scope for a desk pass against a single published exemplar. published_trace.txt's steps_in_trace=5 counts the five numbered natural-language sentences inside the [THOUGHT] block of the one hardcoded few-shot example in make_cot_output_prompt; this is an informal count (CRUXEval's CoT is not a rigid one-line-per-step format) -- see format_description."
+}

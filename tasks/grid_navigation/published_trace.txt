@@ -1,0 +1,18 @@
+# Source: suzgunmirac/BIG-Bench-Hard, cot-prompts/navigate.txt, commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d
+# Paper: Suzgun et al. 2022, "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them," arXiv:2210.09261
+# This is the first full few-shot exemplar (verbatim) from that CoT prompt file.
+
+Q: If you follow these instructions, do you return to the starting point? Turn left. Turn around. Turn left. Take 7 steps. Take 2 steps. Take 4 steps. Take 8 steps.
+Options:
+- Yes
+- No
+A: Let's think step by step.
+We start at the origin (0, 0), facing the positive y-axis.
+(1) Turn left: (0, 0), facing the negative x-axis.
+(2) Turn around: (0, 0), facing the positive x-axis.
+(3) Turn left: (0, 0), facing the positive y-axis.
+(4) Take 7 steps: (0, 7), facing the positive y-axis.
+(5) Take 2 steps: (0, 9), facing the positive y-axis.
+(6) Take 4 steps: (0, 13), facing the positive y-axis.
+(7) Take 8 steps: (0, 21), facing the positive y-axis.
+Since (0, 21) is not (0, 0), we are not where we started. So the answer is No.

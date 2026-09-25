@@ -1,0 +1,17 @@
+SOURCE: Wei et al. 2022, "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models"
+(arXiv:2201.11903), Coin Flip task, one exemplar from the 8-shot CoT prompt given in Figure 3 / Appendix
+G ("Full Prompts"). The paper does not itself release a machine-readable copy of Appendix G; the exact
+wording below is corroborated verbatim (character-for-character) across at least a dozen independent
+third-party reproductions of the paper's official prompt, including
+github.com/ArmelRandy/tree-of-problems (path: top/coin/prompts/cot/cot8.txt, this exemplar is the 7th of
+8 shots in that file), github.com/HKUNLP/HumanPrompt (hub/cot/coinflip/prompt.txt),
+github.com/xlang-ai/batch-prompting (hub/cot_chat/coinflip/prompt.txt), and several independent
+notebooks/configs (aws-samples, sileix/chain-of-draft, wjn1996/Chain-of-Knowledge). This specific
+Q/A pair (Maybelle/Shalonda) is also the one most commonly quoted as the paper's Figure 3 example.
+No raw-parity-variant trace was found published anywhere (Anil et al. 2022 does not release a
+scratchpad exemplar in any text-extractable form we could locate; their scratchpad figure is
+image-only in the PDF) -- trace_available for the raw-parity variant is false; only the coin-flip
+framing has a recoverable published trace.
+
+Q: A coin is heads up. Maybelle flips the coin. Shalonda does not flip the coin. Is the coin still heads up?
+A: The coin was flipped by Maybelle. So the coin was flipped 1 time, which is an odd number. The coin started heads up, so after an odd number of flips, it will be tails up. So the answer is no.

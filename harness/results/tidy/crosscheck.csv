@@ -1,0 +1,24 @@
+table,key,field,expected_in_file,got_from_logs,class
+SUMMARY.md,addition,task marker,addition*,addition†,stale marker (pre-AMENDMENT 5 registry)
+SUMMARY.md,addition/qwen9b,cell,"— (no gap; best gap 0.00 at d8, acc 0.00)","— (no gap; best gap 0.00 at d24, acc 0.00)",tie-break only (SUMMARY takes shallowest of equal gaps; tidy takes deepest)
+SUMMARY.md,boolean_expressions/qwen9b,cell,"d4 / d12 (0.70, 0.36)","d3 / d12 (0.70, 0.36)",number/verdict
+SUMMARY.md,cellular_automaton,verdict,passes through with * (format never prompted in source: no published CoT trace; format is ours),passes through with * (no published CoT trace; format is ours),marker wording (pre-AMENDMENT 5)
+SUMMARY.md,dyck/ds,cell,"d4 / d16 (0.96, 0.68)","d4 / d24 (0.86, 0.68)",tie-break only (SUMMARY takes shallowest of equal gaps; tidy takes deepest)
+SUMMARY.md,nested_arithmetic/qwen9b,cell,"d2 / d5 (1.00, 0.96)","d2 / d7 (0.96, 0.96)",tie-break only (SUMMARY takes shallowest of equal gaps; tidy takes deepest)
+SUMMARY.md,random_lookup_table,task marker,random_lookup_table*,random_lookup_table†,stale marker (pre-AMENDMENT 5 registry)
+SUMMARY.md,random_lookup_table/ds,cell,"d2 / d2 (1.00, 0.86)","d2 / d24 (1.00, 0.86)",tie-break only (SUMMARY takes shallowest of equal gaps; tidy takes deepest)
+SUMMARY.md,s5_composition,task marker,s5_composition*,s5_composition†,stale marker (pre-AMENDMENT 5 registry)
+SUMMARY.md,synthetic_program_trace,task marker,synthetic_program_trace*,synthetic_program_trace†,stale marker (pre-AMENDMENT 5 registry)
+SUMMARY.md,threesum,task marker,threesum*,threesum†,stale marker (pre-AMENDMENT 5 registry)
+SUMMARY.md,threesum/llama70b,cell,"— (no gap; best gap 0.04 at d4, acc 0.52)","— (no gap; best gap 0.04 at d22, acc 0.58)",tie-break only (SUMMARY takes shallowest of equal gaps; tidy takes deepest)
+SUMMARY.md,threesum,verdict,passes through with * (format never prompted in source: Pfau 2024: trained from scratch on the token format),passes through with † (Pfau 2024: trained from scratch on the token format),marker wording (pre-AMENDMENT 5)
+plans/batch3.json,nested_arithmetic,depth vs deepest passing 9B depth,7,20,plan choice
+plans/batch3.json,turing_machine,depth vs deepest passing 9B depth,4,5,plan choice
+plans/batch3.json,synthetic_program_trace,depth vs deepest passing 9B depth,32,48,plan choice
+plans/batch3.json,dyck,depth vs deepest passing 9B depth,8,16,plan choice
+plans/batch3.json,cup_shuffling,depth vs deepest passing 9B depth,12,16,plan choice
+plans/batch3.json,random_lookup_table,depth vs deepest passing 9B depth,24,48,plan choice
+DESK.md vs desk.json,blocksworld,state_bits,6.0,6.9700,desk disagreement (DESK.md used)
+DESK.md vs desk.json,turing_machine,answer_space,64,null,desk disagreement (DESK.md used)
+DESK.md vs desk.json,turing_machine,state_bits,10.2,null,desk disagreement (DESK.md used)
+DESK.md vs desk.json,turing_machine,state_bounded,Y,False,desk disagreement (DESK.md used)

@@ -1,0 +1,60 @@
+{
+  "slug": "grid_navigation",
+  "primary_source": {
+    "paper": "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.09261",
+    "repo": "https://github.com/suzgunmirac/BIG-Bench-Hard (commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d)"
+  },
+  "trace_available": true,
+  "trace_source": "vendor/BIG-Bench-Hard/cot-prompts/navigate.txt (commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d), first full few-shot exemplar, saved verbatim to published_trace.txt",
+  "format_description": "Each step is a parenthesized index followed by the instruction and the resulting state, e.g. '(4) Take 7 steps: (0, 7), facing the positive y-axis.', tracking absolute (x, y) position and compass heading after each instruction, preceded by an initial 'We start at the origin (0, 0), facing the positive y-axis.' line and closed by a final comparison-to-origin sentence giving the Yes/No answer.",
+  "steps_in_trace": 7,
+  "tokens_per_step": {
+    "gemma2": 30.0,
+    "llama3": 27.0,
+    "qwen2": 27.29
+  },
+  "tokens_total": {
+    "gemma2": 210,
+    "llama3": 189,
+    "qwen2": 191
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 2.0,
+  "state_bounded": true,
+  "state_atomic_tokens": false,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Turns compose by relabeling/negating axes and moves compose by addition; since all transformations commute, the final position is a prefix sum of signed step vectors, which is TC0-computable (iterated addition/comparison is a classic TC0 problem, cf. Vollmer 1999 ch.4). Liu et al. 2022 studies gridworld/compositional-generalization instruction-following with a related dead-reckoning structure, cited per assignment, though the exact venue for 'Liu et al. 2022 gridworld' could not be pinned down with confidence in this sourcing pass -- flagged honestly rather than guessed.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 2,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "number of instructions (trace depth) and per-instruction step/turn magnitude",
+    "granularity": "integer instruction count; canonical BBH examples run roughly 2-10 instructions with single- or double-digit step magnitudes",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "medium",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Suzgun et al. 2022 (arXiv:2210.09261), BIG-Bench-Hard",
+      "metric": "3-shot CoT vs answer-only (no-CoT) accuracy on the canonical fixed navigate example set; computed directly from vendored code-davinci-002 eval_metrics.jsonl (not transcribed from the paper's typeset table)",
+      "models": "code-davinci-002 (Codex)",
+      "values": "no-CoT (direct) 50.4% -> CoT 96.4%"
+    },
+    {
+      "paper": "Srivastava et al. 2022 (BIG-bench), arXiv:2206.04615",
+      "metric": "multiple_choice_grade (binary Yes/No accuracy) on the full 1000-example navigate/task.json, at 0/1/2/5-shot, no CoT; read directly from vendored vendor/google-BIG-bench-navigate results file",
+      "models": "PaLM 535B",
+      "values": "0-shot 51.7%, 1-shot 55.8%, 2-shot 56.0%, 5-shot 55.3% (random baseline 50%)"
+    }
+  ],
+  "notes": "tokens_per_step / tokens_total measured with real tokenizers loaded via huggingface_hub + tokenizers on published_trace.txt's CoT completion (the 'A: ...' portion only, 7 numbered instruction steps), no hand estimates: gemma2 tokenizer.json from unsloth/gemma-2-2b (ungated mirror of google/gemma-2-2b, which returned 401 gated), llama3 tokenizer.json from NousResearch/Meta-Llama-3-8B (ungated mirror of meta-llama/Meta-Llama-3-8B, also 401 gated), qwen2 tokenizer.json from Qwen/Qwen2-7B directly (ungated). state_bits=2.0 covers only the fixed-cardinality heading component (4 discrete headings = log2(4) bits); the (x,y) position fields are a SEPARATE, in-principle-unbounded contribution whose magnitude (and hence digit count) grows with instance depth -- empirically verified via the loaded tokenizers that single-digit coordinates (e.g. ' 7', ' 9') are one atomic token across all three tokenizers, but two-digit coordinates (e.g. ' 21', ' 13') split into individual digit tokens for gemma2 and qwen2 (llama3 keeps some two-digit numbers as one token), so state_atomic_tokens is set false overall since atomicity is instance-magnitude-dependent, not reliable once coordinates exceed one digit. Because of that same magnitude-dependence, tokens_flat_across_knob is left null rather than guessed: line length is flat with respect to raw instruction count but grows slightly as accumulated coordinate magnitude crosses digit boundaries, and this was not empirically measured across a range of depths in this pass (would require generating instances at multiple depths, which is implementation work deferred past this sourcing/desk-metrics phase). state_bounded=true reflects that the per-step state is always a fixed 3-field tuple (x, y, heading) regardless of depth (structural boundedness) -- contrast with dyck's genuinely variable-arity stack state. This desk.json describes the canonical BBH task exactly as published (binary Yes/No, per AMENDMENT 2); the assignment's richer (x,y,heading)-per-step / non-binary-answer variant is a planned reformatting, not the published format, and is out of scope for these desk metrics -- see SOURCING.md for that gap."
+}

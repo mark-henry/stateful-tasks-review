@@ -1,0 +1,52 @@
+{
+  "slug": "modn_counter",
+  "primary_source": {
+    "paper": "Liu, Bingbin; Ash, Jordan T.; Goel, Surbhi; Krishnamurthy, Akshay; Zhang, Cyril. \"Transformers Learn Shortcuts to Automata.\"",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.10749",
+    "repo": null
+  },
+  "trace_available": false,
+  "trace_source": null,
+  "format_description": "Neither source paper renders a natural-language or numeric worked example; the published format (Liu et al. 2022, Definition 2 and Appendix B.1.1) is an abstract token-tagging setup: an input symbol sequence (sigma_1,...,sigma_T) with sigma_t drawn uniformly from Sigma={0,...,n-1} (the full cyclic group C_n, tested for n=2..8), fed through a per-symbol learned embedding (not a subword tokenizer) to a shallow Transformer/LSTM, which predicts the state sequence (q_1,...,q_T) with q_t=(q_{t-1}+sigma_t) mod n at every position (a token-tagging/labeling task, not a generated CoT string).",
+  "steps_in_trace": null,
+  "tokens_per_step": {"gemma2": null, "llama3": null, "qwen2": null},
+  "tokens_total": {"gemma2": null, "llama3": null, "qwen2": null},
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 3.0,
+  "state_bounded": true,
+  "state_atomic_tokens": true,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Liu, Ash, Goel, Krishnamurthy, Zhang, \"Transformers Learn Shortcuts to Automata\" (arXiv:2210.10749, ICLR 2023 oral): Definition 2 defines the \"mod-n modular counter semiautomaton\" Q=Sigma={0,...,n-1}, delta(q,sigma)=(q+sigma) mod n -- exactly this task. Lemma 6 constructs a depth-1 Transformer simulating it exactly (embedding dim 3, width 4nT), and Theorem 2 (\"Transformer Krohn-Rhodes\") shows constant-depth shortcuts exist for any solvable semiautomaton, of which the modular counter is the base-case atom; cyclic groups C_n are abelian, hence solvable, hence in TC0, contrasted against non-solvable S5/A5 (NC1-complete) as the paper's hard case.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 8,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "N (cyclic group order / modulus) and T (sequence length, i.e. depth/number of moves)",
+    "granularity": "N: integer group order -- Liu et al.'s main experiments test C2 through C8 (Appendix B.1.1); the independently-vendored BeeGass/Group-Dataset-Generator generator confirms the same construction extended up to C30. T: integer sequence length -- Liu et al.'s main experiments fix T=100 (chosen so |Sigma|^100 sequences are far larger than the training sample budget, ruling out memorization).",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": null,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Liu, Ash, Goel, Krishnamurthy, Zhang, \"Transformers Learn Shortcuts to Automata\", arXiv:2210.10749, ICLR 2023",
+      "metric": "Sufficient Transformer depth/width for exact simulation of the mod-n modular counter semiautomaton (Lemma 6); empirical in-distribution accuracy of trained GPT-2-style Transformers vs. depth for cyclic groups C2-C8 among 19 semiautomata (Appendix B.1.1, Figure 3a truncated table)",
+      "models": "Theoretical construction: depth-1 Transformer (embedding dim 3, MLP width 4nT, 1 attention head). Empirical: GPT-2-configuration Transformers (embed/MLP width 512, 8 heads, depth 1-16) and a 1-layer LSTM (hidden dim 128), trained from scratch, not a named production LLM.",
+      "values": "Lemma 6: exact simulation achievable at depth=1 for any n, T (explicit width/weight-norm bounds given, e.g. width=4nT, weight norm <= 4nT+2). Empirical accuracy-vs-depth results for C2-C8 specifically are reported only graphically/in a truncated table (Figure 3a, Appendix B.1); no per-group numeric accuracy values are given as text in the paper body."
+    },
+    {
+      "paper": "Merrill, Petty, Sabharwal, \"The Illusion of State in State-Space Models\", ICML 2024, arXiv:2404.08819",
+      "metric": "Full-sequence test accuracy vs. minimum model depth required, for the word-problem token-tagging task on three 60-element groups (A5, A4xZ5, and Z60 -- Z60 is an abelian/cyclic group encoding mod-60 addition, i.e. this task with N=60), across transformer, S4, Mamba, RNN, and IDS4 architectures",
+      "models": "Transformer, single-layer RNN, S4, Mamba, and IDS4 (input-dependent S4 variant), trained from scratch on synthetic sequences g_0 g_1 ... g_n",
+      "values": "Reported only graphically (Figure 3: minimum depth for 90% test accuracy vs. sequence length); no per-group tabulated numbers for Z60 alone are given in the paper text. Qualitative finding: RNN and IDS4 solve all three groups (including Z60) at constant depth regardless of sequence length; transformer, S4, and Mamba need depth growing with sequence length for the two non-commutative groups (A5, A4xZ5), consistent with Z60 being the easiest/commutative case though the paper does not isolate a separate Z60-only curve description in text."
+    }
+  ],
+  "notes": "AMENDMENT 2 pass (desk metrics against the PUBLISHED implementation). Searched exhaustively for a genuine worked/rendered example trace of the mod-N counter task in: (1) Liu et al. 2022 (fetched full text via ar5iv and the arXiv PDF, pdftotext'd, grepped for 'counter'/'example'/'cyclic'/'Appendix B.1.1') -- found the EXACT formal task definition (Definition 2: 'mod-n modular counter semiautomaton', delta(q,sigma)=(q+sigma) mod n) and the exact experimental setup (Appendix B.1.1: cyclic groups C2..C8, generator set = full group, sequence length T=100, scratchpad+recency-bias ablation in B.2.4 citing Nye et al. 2021 CoT scratchpad by name for a C2 length-generalization experiment) -- but NO literal numeric example sequence or rendered text trace is ever printed anywhere in the paper; Figure 1's 'mod-2 counter' is a state-diagram graphic, not text. (2) Merrill et al. 2024 (same fetch+grep method) -- found that Z60 ('an abelian group encoding mod-60 addition', Section 3.2) is literally this task with N=60, used as one of three baseline groups in Section 6's token-tagging experiment (input g_0 g_1...g_n, per-step label = product of first i elements) -- again purely abstract notation, no literal numbers. The paper's only literal step-by-step trace (a concrete move sequence '(a8,a7),(a1,b1),(c8,c6),...' in Section 3.2) is for the A5/S5 chess-move reduction, a DIFFERENT (non-cyclic, non-solvable) group, so it was not treated as this task's trace. (3) Vendored BeeGass/Group-Dataset-Generator repo (see SOURCING.md) -- confirmed purely numeric input_sequence/target fields, no natural-language or rendered-text example anywhere (README.md, HF_README.md, and all generator/test files checked). Conclusion: trace_available=false, no trace invented; steps_in_trace/tokens_per_step/tokens_total nulled per AMENDMENT 2 step 2, and no tokenizer install/fetch was attempted since there is no trace text to tokenize (would be moot). format_description, step_delimitable, state_at_fixed_position, state_atomic_tokens, theory_class, local_redundancy, prompt_recomputable, error_diagnostic, counterfactual_defined, ground_truth_cost, contamination_risk, paraphrasable, and interp_tractable were judged answerable directly from the papers' formal task definitions/theory (Definition 2, Theorem 2, Lemma 6, the B.1.1 experimental setup) independent of trace availability. format_natural set to null (not false) because the published format is not a natural-language scratchpad at all -- it is a per-position token-tagging label sequence with custom per-symbol embeddings (no BPE tokenizer used in either paper), so 'would a model emit this unprompted' does not have a well-posed answer against a text corpus. state_bits and answer_space are given for a representative N=8 (log2(8)=3.0), the largest cyclic group in Liu et al.'s main experiment set (C2..C8); both scale with the N knob in general (state_bits=log2(N), answer_space=N) -- see the knob field. primary_source is Liu et al. 2022 rather than Merrill et al. 2024 because Liu et al. define and name this exact construction (Definition 2, 'modular counter semiautomaton') and run it as a dedicated experimental family (cyclic groups C2-C8 with the full generator set, matching this task's 'move amounts given upfront' framing), whereas Merrill et al. only include Z60 as one incidental baseline among three 60-element groups without a dedicated counter framing; Merrill et al. 2024 is still cited in published_data as the more recent, larger-N (N=60), architecture-comparison (SSM/Mamba/S4 vs Transformer vs RNN) empirical source. Liu et al.'s own code was never released (confirmed in the prior sourcing pass, SOURCING.md); this pass relied on the arXiv PDF/ar5iv text directly, not their (nonexistent) repo."
+}

@@ -1,0 +1,729 @@
+========================================================================================
+depth=6  seed=0  answer=2
+========================================================================================
+--- prompt ---
+Consider the following Python function:
+
+def f(v0):
+  v0 *= 2
+  v0 -= 1
+  v0 *= 2
+  return v0
+
+output = f(1)
+
+What is the value of output?
+
+--- gold CoT (format_cot) ---
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(1)
+state: {"v0": 1}
+line:   v0 *= 2
+state: {"v0": 2}
+line:   v0 -= 1
+state: {"v0": 1}
+line:   v0 *= 2
+state: {"v0": 2}
+line:   return v0
+state: {"f": "<callable_object f>", "output": 2}
+
+[DONE]
+Answer: 2
+
+========================================================================================
+depth=6  seed=1  answer=16
+========================================================================================
+--- prompt ---
+Consider the following Python function:
+
+def f(v0):
+  v6 = 1
+  v0 *= 2
+  v7 = 0
+  return v0
+
+output = f(8)
+
+What is the value of output?
+
+--- gold CoT (format_cot) ---
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(8)
+state: {"v0": 8}
+line:   v6 = 1
+state: {"v0": 8, "v6": 1}
+line:   v0 *= 2
+state: {"v0": 16, "v6": 1}
+line:   v7 = 0
+state: {"v0": 16, "v6": 1, "v7": 0}
+line:   return v0
+state: {"f": "<callable_object f>", "output": 16}
+
+[DONE]
+Answer: 16
+
+========================================================================================
+depth=6  seed=2  answer=4
+========================================================================================
+--- prompt ---
+Consider the following Python function:
+
+def f(v0):
+  v0 *= 2
+  v0 += 2
+  v5 = 1
+  return v0
+
+output = f(1)
+
+What is the value of output?
+
+--- gold CoT (format_cot) ---
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(1)
+state: {"v0": 1}
+line:   v0 *= 2
+state: {"v0": 2}
+line:   v0 += 2
+state: {"v0": 4}
+line:   v5 = 1
+state: {"v0": 4, "v5": 1}
+line:   return v0
+state: {"f": "<callable_object f>", "output": 4}
+
+[DONE]
+Answer: 4
+
+========================================================================================
+depth=72  seed=0  answer=578
+========================================================================================
+--- prompt ---
+Consider the following Python function:
+
+def f(v0):
+  v0 += 2
+  v1 = 3
+  while v1 > 0:
+    v1 -= 1
+    v0 -= 1
+  v0 += v1
+  v4 = 1
+  while v4 > 0:
+    v4 -= 1
+    v0 *= 2
+    v0 += 1
+  v1 = 3
+  while v1 > 0:
+    v1 -= 1
+    v0 += 2
+  v1 = 2
+  while v1 > 0:
+    v1 -= 1
+    v0 += 0
+  v1 = 2
+  while v1 > 0:
+    v1 -= 1
+    v0 *= 2
+    v4 *= 2
+  v1 -= 1
+  v4 = 1
+  while v4 > 0:
+    v4 -= 1
+    v0 *= 2
+    v1 += 2
+  v0 += v4
+  v0 -= 0
+  v0 *= 2
+  v4 += 2
+  v0 *= 2
+  v0 *= 2
+  v0 -= v4
+  v0 -= 0
+  v4 *= 2
+  v4 += 0
+  v0 += v4
+  v4 *= 2
+  v4 -= 1
+  v0 -= 0
+  return v0
+
+output = f(2)
+
+What is the value of output?
+
+--- gold CoT (format_cot) ---
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(2)
+state: {"v0": 2}
+line:   v0 += 2
+state: {"v0": 4}
+line:   v1 = 3
+state: {"v0": 4, "v1": 3}
+line:   while v1 > 0:
+state: {"v0": 4, "v1": 3}
+line:     v1 -= 1
+state: {"v0": 4, "v1": 2}
+line:     v0 -= 1
+state: {"v0": 3, "v1": 2}
+line:   while v1 > 0:
+state: {"v0": 3, "v1": 2}
+line:     v1 -= 1
+state: {"v0": 3, "v1": 1}
+line:     v0 -= 1
+state: {"v0": 2, "v1": 1}
+line:   while v1 > 0:
+state: {"v0": 2, "v1": 1}
+line:     v1 -= 1
+state: {"v0": 2, "v1": 0}
+line:     v0 -= 1
+state: {"v0": 1, "v1": 0}
+line:   while v1 > 0:
+state: {"v0": 1, "v1": 0}
+line:   v0 += v1
+state: {"v0": 1, "v1": 0}
+line:   v4 = 1
+state: {"v0": 1, "v1": 0, "v4": 1}
+line:   while v4 > 0:
+state: {"v0": 1, "v1": 0, "v4": 1}
+line:     v4 -= 1
+state: {"v0": 1, "v1": 0, "v4": 0}
+line:     v0 *= 2
+state: {"v0": 2, "v1": 0, "v4": 0}
+line:     v0 += 1
+state: {"v0": 3, "v1": 0, "v4": 0}
+line:   while v4 > 0:
+state: {"v0": 3, "v1": 0, "v4": 0}
+line:   v1 = 3
+state: {"v0": 3, "v1": 3, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 3, "v1": 3, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 3, "v1": 2, "v4": 0}
+line:     v0 += 2
+state: {"v0": 5, "v1": 2, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 5, "v1": 2, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 5, "v1": 1, "v4": 0}
+line:     v0 += 2
+state: {"v0": 7, "v1": 1, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 7, "v1": 1, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 7, "v1": 0, "v4": 0}
+line:     v0 += 2
+state: {"v0": 9, "v1": 0, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 9, "v1": 0, "v4": 0}
+line:   v1 = 2
+state: {"v0": 9, "v1": 2, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 9, "v1": 2, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 9, "v1": 1, "v4": 0}
+line:     v0 += 0
+state: {"v0": 9, "v1": 1, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 9, "v1": 1, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 9, "v1": 0, "v4": 0}
+line:     v0 += 0
+state: {"v0": 9, "v1": 0, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 9, "v1": 0, "v4": 0}
+line:   v1 = 2
+state: {"v0": 9, "v1": 2, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 9, "v1": 2, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 9, "v1": 1, "v4": 0}
+line:     v0 *= 2
+state: {"v0": 18, "v1": 1, "v4": 0}
+line:     v4 *= 2
+state: {"v0": 18, "v1": 1, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 18, "v1": 1, "v4": 0}
+line:     v1 -= 1
+state: {"v0": 18, "v1": 0, "v4": 0}
+line:     v0 *= 2
+state: {"v0": 36, "v1": 0, "v4": 0}
+line:     v4 *= 2
+state: {"v0": 36, "v1": 0, "v4": 0}
+line:   while v1 > 0:
+state: {"v0": 36, "v1": 0, "v4": 0}
+line:   v1 -= 1
+state: {"v0": 36, "v1": -1, "v4": 0}
+line:   v4 = 1
+state: {"v0": 36, "v1": -1, "v4": 1}
+line:   while v4 > 0:
+state: {"v0": 36, "v1": -1, "v4": 1}
+line:     v4 -= 1
+state: {"v0": 36, "v1": -1, "v4": 0}
+line:     v0 *= 2
+state: {"v0": 72, "v1": -1, "v4": 0}
+line:     v1 += 2
+state: {"v0": 72, "v1": 1, "v4": 0}
+line:   while v4 > 0:
+state: {"v0": 72, "v1": 1, "v4": 0}
+line:   v0 += v4
+state: {"v0": 72, "v1": 1, "v4": 0}
+line:   v0 -= 0
+state: {"v0": 72, "v1": 1, "v4": 0}
+line:   v0 *= 2
+state: {"v0": 144, "v1": 1, "v4": 0}
+line:   v4 += 2
+state: {"v0": 144, "v1": 1, "v4": 2}
+line:   v0 *= 2
+state: {"v0": 288, "v1": 1, "v4": 2}
+line:   v0 *= 2
+state: {"v0": 576, "v1": 1, "v4": 2}
+line:   v0 -= v4
+state: {"v0": 574, "v1": 1, "v4": 2}
+line:   v0 -= 0
+state: {"v0": 574, "v1": 1, "v4": 2}
+line:   v4 *= 2
+state: {"v0": 574, "v1": 1, "v4": 4}
+line:   v4 += 0
+state: {"v0": 574, "v1": 1, "v4": 4}
+line:   v0 += v4
+state: {"v0": 578, "v1": 1, "v4": 4}
+line:   v4 *= 2
+state: {"v0": 578, "v1": 1, "v4": 8}
+line:   v4 -= 1
+state: {"v0": 578, "v1": 1, "v4": 7}
+line:   v0 -= 0
+state: {"v0": 578, "v1": 1, "v4": 7}
+line:   return v0
+state: {"f": "<callable_object f>", "output": 578}
+
+[DONE]
+Answer: 578
+
+========================================================================================
+depth=72  seed=1  answer=643
+========================================================================================
+--- prompt ---
+Consider the following Python function:
+
+def f(v0):
+  v7 = 3
+  while v7 > 0:
+    v7 -= 1
+    v0 += 1
+  v9 = 3
+  while v9 > 0:
+    v9 -= 1
+    v0 *= 2
+    v0 *= 2
+  v0 += 2
+  v0 -= 2
+  v7 = 1
+  while v7 > 0:
+    v7 -= 1
+    v0 -= v7
+    v9 += 2
+  v7 = 3
+  while v7 > 0:
+    v7 -= 1
+    v9 += 0
+  v9 *= 2
+  v0 += v7
+  v9 -= 2
+  v0 += 1
+  v9 = 3
+  while v9 > 0:
+    v9 -= 1
+    v0 += 0
+  v0 -= v7
+  v0 += 1
+  v9 = 1
+  while v9 > 0:
+    v9 -= 1
+    v0 -= 0
+    v7 -= 0
+  v0 += 1
+  v0 -= 0
+  return v0
+
+output = f(7)
+
+What is the value of output?
+
+--- gold CoT (format_cot) ---
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(7)
+state: {"v0": 7}
+line:   v7 = 3
+state: {"v0": 7, "v7": 3}
+line:   while v7 > 0:
+state: {"v0": 7, "v7": 3}
+line:     v7 -= 1
+state: {"v0": 7, "v7": 2}
+line:     v0 += 1
+state: {"v0": 8, "v7": 2}
+line:   while v7 > 0:
+state: {"v0": 8, "v7": 2}
+line:     v7 -= 1
+state: {"v0": 8, "v7": 1}
+line:     v0 += 1
+state: {"v0": 9, "v7": 1}
+line:   while v7 > 0:
+state: {"v0": 9, "v7": 1}
+line:     v7 -= 1
+state: {"v0": 9, "v7": 0}
+line:     v0 += 1
+state: {"v0": 10, "v7": 0}
+line:   while v7 > 0:
+state: {"v0": 10, "v7": 0}
+line:   v9 = 3
+state: {"v0": 10, "v7": 0, "v9": 3}
+line:   while v9 > 0:
+state: {"v0": 10, "v7": 0, "v9": 3}
+line:     v9 -= 1
+state: {"v0": 10, "v7": 0, "v9": 2}
+line:     v0 *= 2
+state: {"v0": 20, "v7": 0, "v9": 2}
+line:     v0 *= 2
+state: {"v0": 40, "v7": 0, "v9": 2}
+line:   while v9 > 0:
+state: {"v0": 40, "v7": 0, "v9": 2}
+line:     v9 -= 1
+state: {"v0": 40, "v7": 0, "v9": 1}
+line:     v0 *= 2
+state: {"v0": 80, "v7": 0, "v9": 1}
+line:     v0 *= 2
+state: {"v0": 160, "v7": 0, "v9": 1}
+line:   while v9 > 0:
+state: {"v0": 160, "v7": 0, "v9": 1}
+line:     v9 -= 1
+state: {"v0": 160, "v7": 0, "v9": 0}
+line:     v0 *= 2
+state: {"v0": 320, "v7": 0, "v9": 0}
+line:     v0 *= 2
+state: {"v0": 640, "v7": 0, "v9": 0}
+line:   while v9 > 0:
+state: {"v0": 640, "v7": 0, "v9": 0}
+line:   v0 += 2
+state: {"v0": 642, "v7": 0, "v9": 0}
+line:   v0 -= 2
+state: {"v0": 640, "v7": 0, "v9": 0}
+line:   v7 = 1
+state: {"v0": 640, "v7": 1, "v9": 0}
+line:   while v7 > 0:
+state: {"v0": 640, "v7": 1, "v9": 0}
+line:     v7 -= 1
+state: {"v0": 640, "v7": 0, "v9": 0}
+line:     v0 -= v7
+state: {"v0": 640, "v7": 0, "v9": 0}
+line:     v9 += 2
+state: {"v0": 640, "v7": 0, "v9": 2}
+line:   while v7 > 0:
+state: {"v0": 640, "v7": 0, "v9": 2}
+line:   v7 = 3
+state: {"v0": 640, "v7": 3, "v9": 2}
+line:   while v7 > 0:
+state: {"v0": 640, "v7": 3, "v9": 2}
+line:     v7 -= 1
+state: {"v0": 640, "v7": 2, "v9": 2}
+line:     v9 += 0
+state: {"v0": 640, "v7": 2, "v9": 2}
+line:   while v7 > 0:
+state: {"v0": 640, "v7": 2, "v9": 2}
+line:     v7 -= 1
+state: {"v0": 640, "v7": 1, "v9": 2}
+line:     v9 += 0
+state: {"v0": 640, "v7": 1, "v9": 2}
+line:   while v7 > 0:
+state: {"v0": 640, "v7": 1, "v9": 2}
+line:     v7 -= 1
+state: {"v0": 640, "v7": 0, "v9": 2}
+line:     v9 += 0
+state: {"v0": 640, "v7": 0, "v9": 2}
+line:   while v7 > 0:
+state: {"v0": 640, "v7": 0, "v9": 2}
+line:   v9 *= 2
+state: {"v0": 640, "v7": 0, "v9": 4}
+line:   v0 += v7
+state: {"v0": 640, "v7": 0, "v9": 4}
+line:   v9 -= 2
+state: {"v0": 640, "v7": 0, "v9": 2}
+line:   v0 += 1
+state: {"v0": 641, "v7": 0, "v9": 2}
+line:   v9 = 3
+state: {"v0": 641, "v7": 0, "v9": 3}
+line:   while v9 > 0:
+state: {"v0": 641, "v7": 0, "v9": 3}
+line:     v9 -= 1
+state: {"v0": 641, "v7": 0, "v9": 2}
+line:     v0 += 0
+state: {"v0": 641, "v7": 0, "v9": 2}
+line:   while v9 > 0:
+state: {"v0": 641, "v7": 0, "v9": 2}
+line:     v9 -= 1
+state: {"v0": 641, "v7": 0, "v9": 1}
+line:     v0 += 0
+state: {"v0": 641, "v7": 0, "v9": 1}
+line:   while v9 > 0:
+state: {"v0": 641, "v7": 0, "v9": 1}
+line:     v9 -= 1
+state: {"v0": 641, "v7": 0, "v9": 0}
+line:     v0 += 0
+state: {"v0": 641, "v7": 0, "v9": 0}
+line:   while v9 > 0:
+state: {"v0": 641, "v7": 0, "v9": 0}
+line:   v0 -= v7
+state: {"v0": 641, "v7": 0, "v9": 0}
+line:   v0 += 1
+state: {"v0": 642, "v7": 0, "v9": 0}
+line:   v9 = 1
+state: {"v0": 642, "v7": 0, "v9": 1}
+line:   while v9 > 0:
+state: {"v0": 642, "v7": 0, "v9": 1}
+line:     v9 -= 1
+state: {"v0": 642, "v7": 0, "v9": 0}
+line:     v0 -= 0
+state: {"v0": 642, "v7": 0, "v9": 0}
+line:     v7 -= 0
+state: {"v0": 642, "v7": 0, "v9": 0}
+line:   while v9 > 0:
+state: {"v0": 642, "v7": 0, "v9": 0}
+line:   v0 += 1
+state: {"v0": 643, "v7": 0, "v9": 0}
+line:   v0 -= 0
+state: {"v0": 643, "v7": 0, "v9": 0}
+line:   return v0
+state: {"f": "<callable_object f>", "output": 643}
+
+[DONE]
+Answer: 643
+
+========================================================================================
+depth=72  seed=2  answer=-82
+========================================================================================
+--- prompt ---
+Consider the following Python function:
+
+def f(v0):
+  v0 += 0
+  v6 = 2
+  while v6 > 0:
+    v6 -= 1
+    v0 += 0
+    v0 -= 2
+  v1 = 1
+  while v1 > 0:
+    v1 -= 1
+    v6 *= 2
+    v0 -= v6
+  v0 += v1
+  v6 = 3
+  while v6 > 0:
+    v6 -= 1
+    v0 -= 2
+    v0 *= 2
+  v0 += 1
+  v0 -= v1
+  v1 = 1
+  while v1 > 0:
+    v1 -= 1
+    v0 += v6
+  v0 *= 2
+  v6 += 0
+  v6 = 3
+  while v6 > 0:
+    v6 -= 1
+    v0 += v1
+  v6 = 1
+  while v6 > 0:
+    v6 -= 1
+    v1 -= 0
+    v0 -= 0
+  v0 += 2
+  v6 *= 2
+  v0 += 2
+  v6 += 0
+  v0 += v6
+  v0 += v6
+  v0 -= 0
+  v0 += 0
+  v6 *= 2
+  v0 += 0
+  v6 -= 0
+  return v0
+
+output = f(2)
+
+What is the value of output?
+
+--- gold CoT (format_cot) ---
+[BEGIN]
+
+state: {}
+line: def f(v0):
+state: {"f": "<callable_object f>"}
+line: output = f(2)
+state: {"v0": 2}
+line:   v0 += 0
+state: {"v0": 2}
+line:   v6 = 2
+state: {"v0": 2, "v6": 2}
+line:   while v6 > 0:
+state: {"v0": 2, "v6": 2}
+line:     v6 -= 1
+state: {"v0": 2, "v6": 1}
+line:     v0 += 0
+state: {"v0": 2, "v6": 1}
+line:     v0 -= 2
+state: {"v0": 0, "v6": 1}
+line:   while v6 > 0:
+state: {"v0": 0, "v6": 1}
+line:     v6 -= 1
+state: {"v0": 0, "v6": 0}
+line:     v0 += 0
+state: {"v0": 0, "v6": 0}
+line:     v0 -= 2
+state: {"v0": -2, "v6": 0}
+line:   while v6 > 0:
+state: {"v0": -2, "v6": 0}
+line:   v1 = 1
+state: {"v0": -2, "v6": 0, "v1": 1}
+line:   while v1 > 0:
+state: {"v0": -2, "v6": 0, "v1": 1}
+line:     v1 -= 1
+state: {"v0": -2, "v6": 0, "v1": 0}
+line:     v6 *= 2
+state: {"v0": -2, "v6": 0, "v1": 0}
+line:     v0 -= v6
+state: {"v0": -2, "v6": 0, "v1": 0}
+line:   while v1 > 0:
+state: {"v0": -2, "v6": 0, "v1": 0}
+line:   v0 += v1
+state: {"v0": -2, "v6": 0, "v1": 0}
+line:   v6 = 3
+state: {"v0": -2, "v6": 3, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -2, "v6": 3, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -2, "v6": 2, "v1": 0}
+line:     v0 -= 2
+state: {"v0": -4, "v6": 2, "v1": 0}
+line:     v0 *= 2
+state: {"v0": -8, "v6": 2, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -8, "v6": 2, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -8, "v6": 1, "v1": 0}
+line:     v0 -= 2
+state: {"v0": -10, "v6": 1, "v1": 0}
+line:     v0 *= 2
+state: {"v0": -20, "v6": 1, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -20, "v6": 1, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -20, "v6": 0, "v1": 0}
+line:     v0 -= 2
+state: {"v0": -22, "v6": 0, "v1": 0}
+line:     v0 *= 2
+state: {"v0": -44, "v6": 0, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -44, "v6": 0, "v1": 0}
+line:   v0 += 1
+state: {"v0": -43, "v6": 0, "v1": 0}
+line:   v0 -= v1
+state: {"v0": -43, "v6": 0, "v1": 0}
+line:   v1 = 1
+state: {"v0": -43, "v6": 0, "v1": 1}
+line:   while v1 > 0:
+state: {"v0": -43, "v6": 0, "v1": 1}
+line:     v1 -= 1
+state: {"v0": -43, "v6": 0, "v1": 0}
+line:     v0 += v6
+state: {"v0": -43, "v6": 0, "v1": 0}
+line:   while v1 > 0:
+state: {"v0": -43, "v6": 0, "v1": 0}
+line:   v0 *= 2
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:   v6 += 0
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:   v6 = 3
+state: {"v0": -86, "v6": 3, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -86, "v6": 3, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -86, "v6": 2, "v1": 0}
+line:     v0 += v1
+state: {"v0": -86, "v6": 2, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -86, "v6": 2, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -86, "v6": 1, "v1": 0}
+line:     v0 += v1
+state: {"v0": -86, "v6": 1, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -86, "v6": 1, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:     v0 += v1
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:   v6 = 1
+state: {"v0": -86, "v6": 1, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -86, "v6": 1, "v1": 0}
+line:     v6 -= 1
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:     v1 -= 0
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:     v0 -= 0
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:   while v6 > 0:
+state: {"v0": -86, "v6": 0, "v1": 0}
+line:   v0 += 2
+state: {"v0": -84, "v6": 0, "v1": 0}
+line:   v6 *= 2
+state: {"v0": -84, "v6": 0, "v1": 0}
+line:   v0 += 2
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v6 += 0
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v0 += v6
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v0 += v6
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v0 -= 0
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v0 += 0
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v6 *= 2
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v0 += 0
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   v6 -= 0
+state: {"v0": -82, "v6": 0, "v1": 0}
+line:   return v0
+state: {"f": "<callable_object f>", "output": -82}
+
+[DONE]
+Answer: -82
+

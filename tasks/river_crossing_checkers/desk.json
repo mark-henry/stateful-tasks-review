@@ -1,0 +1,104 @@
+{
+  "slug": "river_crossing_checkers",
+  "primary_source": {
+    "paper": "Shojaee, Mirzadeh, Alizadeh, Horton, Bengio, Farajtabar, \"The Illusion of Thinking: Understanding the Strengths and Limitations of Reasoning Models via the Lens of Problem Complexity\"",
+    "year": 2025,
+    "url": "https://arxiv.org/abs/2506.06941",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": {
+    "checker_jumping": "NOT in the Apple paper (it has no CJ qualitative-example trace, only a rule description + prescribed-algorithm text). Used instead: Song, Yue, Zhang, \"Thinking Isn't an Illusion\", arXiv:2507.17699 (2025), official repo github.com/magiclinux/thinking_is_not_an_illusion @ 1075515f839f21d67543d5193a8c95a2bc2b0564, notebook Scratchpad/DeepSeek/R1/DeepSeekR1_Scratchpad_Checker_Jumping.ipynb (all cell outputs) -- saved verbatim to published_trace_checker_jumping.txt. Uses Apple's own task text/format verbatim, on a real DeepSeek-R1 API response.",
+    "river_crossing": "arXiv:2506.06941v3, Appendix \"Qualitative Examples of Thoughts in LRMs\", \"Example of failures in constraint understanding and verification for River Crossing with N=2\" -- the paper's own transcript of a real Claude-3.7-Sonnet (thinking) response -- saved verbatim to published_trace_river_crossing.txt."
+  },
+  "format_description": {
+    "checker_jumping": "Tool-augmented 'scratchpad' harness: each round the model returns JSON {\"moves\": [[color,from,to],...], \"scratchpad\": \"state = [...]\", \"finished\": bool}; state is a Python-list-literal string of the full board, refreshed once per ROUND (a harness-chosen batch of 1-7 moves), not once per individual move.",
+    "river_crossing": "Free-form <think> CoT; the model spontaneously (not instructed to) interleaves prose with lines of the form 'Move k: [people] cross L->R/R->L' followed by 'State after Move k: a1: R, a2: L, A1: R, A2: L, boat on Right', ending in a final 'moves = [[...], ...]' answer line."
+  },
+  "steps_in_trace": {
+    "checker_jumping": 6,
+    "river_crossing": 5
+  },
+  "tokens_per_step": {
+    "checker_jumping": {
+      "gemma2": 225.83,
+      "llama3": 215.67,
+      "qwen2": 216.33
+    },
+    "river_crossing": {
+      "gemma2": 242.0,
+      "llama3": 230.6,
+      "qwen2": 231.0
+    }
+  },
+  "tokens_total": {
+    "checker_jumping": {
+      "gemma2": 1355,
+      "llama3": 1294,
+      "qwen2": 1298
+    },
+    "river_crossing": {
+      "gemma2": 1210,
+      "llama3": 1153,
+      "qwen2": 1155
+    }
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": {
+    "checker_jumping": "log2(C(2N+1,N)) board-arrangements upper bound; N=3 (board len 7): log2(35)=5.13 bits; growth with N is the knob, not depth",
+    "river_crossing": "2N+1 bits upper bound (bank of each of 2N people + boat side); N=2: 5 bits; legal (safety-respecting) states are a small fraction of this"
+  },
+  "state_bounded": true,
+  "state_atomic_tokens": false,
+  "theory_class": "unclear",
+  "theory_citation": "General propositional STRIPS plan existence is PSPACE-complete (Bylander, 1994, 'The computational complexity of propositional STRIPS planning', Artificial Intelligence 69). Neither puzzle family is given a complexity-class label in Shojaee et al. 2025 itself. The generalized river-crossing / jealous-husbands family admits known polynomial closed-form constructive solutions for fixed boat-capacity rules (Efimova, 2018, 'River Crossing Problems: Algebraic Approach', arXiv:1802.09369); checker/peg jumping (frogs-and-toads) admits a known greedy O(N^2)-move constructive solution, consistent with Shojaee et al.'s own (N+1)^2-1 minimum-move formula (Sec. 3.1). So plan EXISTENCE and one constructive plan are polynomial for these specific rule sets, but the paper evaluates whether an LLM finds/verifies a full valid sequence, which is not itself assigned a class here -- hence 'unclear' rather than asserting P-completeness or TC0.",
+  "local_redundancy": "low",
+  "prompt_recomputable": false,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "N (checkers per side / actor-agent pairs)",
+    "granularity": "integer, N>=1",
+    "tokens_flat_across_knob": false
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "medium",
+  "paraphrasable": true,
+  "format_natural": {
+    "checker_jumping": false,
+    "river_crossing": true
+  },
+  "interp_tractable": {
+    "checker_jumping": true,
+    "river_crossing": false
+  },
+  "published_data": [
+    {
+      "paper": "Shojaee et al. 2025, arXiv:2506.06941v3",
+      "metric": "Accuracy vs N and thinking-tokens vs N, Checker Jumping and River Crossing (Fig. 5, 6, 18; App A.6-A.8); no numeric per-N table in text, curves only",
+      "models": "Claude 3.7 Sonnet (thinking/non-thinking), DeepSeek-R1/V3, o3-mini (medium/high), DeepSeek-R1-Distill-Qwen-32B, QwQ-32B, Qwen2.5-32B",
+      "values": "Text-extractable only: RC accuracy collapses from N=3 (11-move solution) across models; Claude-3.7-Sonnet-thinking's first invalid RC move occurs at move 4 of 11 for N=3; QwQ-32B collapse point ~N=2 for Checker Jumping, ~N=3 for River Crossing; providing the solving algorithm in-prompt for Checker Jumping does not shift its collapse point (Fig. 8, 17); v3 restricts River Crossing analysis to N<6 because k=4 becomes puzzle-optimal at N>=6"
+    },
+    {
+      "paper": "Opus & Lawsen 2025, 'The Illusion of the Illusion of Thinking', arXiv:2506.09250 (comment)",
+      "metric": "Solvability critique, not new accuracy numbers",
+      "models": "none run",
+      "values": "Proves Apple's River Crossing instances with boat capacity k=3 and N>5 are mathematically unsolvable (classic Missionaries-and-Cannibals bound N<=2k-1), so those scored 'failures' are evaluation artifacts, not model failures"
+    },
+    {
+      "paper": "Dellibarda Varela 2025, 'Rethinking the Illusion of Thinking', arXiv:2507.01231; result CSVs vendored at vendor/Rethinking-The-Illusion-of-Thinking",
+      "metric": "Success rate (of ~10 runs) and mean total tokens per N, using Apple's exact prompts",
+      "models": "gemini-2.5-pro-preview-06-05",
+      "values": "Checker Jumping (baseline): N=2 2/4, N=4 8/11, N=5 6/12, N=6 7/9, N=7 3/10, N=8 2/10, N=9 1/10, N=10 2/10, N=11 1/10, N=12 1/10, N=13 0/10; mean total tokens ~7.2k (N=2) rising to ~21-23k (N>=5). River Crossing unfiltered: N=2,k=2 10/10; N=3,k=2 8/10; N=4,k=3 4/10; N=5,k=3 1/10; N=6/7/8,k=3 0/10,0/7,0/11 (all mathematically unsolvable per Opus&Lawsen). River Crossing solvable-only re-run: N=2 100%, N=3 50%, N=4 20%, N=5(k=3) 0%; with k=4: N=5 100%, N=10 70%, N=20 80%, N=50 80%, N=100 90%"
+    },
+    {
+      "paper": "Song, Yue, Zhang 2025, 'Thinking Isn't an Illusion', arXiv:2507.17699; README vendored at vendor/thinking_is_not_an_illusion",
+      "metric": "Success rate over 5 runs per N, River Crossing, under tool-augmented prompting strategies",
+      "models": "DeepSeek-R1, DeepSeek-V3 (PoT / Scratchpad / Think-and-Execute); Qwen3 thinking/non-thinking and Llama3 also tested per-repo but not tabulated in README",
+      "values": "River Crossing, N=3,5,7,9,11,13: PoT DeepSeek-R1 4/5 at every N, DeepSeek-V3 0/5 at every N; Scratchpad DeepSeek-R1 1/5 at N=3 else 0/5, DeepSeek-V3 0/5 at every N; Think-and-Execute 0/5 for both models at every N. (N>=6 instances are the k=3-unsolvable cases per Opus&Lawsen unless their tool changed effective k -- treat with caution.)"
+    }
+  ],
+  "notes": "This desk.json describes BOTH sub-puzzles AS ORIGINALLY PUBLISHED (planning: model emits a full move sequence; a simulator validates it), per AMENDMENT 2 -- NOT our library's future tracking-formulation redesign (that was scoped in SOURCING.md/the phase-1 desk.json, now superseded in spirit though still relevant background). Fields that differ by sub-puzzle are nested as {\"checker_jumping\": ..., \"river_crossing\": ...} under the exact schema key; fields with one shared answer are given flat. Two real published traces were found (published_trace_checker_jumping.txt, published_trace_river_crossing.txt); tokens_per_step/tokens_total were measured with real tokenizer.json files pulled via huggingface_hub for Qwen/Qwen2-7B (ungated), NousResearch/Meta-Llama-3-8B (ungated Llama-3 mirror; meta-llama/Meta-Llama-3-8B is gated with no HF token in this environment), and unsloth/gemma-2-2b (ungated Gemma-2 mirror; google/gemma-2-2b is gated) -- no hand-estimates. steps_in_trace counts model-response rounds (CJ) or explicitly-labeled Move/State lines in the accepted solution path (RC); RC's full trace also contains ~4 abandoned attempts with their own reused 'Move 1/2/3' labels before the accepted path, which is why local_redundancy=low, prompt_recomputable=false, and interp_tractable=false for RC specifically -- the true next move is not visible in the prompt and requires backtracking search, and an interpretability probe would have to first disambiguate which 'Move 1' belongs to the eventually-accepted branch. Checker Jumping's JSON-scratchpad format is comparatively clean (interp_tractable=true) but was imposed by the harness's tool-augmentation prompt rather than emitted unprompted (format_natural=false), whereas River Crossing's 'State after Move k' annotation was volunteered by the model without being asked for it (format_natural=true) -- worth flagging since it argues the model finds narrating boat/bank state genuinely useful for this puzzle, unprompted. contamination_risk=medium (not low) because both puzzle families (missionaries-and-cannibals / jealous-husbands; frogs-and-toads / checker-jumping) are extremely well-known recreational-math and intro-AI-course puzzles, likely present verbatim in pretraining data for small N and the classic 3-couple/simple form -- though Apple's specific N-generalized a_i/A_i notation and R/B/_ board notation, run at larger N, are less likely to appear verbatim online. state_atomic_tokens=false confirmed by direct tokenization: quoted board symbols like \"'R'\" split into 2-3 tokens (quote-fused) and actor/agent ids like 'a1'/'A1' split into 2 tokens (letter+digit) on all three tested tokenizers. theory_class left 'unclear' rather than forcing solvable/TC0, NC1-hard, or P-complete: the underlying puzzle families have known polynomial constructive solutions (see theory_citation) but the paper does not classify the LLM-facing plan-verification task itself, and general STRIPS planning is PSPACE-complete."
+}

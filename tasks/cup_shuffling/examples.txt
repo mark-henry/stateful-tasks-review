@@ -1,0 +1,174 @@
+==============================================================================
+depth=2  objects=3  scenario=book  seed=100  answer=(B) (Moby Dick)
+==============================================================================
+PROMPT:
+Alice, Bob, and Claire are friends and avid readers who occasionally trade books. At the start of the semester, they each buy one new book: Alice gets Lolita, Bob gets Moby Dick, and Claire gets The Pearl.
+As the semester proceeds, they start trading around the new books. First, Alice and Claire swap books. Finally, Bob and Claire swap books. At the end of the semester, Claire has
+Options:
+(A) Lolita
+(B) Moby Dick
+(C) The Pearl
+
+GOLD:
+(0) At the start: Alice: Lolita, Bob: Moby Dick, Claire: The Pearl.
+(1) Alice and Claire swap books: Alice: The Pearl, Bob: Moby Dick, Claire: Lolita.
+(2) Bob and Claire swap books: Alice: The Pearl, Bob: Lolita, Claire: Moby Dick.
+At the end of the semester, Claire has Moby Dick. So the answer is (B).
+Answer: (B)
+
+==============================================================================
+depth=2  objects=3  scenario=ball  seed=101  answer=(B) (blue ball)
+==============================================================================
+PROMPT:
+Alice, Bob, and Claire are playing a game. At the start of the game, they are each holding a ball: Alice has a red ball, Bob has a blue ball, and Claire has a black ball.
+As the game progresses, pairs of players trade balls. First, Bob and Claire swap balls. Finally, Alice and Bob swap balls. At the end of the game, Claire has the
+Options:
+(A) red ball
+(B) blue ball
+(C) black ball
+
+GOLD:
+(0) At the start: Alice: red, Bob: blue, Claire: black.
+(1) Bob and Claire swap balls: Alice: red, Bob: black, Claire: blue.
+(2) Alice and Bob swap balls: Alice: black, Bob: red, Claire: blue.
+At the end of the game, Claire has the blue ball. So the answer is (B).
+Answer: (B)
+
+==============================================================================
+depth=2  objects=3  scenario=gift  seed=102  answer=(B) (brown present)
+==============================================================================
+PROMPT:
+Alice, Bob, and Claire are holding a white elephant gift exchange. At the start of the event, they are each holding a present of a different color: Alice has a yellow present, Bob has a brown present, and Claire has a blue present.
+As the event progresses, pairs of people swap gifts. First, Alice and Bob swap their gifts. Finally, Bob and Claire swap their gifts. At the end of the event, Alice has the
+Options:
+(A) yellow present
+(B) brown present
+(C) blue present
+
+GOLD:
+(0) At the start: Alice: yellow, Bob: brown, Claire: blue.
+(1) Alice and Bob swap their gifts: Alice: brown, Bob: yellow, Claire: blue.
+(2) Bob and Claire swap their gifts: Alice: brown, Bob: blue, Claire: yellow.
+At the end of the event, Alice has the brown present. So the answer is (B).
+Answer: (B)
+
+==============================================================================
+depth=24  objects=3  scenario=dance  seed=100  answer=(B) (Jamie)
+==============================================================================
+PROMPT:
+Alice, Bob, and Claire are dancers at a square dance. At the start of a song, they each have a partner: Alice is dancing with Lola, Bob is dancing with Jamie, and Claire is dancing with Patrick.
+Throughout the song, the dancers often trade partners. First, Bob and Claire switch partners. Then, Alice and Claire switch partners. Then, Alice and Bob switch partners. Then, Bob and Claire switch partners. Then, Alice and Bob switch partners. Then, Alice and Claire switch partners. Then, Alice and Bob switch partners. Then, Bob and Claire switch partners. Then, Alice and Claire switch partners. Then, Alice and Bob switch partners. Then, Alice and Claire switch partners. Then, Bob and Claire switch partners. Then, Alice and Bob switch partners. Then, Alice and Claire switch partners. Then, Bob and Claire switch partners. Then, Alice and Bob switch partners. Then, Bob and Claire switch partners. Then, Alice and Bob switch partners. Then, Alice and Claire switch partners. Then, Alice and Bob switch partners. Then, Alice and Claire switch partners. Then, Alice and Bob switch partners. Then, Alice and Claire switch partners. Finally, Bob and Claire switch partners. At the end of the dance, Bob is dancing with
+Options:
+(A) Lola
+(B) Jamie
+(C) Patrick
+
+GOLD:
+(0) At the start: Alice: Lola, Bob: Jamie, Claire: Patrick.
+(1) Bob and Claire switch partners: Alice: Lola, Bob: Patrick, Claire: Jamie.
+(2) Alice and Claire switch partners: Alice: Jamie, Bob: Patrick, Claire: Lola.
+(3) Alice and Bob switch partners: Alice: Patrick, Bob: Jamie, Claire: Lola.
+(4) Bob and Claire switch partners: Alice: Patrick, Bob: Lola, Claire: Jamie.
+(5) Alice and Bob switch partners: Alice: Lola, Bob: Patrick, Claire: Jamie.
+(6) Alice and Claire switch partners: Alice: Jamie, Bob: Patrick, Claire: Lola.
+(7) Alice and Bob switch partners: Alice: Patrick, Bob: Jamie, Claire: Lola.
+(8) Bob and Claire switch partners: Alice: Patrick, Bob: Lola, Claire: Jamie.
+(9) Alice and Claire switch partners: Alice: Jamie, Bob: Lola, Claire: Patrick.
+(10) Alice and Bob switch partners: Alice: Lola, Bob: Jamie, Claire: Patrick.
+(11) Alice and Claire switch partners: Alice: Patrick, Bob: Jamie, Claire: Lola.
+(12) Bob and Claire switch partners: Alice: Patrick, Bob: Lola, Claire: Jamie.
+(13) Alice and Bob switch partners: Alice: Lola, Bob: Patrick, Claire: Jamie.
+(14) Alice and Claire switch partners: Alice: Jamie, Bob: Patrick, Claire: Lola.
+(15) Bob and Claire switch partners: Alice: Jamie, Bob: Lola, Claire: Patrick.
+(16) Alice and Bob switch partners: Alice: Lola, Bob: Jamie, Claire: Patrick.
+(17) Bob and Claire switch partners: Alice: Lola, Bob: Patrick, Claire: Jamie.
+(18) Alice and Bob switch partners: Alice: Patrick, Bob: Lola, Claire: Jamie.
+(19) Alice and Claire switch partners: Alice: Jamie, Bob: Lola, Claire: Patrick.
+(20) Alice and Bob switch partners: Alice: Lola, Bob: Jamie, Claire: Patrick.
+(21) Alice and Claire switch partners: Alice: Patrick, Bob: Jamie, Claire: Lola.
+(22) Alice and Bob switch partners: Alice: Jamie, Bob: Patrick, Claire: Lola.
+(23) Alice and Claire switch partners: Alice: Lola, Bob: Patrick, Claire: Jamie.
+(24) Bob and Claire switch partners: Alice: Lola, Bob: Jamie, Claire: Patrick.
+At the end of the dance, Bob is dancing with Jamie. So the answer is (B).
+Answer: (B)
+
+==============================================================================
+depth=24  objects=3  scenario=gift  seed=101  answer=(C) (pink present)
+==============================================================================
+PROMPT:
+Alice, Bob, and Claire are holding a white elephant gift exchange. At the start of the event, they are each holding a present of a different color: Alice has a brown present, Bob has a yellow present, and Claire has a pink present.
+As the event progresses, pairs of people swap gifts. First, Alice and Claire swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Bob swap their gifts. Then, Alice and Claire swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Claire swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Bob swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Claire swap their gifts. Then, Alice and Bob swap their gifts. Then, Alice and Claire swap their gifts. Then, Alice and Bob swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Claire swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Claire swap their gifts. Then, Alice and Bob swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Claire swap their gifts. Then, Bob and Claire swap their gifts. Then, Alice and Claire swap their gifts. Then, Bob and Claire swap their gifts. Finally, Alice and Claire swap their gifts. At the end of the event, Alice has the
+Options:
+(A) brown present
+(B) yellow present
+(C) pink present
+
+GOLD:
+(0) At the start: Alice: brown, Bob: yellow, Claire: pink.
+(1) Alice and Claire swap their gifts: Alice: pink, Bob: yellow, Claire: brown.
+(2) Bob and Claire swap their gifts: Alice: pink, Bob: brown, Claire: yellow.
+(3) Alice and Bob swap their gifts: Alice: brown, Bob: pink, Claire: yellow.
+(4) Alice and Claire swap their gifts: Alice: yellow, Bob: pink, Claire: brown.
+(5) Bob and Claire swap their gifts: Alice: yellow, Bob: brown, Claire: pink.
+(6) Alice and Claire swap their gifts: Alice: pink, Bob: brown, Claire: yellow.
+(7) Bob and Claire swap their gifts: Alice: pink, Bob: yellow, Claire: brown.
+(8) Alice and Bob swap their gifts: Alice: yellow, Bob: pink, Claire: brown.
+(9) Bob and Claire swap their gifts: Alice: yellow, Bob: brown, Claire: pink.
+(10) Alice and Claire swap their gifts: Alice: pink, Bob: brown, Claire: yellow.
+(11) Alice and Bob swap their gifts: Alice: brown, Bob: pink, Claire: yellow.
+(12) Alice and Claire swap their gifts: Alice: yellow, Bob: pink, Claire: brown.
+(13) Alice and Bob swap their gifts: Alice: pink, Bob: yellow, Claire: brown.
+(14) Bob and Claire swap their gifts: Alice: pink, Bob: brown, Claire: yellow.
+(15) Alice and Claire swap their gifts: Alice: yellow, Bob: brown, Claire: pink.
+(16) Bob and Claire swap their gifts: Alice: yellow, Bob: pink, Claire: brown.
+(17) Alice and Claire swap their gifts: Alice: brown, Bob: pink, Claire: yellow.
+(18) Alice and Bob swap their gifts: Alice: pink, Bob: brown, Claire: yellow.
+(19) Bob and Claire swap their gifts: Alice: pink, Bob: yellow, Claire: brown.
+(20) Alice and Claire swap their gifts: Alice: brown, Bob: yellow, Claire: pink.
+(21) Bob and Claire swap their gifts: Alice: brown, Bob: pink, Claire: yellow.
+(22) Alice and Claire swap their gifts: Alice: yellow, Bob: pink, Claire: brown.
+(23) Bob and Claire swap their gifts: Alice: yellow, Bob: brown, Claire: pink.
+(24) Alice and Claire swap their gifts: Alice: pink, Bob: brown, Claire: yellow.
+At the end of the event, Alice has the pink present. So the answer is (C).
+Answer: (C)
+
+==============================================================================
+depth=24  objects=3  scenario=ball  seed=102  answer=(A) (yellow ball)
+==============================================================================
+PROMPT:
+Alice, Bob, and Claire are playing a game. At the start of the game, they are each holding a ball: Alice has a yellow ball, Bob has a black ball, and Claire has a green ball.
+As the game progresses, pairs of players trade balls. First, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Claire swap balls. Then, Bob and Claire swap balls. Then, Alice and Claire swap balls. Then, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Bob swap balls. Then, Alice and Claire swap balls. Then, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Claire swap balls. Then, Bob and Claire swap balls. Then, Alice and Claire swap balls. Then, Alice and Bob swap balls. Then, Bob and Claire swap balls. Then, Alice and Claire swap balls. Finally, Bob and Claire swap balls. At the end of the game, Claire has the
+Options:
+(A) yellow ball
+(B) black ball
+(C) green ball
+
+GOLD:
+(0) At the start: Alice: yellow, Bob: black, Claire: green.
+(1) Alice and Bob swap balls: Alice: black, Bob: yellow, Claire: green.
+(2) Bob and Claire swap balls: Alice: black, Bob: green, Claire: yellow.
+(3) Alice and Bob swap balls: Alice: green, Bob: black, Claire: yellow.
+(4) Bob and Claire swap balls: Alice: green, Bob: yellow, Claire: black.
+(5) Alice and Bob swap balls: Alice: yellow, Bob: green, Claire: black.
+(6) Bob and Claire swap balls: Alice: yellow, Bob: black, Claire: green.
+(7) Alice and Claire swap balls: Alice: green, Bob: black, Claire: yellow.
+(8) Bob and Claire swap balls: Alice: green, Bob: yellow, Claire: black.
+(9) Alice and Claire swap balls: Alice: black, Bob: yellow, Claire: green.
+(10) Alice and Bob swap balls: Alice: yellow, Bob: black, Claire: green.
+(11) Bob and Claire swap balls: Alice: yellow, Bob: green, Claire: black.
+(12) Alice and Bob swap balls: Alice: green, Bob: yellow, Claire: black.
+(13) Bob and Claire swap balls: Alice: green, Bob: black, Claire: yellow.
+(14) Alice and Bob swap balls: Alice: black, Bob: green, Claire: yellow.
+(15) Alice and Claire swap balls: Alice: yellow, Bob: green, Claire: black.
+(16) Alice and Bob swap balls: Alice: green, Bob: yellow, Claire: black.
+(17) Bob and Claire swap balls: Alice: green, Bob: black, Claire: yellow.
+(18) Alice and Claire swap balls: Alice: yellow, Bob: black, Claire: green.
+(19) Bob and Claire swap balls: Alice: yellow, Bob: green, Claire: black.
+(20) Alice and Claire swap balls: Alice: black, Bob: green, Claire: yellow.
+(21) Alice and Bob swap balls: Alice: green, Bob: black, Claire: yellow.
+(22) Bob and Claire swap balls: Alice: green, Bob: yellow, Claire: black.
+(23) Alice and Claire swap balls: Alice: black, Bob: yellow, Claire: green.
+(24) Bob and Claire swap balls: Alice: black, Bob: green, Claire: yellow.
+At the end of the game, Claire has the yellow ball. So the answer is (A).
+Answer: (A)
+

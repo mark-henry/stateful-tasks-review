@@ -1,0 +1,12 @@
+[project]
+name = "stateful-harness"
+version = "0.1.0"
+description = "Inspect AI harness for the stateful chain-of-thought task review: CoT vs no-CoT depth sweeps, trace knockout, filler, prompt blinding and mistake propagation"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "inspect-ai>=0.3.263",
+    "openai>=3.14.1",
+    "together>=2.34.0",
+    "tokenizers>=0.23.2",
+]

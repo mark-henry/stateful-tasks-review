@@ -1,0 +1,58 @@
+{
+  "slug": "khop_pointer_chasing",
+  "primary_source": {
+    "paper": "Zhang, Raghu, Kleinberg, Bengio - Pointer Value Retrieval: A new benchmark for understanding the limits of neural network generalization",
+    "year": 2021,
+    "url": "https://arxiv.org/abs/2107.12580",
+    "repo": null
+  },
+  "trace_available": false,
+  "trace_source": null,
+  "format_description": "PVR (the assigned primary source) represents each instance as a fixed-length numeric vector or image: a 'pointer' segment of the input encodes an index into a separate 'value' segment, and the model performs ONE hop of indirection (read pointer -> look up one value) as a single-shot classification/regression output -- there is no iterated/repeated hopping and no natural-language CoT/scratchpad in the published task at all.",
+  "steps_in_trace": null,
+  "tokens_per_step": {"gemma2": null, "llama3": null, "qwen2": null},
+  "tokens_total": {"gemma2": null, "llama3": null, "qwen2": null},
+  "step_delimitable": null,
+  "state_at_fixed_position": null,
+  "state_bits": 3.0,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "unclear",
+  "theory_citation": "Wyllie, \"The Complexity of Parallel Computations\" (PhD thesis, 1979) -- pointer-jumping / list-ranking shows a FIXED functional graph can be iterated depth times via O(log depth) rounds of repeated squaring (compute f, f^2=f o f, f^4, ...) rather than depth genuinely-serial steps, so despite the surface 'chase k hops' framing, this task is not provably forced-serial the way s5_composition (Barrington 1989, NC1-hard) or random_lookup_table (fresh function per step, no fixed f to square) are. This is a deliberate negative-control property of the task, not an oversight.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 8,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "depth (number of hops)",
+    "granularity": "integer >=1; because f is fixed and shown once, an alternate solution strategy's true cost scales as O(log depth) rather than O(depth), so depth is a weaker difficulty knob here than in the other two tasks even though naive single-hop CoT length still grows linearly with it",
+    "tokens_flat_across_knob": null
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "low",
+  "paraphrasable": true,
+  "format_natural": false,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Zhang, Raghu, Kleinberg, Bengio, \"Pointer Value Retrieval\" (arXiv:2107.12580, 2021)",
+      "metric": "generalization gap (train/test accuracy) on single-hop pointer-value indirection, as a function of PVR task difficulty knobs (pointer length, value complexity, etc.)",
+      "models": "CNNs, MLPs, ResNets on vectorized/visual PVR inputs; no LLMs and no official code release found (only an unofficial reimplementation at github.com/qiuqiu1602/Pointer_Value_Retrieval, its own README self-describes as unofficial -- an earlier web-search summary incorrectly called it the official release, corrected during sourcing by reading the README directly)",
+      "values": "not independently re-extracted from the paper's figures/tables in this desk pass; not directly comparable to a CoT-token metric in any case since PVR is not a text/CoT task"
+    },
+    {
+      "paper": "Bachmann & Nagarajan, \"The Pitfalls of Next-Token Prediction\" (arXiv:2403.06963, ICML 2024, code at github.com/gregorbachmann/Next-Token-Failures)",
+      "metric": "single-shot next-token accuracy on path-star graph search (find and emit the correct arm from source to goal); demonstrates a 'Clever Hans Cheat' shortcut under teacher forcing",
+      "models": "small from-scratch transformers (GPT-2-scale, not open-weight LLMs)",
+      "values": "not directly comparable: path-star is sparse multi-arm graph SEARCH (ambiguous until resolved), not iteration of one fixed total function f:[N]->[N]; no per-hop CoT trace is published there either (the path is emitted in one shot). Cited for lineage/motivation only, not as this task's own published trace."
+    },
+    {
+      "paper": "Wyllie, \"The Complexity of Parallel Computations\" (PhD thesis, 1979)",
+      "metric": "theoretical: O(log n) parallel list-ranking / pointer-doubling algorithm",
+      "models": "n/a (theory, pre-dates neural networks)",
+      "values": "n/a"
+    }
+  ],
+  "notes": "AMENDMENT 2 pass: NO published textual CoT/scratchpad trace exists for this task under either candidate source found during sourcing. PVR (the assigned primary source) is vector/image-based, single-hop only, and was never released as official code (only an unofficial, unlicensed reimplementation exists) -- there is no natural-language text to tokenize at all, so tokens_per_step/tokens_total/steps_in_trace/step_delimitable/state_at_fixed_position/state_atomic_tokens are correctly null rather than estimated, per AMENDMENT 2's explicit instruction not to invent a format. The path-star task (Bachmann & Nagarajan 2024) is textual and pointer-chasing-shaped, but is a different combinatorial object (sparse ambiguous multi-arm search, single-shot output) from this task's definition (dense total function, iterated hopping), was not the assigned source, and itself has no per-hop CoT trace either (only a final one-shot path string) -- so it was not substituted in as a trace_source the way belindal/state-tracking was for s5_composition; using it here would have required inventing a step-by-step format neither paper actually publishes, which AMENDMENT 2 explicitly disallows. state_bits/answer_space use a representative N=8 (log2(8)=3.0) since N is a free knob with no single 'published' value; theory_class is correctly 'unclear' per the schema enum (closest fit for 'admits a shortcut, not provably serial' -- this is the intended, load-bearing finding of this task's desk review, not a gap in the research)."
+}

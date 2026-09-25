@@ -1,0 +1,40 @@
+# source: HaitaoWuTJU/Turing-Machine-Bench, src/prompt.py (commit 9e04fcaec05664aa28fc86f20d9a2bb0e17551ea)
+# paper: Wu, Han, Zhou, Huang, Zhang, "Computational Reasoning of Large Language Models" (TMBench), arXiv:2504.20771 (2025)
+# this is the literal worked few-shot exemplar embedded in the official eval prompt template (generate_prompt() in prompt.py).
+# NOTE: TMBench's task is an m-tag (string-rewriting) system, a queue with head-symbol lookup, append, and
+# fixed-count deletion -- it has no separate head-state register or tape-position pointer, so it is a close
+# cousin of, not identical to, the (head state, head position, tape) Turing machine task assigned to this repo's
+# turing_machine slug (see SOURCING.md). Kept as the best available published trace for desk metrics.
+
+## Example:
+m: 2
+Alphabet: {A, B, C}
+Init: [B C A]
+Transition rules:
+A : C A C
+B : A
+C : B
+Simulation steps:
+### step 0:
+   - Action: Init
+   - Queue State: [B C A]
+
+### step 1:
+   - Head Symbol: B
+   - Action: Append A to the end of the queue. Remove B C from the head.
+   - Queue State: [A A]
+
+### step 2:
+   - Head Symbol: A
+   - Action: Append C A C to the end of the queue. Remove A A from the head.
+   - Queue State: [C A C]
+
+### step 3:
+   - Head Symbol: C
+   - Action: Append B to the end of the queue. Remove C A from the head.
+   - Queue State: [C B]
+
+### step 4:
+   - Head Symbol: C
+   - Action: Append B to the end of the queue. Remove C B from the head.
+   - Queue State: [B] <halt>

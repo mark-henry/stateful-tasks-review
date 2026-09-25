@@ -1,0 +1,14 @@
+# SOURCE: Suzgun, Scales, Scharli, Gehrmann, Tay, Chung, Chowdhery, Le, Chi, Zhou, Wei (2022),
+# "Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them", arXiv:2210.09261.
+# Verbatim first worked example from the paper's official 3-shot CoT prompt file for this task:
+# repo suzgunmirac/BIG-Bench-Hard @ commit 9ee07bd481feebf959a6b59d61ea57bdcf30964d
+# path: cot-prompts/multistep_arithmetic_two.txt (first of the three few-shot exemplars in the file)
+# vendored locally at: vendor/bbh-suzgun/cot-prompts/multistep_arithmetic_two.txt
+
+Q: ((-5 + 9 * -4 - 0) * (4 + -7 + 0 * -5)) =
+A: Let's think step by step.
+Let’s recall that the order of operations in mathematics is as follows: (1) Parentheses, (2) exponents, (3) multiplication and division (from left to right), (4) addition and multiplication (from left to right). So, remember to always compute the expressions inside parentheses or brackets first.
+This equation can be written as "A * B", where A = (-5 + 9 * -4 - 0) and B = (4 + -7 + 0 * -5).
+Let's calculate A = (-5 + 9 * -4 - 0) = (-5 + (9 * -4) - 0) = (-5 + (-36) - 0) = (-5 + -36 - 0) = -5 - 36 = -41.
+Let's calculate B = (4 + -7 + 0 * -5) = (4 + -7 + (0 * -5)) = (4 + -7 + 0) = (4 + -7) = (4 - 7) = -3.
+Then, the final equation is A * B = -41 * -3 = (-61) * (-3) = 123. So the answer is 123.

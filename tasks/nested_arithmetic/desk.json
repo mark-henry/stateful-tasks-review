@@ -1,0 +1,54 @@
+{
+  "slug": "nested_arithmetic",
+  "primary_source": {
+    "paper": "Suzgun, Scales, Scharli, Gehrmann, Tay, Chung, Chowdhery, Le, Chi, Zhou, Wei (2022), \"Challenging BIG-Bench Tasks and Whether Chain-of-Thought Can Solve Them\"",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2210.09261",
+    "repo": "https://github.com/suzgunmirac/BIG-Bench-Hard"
+  },
+  "trace_available": true,
+  "trace_source": "published_trace.txt (verbatim first of 3 few-shot exemplars from vendor/bbh-suzgun/cot-prompts/multistep_arithmetic_two.txt, repo suzgunmirac/BIG-Bench-Hard @ 9ee07bd481feebf959a6b59d61ea57bdcf30964d)",
+  "format_description": "Each reduction is a prose sentence keyed to a named sub-expression ('Let's calculate A = ...' / 'Let's calculate B = ...' / 'Then, the final equation is A op B = ...') that chains a series of '=' rewrites, first parenthesizing the next operation to evaluate under standard order-of-operations (multiplication before left-to-right addition/subtraction) and then substituting its computed numeric result, until a single integer remains at the end of the line.",
+  "steps_in_trace": 3,
+  "tokens_per_step": {
+    "gemma2": 56.0,
+    "llama3": 51.333333333333336,
+    "qwen2": 54.666666666666664
+  },
+  "tokens_total": {
+    "gemma2": 168,
+    "llama3": 154,
+    "qwen2": 164
+  },
+  "step_delimitable": true,
+  "state_at_fixed_position": true,
+  "state_bits": 11.34,
+  "state_bounded": false,
+  "state_atomic_tokens": false,
+  "theory_class": "NC1-hard",
+  "theory_citation": "Buss, S.R. (1987), \"The Boolean Formula Value Problem is in ALOGTIME\", STOC 1987, pp. 123-131 — establishes evaluation of bounded-fan-in boolean formulas as ALOGTIME/NC1-complete; fixed-depth nested arithmetic expression evaluation (parenthesized +,-,* over integers, as in this task) is a direct numeric analogue of the formula-value problem, so we classify it NC1-hard rather than TC0-flat (sequential dependent reductions across a depth-2+ tree) or P-complete (no unbounded pointer-chasing/loop structure).",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": null,
+  "error_diagnostic": true,
+  "knob": {
+    "name": "nesting depth / innermost chain length (BIG-bench generator's depth_level_list x length; BBH's fixed multistep_arithmetic_two set uses depth_level_list=[2] with length=4, i.e. one two-way split into two innermost groups of exactly 4 single-digit operands each -- verified over all 250 examples)",
+    "granularity": "integer levels for nesting depth; integer operator count for innermost chain length; operand magnitude fixed at single digits [-9,9] in the published fixed set",
+    "tokens_flat_across_knob": false
+  },
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "medium",
+  "paraphrasable": true,
+  "format_natural": true,
+  "interp_tractable": true,
+  "published_data": [
+    {
+      "paper": "Suzgun et al. 2022, arXiv:2210.09261, Table 3, row 'Multi-Step Arithmetic [Two]'",
+      "metric": "3-shot accuracy (%), Answer-Only (No-CoT) vs Chain-of-Thought, on the fixed 250-example BBH multistep_arithmetic_two set",
+      "models": "Random guessing; Prior BIG-Bench SOTA; Average human-rater; Max human-rater; InstructGPT (text-davinci-002); Codex (code-davinci-002); PaLM 540B",
+      "values": "Random guessing: 0.0% (no-CoT only); Prior SOTA: 5.7% (no-CoT only); Avg human-rater: 9.7% (no-CoT only); Max human-rater: 25.0% (no-CoT only); InstructGPT: 1.2% no-CoT -> 53.2% CoT; Codex: 1.2% no-CoT -> 47.6% CoT; PaLM 540B: 1.6% no-CoT -> 19.6% CoT"
+    }
+  ],
+  "notes": "AMENDMENT 2 pass (desk metrics against the published implementation). Published trace: verbatim first worked example ('((-5 + 9 * -4 - 0) * (4 + -7 + 0 * -5)) =') from the Suzgun et al. 3-shot CoT prompt file, saved to published_trace.txt with full provenance header. Note the source trace itself contains an apparent transcription slip in its final line ('A * B = -41 * -3 = (-61) * (-3) = 123' -- -61 should be -41; the final numeric answer 123 is nonetheless correct since -41*-3=123, so this is a cosmetic typo in the published prompt, preserved verbatim per instructions, not corrected. steps_in_trace=3: counted at the granularity that is actually programmatically delimitable in this prose format -- the three lines beginning 'Let's calculate A', 'Let's calculate B', and 'Then, the final equation is' (each corresponds to one sub-expression of the depth-2 nesting structure). A finer count exists if you instead count each individually-computed numeric reduction within those lines (paren-insertion + substitution + final compute): that finer count is 5 (2 for A: the inner multiply then the outer sum; 2 for B likewise; 1 for the final combination), which would roughly halve tokens_per_step; we chose the coarser, delimitable-by-marker count as the primary metric and flag the alternative here. tokens_per_step/tokens_total measured with the `tokenizers` library directly on tokenizer.json files pulled via huggingface_hub for the CoT-only text (the three reduction lines only, excluding the canary/header, the 'Solve multi-step arithmetic problems' instruction, 'Let's think step by step.', the order-of-operations recall sentence, and the 'This equation can be written as A*B...' notation-setup sentence -- none of those are reduction content). Gated originals 401'd as expected (google/gemma-2-2b, meta-llama/Meta-Llama-3-8B); used the specified working mirrors instead: unsloth/gemma-2-2b, NousResearch/Meta-Llama-3-8B, Qwen/Qwen2-7B (ungated, no mirror needed). All three fetched and loaded successfully, no nulls. Gemma2 and Llama3 tokenizers auto-prepend a BOS special token (<bos> / <|begin_of_text|>) on encode(); Qwen2 does not; the reported tokens_total figures have that leading special token stripped from gemma2/llama3 so all three counts are apples-to-apples content-token counts. state_bits=11.34: NOT hand-estimated -- computed empirically by AST-evaluating both parenthesized halves (the 'A' and 'B' sub-expressions) of all 250 fixed BBH examples; the resulting per-step (per sub-expression) value range is [-1296, 1134], abs max 1296, giving log2(2*1296+1)=11.34 bits; median abs value is only 16, so the distribution is heavy-tailed and this bit count is itself depth/chain-length dependent (see state_bounded). state_bounded=false: confirmed empirically, not just asserted -- the final top-level answers in the same fixed 250-example set range up to |250992| (18.9 bits), well above any single sub-expression's range, and BIG-bench's generator can nest further/lengthen chains via its depth_level_list and length knobs, which would push both the sub-expression and final-answer magnitude (and thus bit count) higher still; multiplication chains are the driver (leaf operands stay in the fixed narrow range [-9,9] regardless of depth). state_atomic_tokens=false: verified directly against all three tokenizers on representative intermediate values from the trace (-41, -36, -3, 123, plus -163/3969/-219 from the other two exemplars in the same prompt file) -- gemma2 and Qwen2 tokenize every digit (and the '-' sign) as a separate token even for 2-3 digit numbers, and Llama3, while keeping most 2-3 digit magnitudes as one token, still always splits the '-' sign into its own token for negatives (which are the majority of values in this task) and splits 4-digit values (e.g. 3969) into two tokens; no tokenizer gives 'one state value = one token' in general. knob.tokens_flat_across_knob=false: increasing nesting depth adds more 'Let's calculate X' macro-lines (near-linear token growth in the number of steps) and increasing innermost chain length/depth grows intermediate-value magnitude (more digit-tokens per computed value per the digit-splitting behavior above), so neither knob leaves tokens/step flat; this is a reasoned inference from the trace + generator design and the digit-tokenization result above, not a re-run across multiple depths (no generator code was written per the SPEC's desk-research-only constraint for this task in this pass). published_data re-verified via two independent fetches (arXiv abstract page, which has no table, and an ar5iv HTML render of the full paper) in this pass; the ar5iv figures exactly match phase 1's numbers (which were themselves cross-checked across two fetches after an initial fetch returned the InstructGPT/Codex CoT values transposed) -- carrying forward as medium-confidence per phase 1's flag, since neither this pass nor phase 1 read the literal typeset PDF table directly, only automated HTML/LLM renderings of it. format_natural=true carries a caveat: the specific 'Let's calculate A/B' prose is authored into the paper's 3-shot exemplars (few-shot CoT prompting always demonstrates rather than elicits ex nihilo), but arithmetic decomposition via named sub-expressions is a common, low-effort strategy models adopt once shown any 'show your work' example, and BBH's headline finding for this task -- near-random (~1%) to 47-53% purely from adding CoT exemplars -- is evidence the decomposition strategy itself is easy for capable models to generalize, not evidence of pre-prompting spontaneous emission. Judgment calls flagged for review: (1) steps_in_trace granularity (3 macro-steps vs. 5 finer numeric reductions) changes tokens_per_step by roughly 2x; (2) state_bits is empirical-but-depth-2-only (would need re-measurement at other depths if/when a generator is written); (3) contamination_risk kept at 'medium' from phase 1 (fixed+canary-tagged data is widely mirrored, but the underlying grammar is common enough that even fresh instances carry some risk from generic small-integer-arithmetic exposure in pretraining). CORRECTION (implementation pass, 2026-09-16): the knob.name field previously said BBH's fixed set uses depth_level_list=[2,2] with 3-4 operands per innermost group; re-checked programmatically over all 250 examples in vendor/bbh-suzgun/bbh/multistep_arithmetic_two.json and every one is ((a op b op c op d) op (e op f op g op h)) -- exactly 2 innermost groups of exactly 4 operands, i.e. BIG-bench depth_level_list=[2], length=4. Field corrected. Also newly verified in that pass: the stdlib recursive-descent evaluator in task.py reproduces all 250 published `target` values exactly, so ground_truth_cost='trivial' is confirmed empirically."
+}

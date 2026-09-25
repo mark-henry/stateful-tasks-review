@@ -1,0 +1,60 @@
+{
+  "slug": "parity_coinflip",
+  "primary_source": {
+    "paper": "Wei et al. 2022, \"Chain-of-Thought Prompting Elicits Reasoning in Large Language Models\"",
+    "year": 2022,
+    "url": "https://arxiv.org/abs/2201.11903",
+    "repo": null
+  },
+  "trace_available": true,
+  "trace_source": "tasks/parity_coinflip/published_trace.txt -- Wei et al. 2022 Fig. 3 / Appendix G 8-shot CoT prompt for Coin Flip, corroborated verbatim via third-party reproductions (ArmelRandy/tree-of-problems, HKUNLP/HumanPrompt, xlang-ai/batch-prompting, others; see file header). No trace exists for the raw-parity variant (Anil et al. 2022's scratchpad figure is image-only in the PDF; no text-extractable exemplar found anywhere) -- every metric below describes the coin-flip framing only.",
+  "format_description": "A single free-form narrative sentence that counts total flip events across the whole chain and states the parity of that count in words (e.g. \"flipped 1 time, which is an odd number\"), then derives heads/tails from the start state -- NOT a per-person or per-step scratchpad line; the published CoT never itemizes each person's flip decision individually.",
+  "steps_in_trace": null,
+  "tokens_per_step": {"gemma2": null, "llama3": null, "qwen2": null},
+  "tokens_total": {"gemma2": 50, "llama3": 51, "qwen2": 50},
+  "step_delimitable": false,
+  "state_at_fixed_position": false,
+  "state_bits": 1.0,
+  "state_bounded": true,
+  "state_atomic_tokens": null,
+  "theory_class": "solvable/TC0",
+  "theory_citation": "Chiang & Cholak 2022, \"Overcoming a Theoretical Limitation of Self-Attention\" (ACL 2022, arXiv:2202.12172; code github.com/ndnlp/parity) construct an explicit constant-depth transformer that computes PARITY exactly, so parity/coin-flip is NOT provably serial for transformers despite being canonically 'inherently sequential' for RNNs/finite automata. Bhattamishra et al. 2020 (EMNLP, \"On the Ability of Self-Attention Networks to Recognize Counter Languages\") independently show self-attention can recognize parity-adjacent counter languages under suitable positional encodings.",
+  "local_redundancy": "high",
+  "prompt_recomputable": true,
+  "answer_space": 2,
+  "error_diagnostic": false,
+  "knob": {"name": "depth (number of people/flip events)", "granularity": "1", "tokens_flat_across_knob": null},
+  "counterfactual_defined": true,
+  "ground_truth_cost": "trivial",
+  "contamination_risk": "medium",
+  "paraphrasable": true,
+  "format_natural": true,
+  "interp_tractable": false,
+  "published_data": [
+    {
+      "paper": "Wei et al. 2022 (arXiv:2201.11903)",
+      "metric": "PaLM 540B accuracy, standard vs chain-of-thought prompting, Coin Flip",
+      "models": "PaLM 540B",
+      "values": "standard prompting 98.1%; CoT prompting 100.0% (per-text extraction via ar5iv render, flagged for a check against the original PDF/figure -- the paper's headline coin-flip result concerns OOD length generalization, i.e. training exemplars show 2 flips and test chains are longer, where standard prompting's advantage over CoT is expected to be much smaller than these in-domain-looking numbers suggest; treat this row as needing verification of which condition -- in-domain vs OOD -- it reports)"
+    },
+    {
+      "paper": "Anil et al. 2022, \"Exploring Length Generalization in Large Language Models\" (NeurIPS 2022, arXiv:2207.04901)",
+      "metric": "Length generalization of raw parity under scratchpad/CoT prompting vs finetuning alone",
+      "models": "not publicly specified which base checkpoints (Google-internal)",
+      "values": "qualitative only: scratchpad prompting dramatically improves length generalization on parity relative to finetuning-only or prompting-only baselines, but every technique/combination shows distinct failure modes as length grows; no single numeric table extracted (paper presents this primarily as generalization curves, and no trace/figure text was recoverable for exact values)"
+    },
+    {
+      "paper": "Bhattamishra et al. 2020 (EMNLP)",
+      "metric": "Theoretical + small-scale empirical characterization of which counter languages self-attention networks recognize",
+      "models": "small trained Transformer encoders (toy study, not a benchmarked frontier LLM)",
+      "values": "no single headline accuracy number applies; framing/theory citation only"
+    },
+    {
+      "paper": "Chiang & Cholak 2022 (ACL, arXiv:2202.12172)",
+      "metric": "Existence of a constant-depth transformer construction computing PARITY exactly",
+      "models": "hand-constructed small Transformer, not a pretrained LLM",
+      "values": "100% by construction (proof, not an empirical benchmark run)"
+    }
+  ],
+  "notes": "Central finding of this desk pass: the WIDELY-CITED published coin-flip CoT format is a global counting shortcut ('flipped N times, N is odd/even'), not a per-person state-tracking scratchpad -- this matches the explicit observation in the 'Self-Harmonized Chain of Thought' paper that human-written Few-shot-CoT prompts for this task 'employ a shortcut solution by counting overall flips' rather than tracking state step by step, in contrast to some automatically-generated CoTs that do track state explicitly. Because of this, step_delimitable, state_at_fixed_position, error_diagnostic, and interp_tractable are all FALSE for the format as published, even though the underlying task (heads/tails toggling under an XOR chain) has a maximally step-local, high-redundancy structure (state_k = state_{k-1} XOR flip_k) that WOULD support a rigid, highly interpretable per-step scratchpad if we chose to write one -- that is a design choice for our own task.py, not something the literature already provides. tokens_per_step/steps_in_trace/state_atomic_tokens/knob.tokens_flat_across_knob are null because the published trace has no discrete step boundaries to divide by, and only one exemplar (depth=2 flip-events) was locatable, so nothing about flatness-across-depth could be measured. 50% guessing floor still applies to the underlying binary answer regardless of prompting format. No usable existing generator/dataset/wrapper was found for either the coin-flip or raw-parity framing (see SOURCING.md from the phase-1 pass); task.py, if and when written, must be built from scratch. Tokenizers used: unsloth/gemma-2-2b (mirror; google/gemma-2-2b is gated and inaccessible without an HF token in this environment), NousResearch/Meta-Llama-3-8B (mirror; meta-llama/Meta-Llama-3-8B is likewise gated), Qwen/Qwen2-7B (ungated, fetched directly). Per amendment 2's own instruction to never hand-estimate, all token counts above are real tokenizer.json encodes, not estimates."
+}
